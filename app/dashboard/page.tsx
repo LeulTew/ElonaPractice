@@ -1,8 +1,10 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { BookOpen, Clock, TrendingUp, Award } from "lucide-react"
 import Link from "next/link"
+import { supabase } from "@/lib/supabase"
 
 interface KPICardProps {
   title: string
@@ -39,12 +41,61 @@ function KPICard({ title, value, icon, gradient, delay }: KPICardProps) {
 }
 
 export default function Dashboard() {
-  // TODO: Fetch real data from Supabase
-  const stats = {
-    totalExams: 12,
-    avgScore: 85,
-    timeSpent: 240, // minutes
-    streak: 5
+  const [stats, setStats] = useState({
+    totalExams: 0,
+    avgScore: 0,
+    timeSpent: 0,
+    totalAttempts: 0
+  })
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    fetchStats()
+  }, [])
+
+  async function fetchStats() {
+    try {
+      // Fetch total exams
+      const { count: examCount } = await supabase
+        .from('exams')
+        .select('*', { count: 'exact', head: true })
+
+      // Fetch exam attempts
+      const { data: attempts } = await supabase
+        .from('exam_attempts')
+        .select('score, time_spent_seconds')
+
+      let avgScore = 0
+      let totalTime = 0
+      
+      if (attempts && attempts.length > 0) {
+        const totalScore = attempts.reduce((sum, a) => sum + (a.score || 0), 0)
+        avgScore = Math.round(totalScore / attempts.length)
+        totalTime = attempts.reduce((sum, a) => sum + (a.time_spent_seconds || 0), 0)
+      }
+
+      setStats({
+        totalExams: examCount || 0,
+        avgScore,
+        timeSpent: Math.floor(totalTime / 60), // Convert to minutes
+        totalAttempts: attempts?.length || 0
+      })
+    } catch (error) {
+      console.error('Error fetching stats:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  if (loading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="text-center">
+          <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-indigo-600 border-r-transparent"></div>
+          <p className="mt-4 text-gray-600">Loading dashboard...</p>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -88,8 +139,8 @@ export default function Dashboard() {
             delay={0.3}
           />
           <KPICard
-            title="Day Streak"
-            value={`${stats.streak} days`}
+            title="Total Attempts"
+            value={stats.totalAttempts}
             icon={<TrendingUp className="h-6 w-6 text-white" />}
             gradient="bg-gradient-to-br from-green-500 to-emerald-500"
             delay={0.4}
