@@ -3,7 +3,7 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 -- Courses table
 CREATE TABLE IF NOT EXISTS courses (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id TEXT PRIMARY KEY,
   title TEXT NOT NULL,
   code TEXT NOT NULL,
   description TEXT,
@@ -13,8 +13,8 @@ CREATE TABLE IF NOT EXISTS courses (
 
 -- Exams table (one per chapter + comprehensive)
 CREATE TABLE IF NOT EXISTS exams (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  course_id UUID REFERENCES courses(id) ON DELETE CASCADE,
+  id TEXT PRIMARY KEY,
+  course_id TEXT REFERENCES courses(id) ON DELETE CASCADE,
   title TEXT NOT NULL,
   description TEXT,
   chapter_number INT, -- NULL for comprehensive exam
@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS exams (
 -- Questions table
 CREATE TABLE IF NOT EXISTS questions (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  exam_id UUID REFERENCES exams(id) ON DELETE CASCADE,
+  exam_id TEXT REFERENCES exams(id) ON DELETE CASCADE,
   content TEXT NOT NULL,
   image_url TEXT,
   question_type TEXT NOT NULL CHECK (question_type IN ('MCQ', 'FILL_BLANK', 'SHORT_ANSWER')),
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS questions (
 CREATE TABLE IF NOT EXISTS exam_attempts (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   user_id UUID, -- For future auth integration
-  exam_id UUID REFERENCES exams(id) ON DELETE CASCADE,
+  exam_id TEXT REFERENCES exams(id) ON DELETE CASCADE,
   mode TEXT NOT NULL CHECK (mode IN ('PRACTICE', 'EXAM')),
   score DECIMAL,
   total_points INT,
@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS user_answers (
 -- User stats table
 CREATE TABLE IF NOT EXISTS user_stats (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  course_id UUID REFERENCES courses(id) ON DELETE CASCADE,
+  course_id TEXT REFERENCES courses(id) ON DELETE CASCADE,
   total_attempts INT DEFAULT 0,
   avg_score DECIMAL,
   total_time_minutes INT DEFAULT 0,
