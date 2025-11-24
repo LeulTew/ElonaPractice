@@ -1,9 +1,10 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { FlaskConical } from "lucide-react"
 import { ExamSelectionModal } from "@/components/exam-selection-modal"
+import { supabase } from "@/lib/supabase"
 
 interface Course {
   id: string
@@ -15,16 +16,37 @@ interface Course {
 
 export default function CoursesPage() {
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null)
-  
-  // TODO: Fetch from Supabase
-  const courses: Course[] = [
-    {
-      id: "1",
-      title: "Chemistry of Natural Product",
-      code: "CNP-101",
-      description: "Comprehensive study of natural product chemistry including stereochemistry, carbohydrates, and organic compounds."
+  const [courses, setCourses] = useState<Course[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    fetchCourses()
+  }, [])
+
+  async function fetchCourses() {
+    const { data, error } = await supabase
+      .from('courses')
+      .select('*')
+    
+    if (data) {
+      setCourses(data)
     }
-  ]
+    if (error) {
+      console.error('Error fetching courses:', error)
+    }
+    setLoading(false)
+  }
+
+  if (loading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="text-center">
+          <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-indigo-600 border-r-transparent"></div>
+          <p className="mt-4 text-gray-600">Loading courses...</p>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-purple-900/20 dark:to-indigo-900/20">
