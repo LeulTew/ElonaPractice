@@ -45,6 +45,7 @@ async function processPptx(filePath: string, courseName: string, questions: Ques
     
     // Extract text
     const texts: string[] = [];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const findText = (obj: any) => {
       if (typeof obj === 'object') {
         for (const key in obj) {
@@ -88,6 +89,7 @@ async function processPptx(filePath: string, courseName: string, questions: Ques
             if (relsResult.Relationships && relsResult.Relationships.Relationship) {
                 const rels = relsResult.Relationships.Relationship;
                 // Find image relationship
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 const imageRel = rels.find((r: any) => 
                     r.$.Type.includes('image')
                 );

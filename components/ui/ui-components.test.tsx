@@ -12,7 +12,7 @@ describe('UI Components', () => {
     })
 
     it('renders as child when asChild is true', () => {
-      render(<Button asChild><a href="/">Link Button</a></Button>)
+      render(<Button asChild><span role="link">Link Button</span></Button>)
       const link = screen.getByRole('link', { name: 'Link Button' })
       expect(link).toBeInTheDocument()
     })

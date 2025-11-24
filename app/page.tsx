@@ -7,7 +7,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react"
 import questionsData from "@/lib/questions.json"
 
 // Type definition matching the JSON structure
-interface Question {
+interface QuestionData {
   course: string
   sourceFile: string
   slideNumber: number
@@ -21,12 +21,13 @@ export default function Home() {
 
   // Prevent hydration mismatch
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true)
   }, [])
 
   if (!mounted) return null
 
-  const currentQuestion = questionsData[currentIndex]
+  const currentQuestion: QuestionData = questionsData[currentIndex]
   const totalQuestions = questionsData.length
 
   const handleNext = () => {

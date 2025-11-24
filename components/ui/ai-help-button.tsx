@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { Bot, Copy, ExternalLink } from "lucide-react"
+import { Bot } from "lucide-react"
 
 interface AIHelpButtonProps {
   questionText: string

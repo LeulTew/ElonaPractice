@@ -31,7 +31,6 @@ describe('Supabase Client Integration', () => {
     const mockFrom = vi.fn().mockReturnValue({ select: mockSelect })
     
     // Re-mock implementation for this test
-    // @ts-ignore
     supabase.from = mockFrom
 
     const { data, error } = await supabase
@@ -50,7 +49,6 @@ describe('Supabase Client Integration', () => {
     const mockSelect = vi.fn().mockResolvedValue({ data: null, error: mockError })
     const mockFrom = vi.fn().mockReturnValue({ select: mockSelect })
     
-    // @ts-ignore
     supabase.from = mockFrom
 
     const { data, error } = await supabase
