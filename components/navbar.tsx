@@ -14,18 +14,24 @@ export function Navbar() {
             </span>
           </Link>
           <div className="flex gap-6 md:gap-10">
-            <Link
-              href="/courses"
+            <a
               className="flex items-center text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+              href="/dashboard"
+            >
+              Dashboard
+            </a>
+            <a
+              className="flex items-center text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+              href="/courses"
             >
               Courses
-            </Link>
-            <Link
-              href="/about"
+            </a>
+            <a
               className="flex items-center text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+              href="/about"
             >
               About
-            </Link>
+            </a>
           </div>
         </div>
         <div className="flex flex-1 items-center justify-end space-x-2">
