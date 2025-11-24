@@ -1,6 +1,14 @@
 -- Enable UUID extension
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
+-- Drop existing tables (in reverse order of dependencies)
+DROP TABLE IF EXISTS user_stats CASCADE;
+DROP TABLE IF EXISTS user_answers CASCADE;
+DROP TABLE IF EXISTS exam_attempts CASCADE;
+DROP TABLE IF EXISTS questions CASCADE;
+DROP TABLE IF EXISTS exams CASCADE;
+DROP TABLE IF EXISTS courses CASCADE;
+
 -- Courses table
 CREATE TABLE IF NOT EXISTS courses (
   id TEXT PRIMARY KEY,
