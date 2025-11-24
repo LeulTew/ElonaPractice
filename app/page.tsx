@@ -1,46 +1,89 @@
 "use client"
 
-import { AIHelpButton } from "@/components/ui/ai-help-button"
+import { useState, useEffect } from "react"
+import { QuestionCard } from "@/components/question-card"
+import { Button } from "@/components/ui/button"
+import { ChevronLeft, ChevronRight } from "lucide-react"
+import questionsData from "@/lib/questions.json"
+
+// Type definition matching the JSON structure
+interface Question {
+  course: string
+  sourceFile: string
+  slideNumber: number
+  content: string
+  imageUrl?: string
+}
 
 export default function Home() {
-  // Mock data for demonstration
-  const mockQuestion = {
-    id: "1",
-    content: "Which of the following is a characteristic of enantiomers?",
-    options: [
-      "They have different boiling points",
-      "They rotate plane-polarized light in opposite directions",
-      "They have different solubilities in achiral solvents",
-      "They react identically with chiral reagents"
-    ],
-    correct_answer: "They rotate plane-polarized light in opposite directions"
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [mounted, setMounted] = useState(false)
+
+  // Prevent hydration mismatch
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) return null
+
+  const currentQuestion = questionsData[currentIndex]
+  const totalQuestions = questionsData.length
+
+  const handleNext = () => {
+    setCurrentIndex((prev) => (prev + 1) % totalQuestions)
+  }
+
+  const handlePrevious = () => {
+    setCurrentIndex((prev) => (prev - 1 + totalQuestions) % totalQuestions)
+  }
+
+  // Map JSON data to component props
+  const mappedQuestion = {
+    id: `${currentIndex + 1}`,
+    content: currentQuestion.content,
+    image_url: currentQuestion.imageUrl,
+    question_type: "OPEN", // Defaulting to OPEN for now as extracted from PPT
+    options: []
   }
 
   return (
-    <div className="min-h-screen bg-background p-8 font-sans">
-      <main className="max-w-2xl mx-auto space-y-8">
-        <header className="text-center space-y-2">
+    <div className="min-h-screen bg-background p-4 md:p-8 font-sans pb-20">
+      <main className="max-w-4xl mx-auto space-y-8">
+        <header className="text-center space-y-2 mb-8">
           <h1 className="text-3xl font-bold tracking-tight">Elona Exam Practice</h1>
-          <p className="text-muted-foreground">Chemistry of Natural Product (CNP)</p>
+          <p className="text-muted-foreground">
+            {currentQuestion.course} • Slide {currentQuestion.slideNumber}
+          </p>
         </header>
 
-        <div className="rounded-xl border bg-card text-card-foreground shadow-sm p-6 space-y-6">
-          <div className="space-y-4">
-            <div className="flex justify-between items-start gap-4">
-              <h2 className="text-lg font-medium leading-none">Question 1</h2>
-              <AIHelpButton questionText={mockQuestion.content} />
-            </div>
+        <div className="space-y-6">
+          <QuestionCard 
+            question={mappedQuestion} 
+            courseName={currentQuestion.sourceFile.replace('.pptx', '')}
+          />
+
+          <div className="flex items-center justify-between max-w-3xl mx-auto pt-4">
+            <Button 
+              variant="outline" 
+              onClick={handlePrevious}
+              className="w-32"
+            >
+              <ChevronLeft className="mr-2 h-4 w-4" />
+              Previous
+            </Button>
             
-            <p className="text-lg">{mockQuestion.content}</p>
-            
-            <div className="grid gap-3">
-              {mockQuestion.options.map((option, index) => (
-                <div key={index} className="flex items-center space-x-3 rounded-lg border p-4 hover:bg-accent cursor-pointer transition-colors">
-                  <div className="h-4 w-4 rounded-full border border-primary" />
-                  <span>{option}</span>
-                </div>
-              ))}
-            </div>
+            <span className="text-sm text-muted-foreground font-medium">
+              {currentIndex + 1} / {totalQuestions}
+            </span>
+
+            <Button 
+              variant="outline" 
+              onClick={handleNext}
+              className="w-32"
+            >
+              Next
+              <ChevronRight className="ml-2 h-4 w-4" />
+            </Button>
           </div>
         </div>
       </main>
