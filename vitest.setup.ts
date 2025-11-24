@@ -1,27 +1,29 @@
 import '@testing-library/jest-dom'
-import { vi } from 'vitest'
 
-// Mock matchMedia
+// Polyfills for JSDOM (not mocks - these are necessary for Radix UI to work)
+global.ResizeObserver = class ResizeObserver {
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+}
+
+// Polyfill matchMedia for theme switching
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
-  value: vi.fn().mockImplementation(query => ({
+  value: (query: string) => ({
     matches: false,
     media: query,
     onchange: null,
-    addListener: vi.fn(), // deprecated
-    removeListener: vi.fn(), // deprecated
-    addEventListener: vi.fn(),
-    removeEventListener: vi.fn(),
-    dispatchEvent: vi.fn(),
-  })),
+    addListener: () => {},
+    removeListener: () => {},
+    addEventListener: () => {},
+    removeEventListener: () => {},
+    dispatchEvent: () => true,
+  }),
 })
 
-// Mock clipboard
-Object.defineProperty(navigator, 'clipboard', {
-  value: {
-    writeText: vi.fn(),
-  },
-})
-
-// Mock window.open
-vi.stubGlobal('open', vi.fn())
+// Polyfill Pointer Capture for Radix UI
+window.HTMLElement.prototype.hasPointerCapture = () => false
+window.HTMLElement.prototype.setPointerCapture = () => {}
+window.HTMLElement.prototype.releasePointerCapture = () => {}
+window.HTMLElement.prototype.scrollIntoView = () => {}
