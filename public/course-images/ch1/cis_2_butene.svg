@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 150" width="200" height="150">
+  <text x="100" y="20" font-family="Arial" font-size="14" text-anchor="middle">cis-2-Butene</text>
+  <g transform="translate(100, 80)">
+    <!-- Double Bond -->
+    <line x1="-20" y1="0" x2="20" y2="0" stroke="black" stroke-width="4"/>
+    
+    <!-- Methyl Groups (Up) -->
+    <line x1="-20" y1="0" x2="-50" y2="-40" stroke="black" stroke-width="2"/>
+    <line x1="20" y1="0" x2="50" y2="-40" stroke="black" stroke-width="2"/>
+    
+    <!-- Hydrogens (Down) -->
+    <line x1="-20" y1="0" x2="-50" y2="40" stroke="black" stroke-width="2"/>
+    <line x1="20" y1="0" x2="50" y2="40" stroke="black" stroke-width="2"/>
+    
+    <!-- Labels -->
+    <text x="-60" y="-45" font-family="Arial" font-size="12">CH3</text>
+    <text x="40" y="-45" font-family="Arial" font-size="12">CH3</text>
+    <text x="-60" y="55" font-family="Arial" font-size="12">H</text>
+    <text x="50" y="55" font-family="Arial" font-size="12">H</text>
+  </g>
+</svg>

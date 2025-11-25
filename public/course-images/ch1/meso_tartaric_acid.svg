@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 250" width="200" height="250">
+  <text x="100" y="20" font-family="Arial" font-size="14" text-anchor="middle">Meso-Tartaric Acid</text>
+  
+  <!-- Fischer Projection Backbone -->
+  <line x1="100" y1="50" x2="100" y2="200" stroke="black" stroke-width="2"/>
+  
+  <!-- Horizontal Lines -->
+  <line x1="60" y1="100" x2="140" y2="100" stroke="black" stroke-width="2"/>
+  <line x1="60" y1="150" x2="140" y2="150" stroke="black" stroke-width="2"/>
+
+  <!-- Groups -->
+  <text x="100" y="45" font-family="Arial" font-size="12" text-anchor="middle">COOH</text>
+  <text x="100" y="215" font-family="Arial" font-size="12" text-anchor="middle">COOH</text>
+  
+  <text x="50" y="105" font-family="Arial" font-size="12" text-anchor="end">H</text>
+  <text x="150" y="105" font-family="Arial" font-size="12" text-anchor="start">OH</text>
+  
+  <text x="50" y="155" font-family="Arial" font-size="12" text-anchor="end">H</text>
+  <text x="150" y="155" font-family="Arial" font-size="12" text-anchor="start">OH</text>
+
+  <!-- Plane of Symmetry -->
+  <line x1="40" y1="125" x2="160" y2="125" stroke="red" stroke-dasharray="4" stroke-width="1"/>
+  <text x="170" y="130" font-family="Arial" font-size="10" fill="red">Plane of Symmetry</text>
+</svg>

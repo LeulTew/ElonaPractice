@@ -9,7 +9,8 @@ describe('Navbar Integration', () => {
         <Navbar />
       </ThemeProvider>
     )
-    expect(screen.getByText('ElonaPractice')).toBeInTheDocument()
+    expect(screen.getByText('Elona')).toBeInTheDocument()
+    expect(screen.getByText('Practice')).toBeInTheDocument()
     expect(screen.getByText('Courses')).toBeInTheDocument()
     expect(screen.getByText('About')).toBeInTheDocument()
   })

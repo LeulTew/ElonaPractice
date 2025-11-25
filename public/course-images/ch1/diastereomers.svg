@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" width="400" height="200">
+  <text x="200" y="20" font-family="Arial" font-size="14" text-anchor="middle">Diastereomers (2,3-Dichlorobutane)</text>
+  
+  <!-- Structure A: (2R, 3R) -->
+  <g transform="translate(100, 50)">
+    <text x="0" y="0" font-family="Arial" font-size="12" text-anchor="middle">(2R, 3R)</text>
+    <line x1="0" y1="20" x2="0" y2="120" stroke="black" stroke-width="2"/>
+    <line x1="-30" y1="45" x2="30" y2="45" stroke="black" stroke-width="2"/>
+    <line x1="-30" y1="95" x2="30" y2="95" stroke="black" stroke-width="2"/>
+    
+    <text x="0" y="15" font-family="Arial" font-size="12" text-anchor="middle">CH3</text>
+    <text x="0" y="135" font-family="Arial" font-size="12" text-anchor="middle">CH3</text>
+    
+    <text x="-40" y="50" font-family="Arial" font-size="12" text-anchor="end">H</text>
+    <text x="40" y="50" font-family="Arial" font-size="12" text-anchor="start">Cl</text>
+    
+    <text x="-40" y="100" font-family="Arial" font-size="12" text-anchor="end">H</text>
+    <text x="40" y="100" font-family="Arial" font-size="12" text-anchor="start">Cl</text>
+  </g>
+
+  <!-- Structure B: (2R, 3S) Meso -->
+  <g transform="translate(300, 50)">
+    <text x="0" y="0" font-family="Arial" font-size="12" text-anchor="middle">(2R, 3S) Meso</text>
+    <line x1="0" y1="20" x2="0" y2="120" stroke="black" stroke-width="2"/>
+    <line x1="-30" y1="45" x2="30" y2="45" stroke="black" stroke-width="2"/>
+    <line x1="-30" y1="95" x2="30" y2="95" stroke="black" stroke-width="2"/>
+    
+    <text x="0" y="15" font-family="Arial" font-size="12" text-anchor="middle">CH3</text>
+    <text x="0" y="135" font-family="Arial" font-size="12" text-anchor="middle">CH3</text>
+    
+    <text x="-40" y="50" font-family="Arial" font-size="12" text-anchor="end">H</text>
+    <text x="40" y="50" font-family="Arial" font-size="12" text-anchor="start">Cl</text>
+    
+    <text x="-40" y="100" font-family="Arial" font-size="12" text-anchor="end">Cl</text>
+    <text x="40" y="100" font-family="Arial" font-size="12" text-anchor="start">H</text>
+  </g>
+</svg>

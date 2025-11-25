@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200" width="300" height="200">
+  <text x="150" y="20" font-family="Arial" font-size="14" text-anchor="middle">Alpha-D-Glucopyranose (Haworth)</text>
+  <g transform="translate(150, 100)">
+    <!-- Hexagon Ring -->
+    <polyline points="-50,-30 50,-30 80,20 50,70 -50,70 -80,20 -50,-30" stroke="black" stroke-width="2" fill="none"/>
+    
+    <!-- Oxygen in Ring (Top Right) -->
+    <circle cx="50" cy="-30" r="10" fill="white"/>
+    <text x="50" y="-25" font-family="Arial" font-size="14" text-anchor="middle">O</text>
+    
+    <!-- Vertical Bonds -->
+    <line x1="80" y1="20" x2="80" y2="50" stroke="black" stroke-width="2"/> <!-- C1 Down (Alpha) -->
+    <line x1="80" y1="20" x2="80" y2="-10" stroke="black" stroke-width="2"/> <!-- C1 Up -->
+    
+    <line x1="50" y1="70" x2="50" y2="100" stroke="black" stroke-width="2"/> <!-- C2 Down -->
+    <line x1="50" y1="70" x2="50" y2="40" stroke="black" stroke-width="2"/> <!-- C2 Up -->
+    
+    <line x1="-50" y1="70" x2="-50" y2="100" stroke="black" stroke-width="2"/> <!-- C3 Down -->
+    <line x1="-50" y1="70" x2="-50" y2="40" stroke="black" stroke-width="2"/> <!-- C3 Up -->
+    
+    <line x1="-80" y1="20" x2="-80" y2="50" stroke="black" stroke-width="2"/> <!-- C4 Down -->
+    <line x1="-80" y1="20" x2="-80" y2="-10" stroke="black" stroke-width="2"/> <!-- C4 Up -->
+    
+    <line x1="-50" y1="-30" x2="-50" y2="-60" stroke="black" stroke-width="2"/> <!-- C5 Up (CH2OH) -->
+    
+    <!-- Groups -->
+    <text x="80" y="65" font-family="Arial" font-size="12" text-anchor="middle">OH</text> <!-- Alpha OH -->
+    <text x="-50" y="-70" font-family="Arial" font-size="12" text-anchor="middle">CH2OH</text>
+  </g>
+</svg>

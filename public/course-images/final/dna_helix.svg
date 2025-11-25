@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 400" width="200" height="400">
+  <text x="100" y="20" font-family="Arial" font-size="14" text-anchor="middle">DNA Double Helix</text>
+  
+  <!-- Simplified Helix -->
+  <path d="M60,40 Q140,80 60,120 T60,200 T60,280 T60,360" stroke="blue" stroke-width="4" fill="none"/>
+  <path d="M140,40 Q60,80 140,120 T140,200 T140,280 T140,360" stroke="red" stroke-width="4" fill="none"/>
+  
+  <!-- Base Pairs -->
+  <line x1="60" y1="60" x2="140" y2="60" stroke="black" stroke-width="2"/>
+  <line x1="80" y1="80" x2="120" y2="80" stroke="black" stroke-width="2"/>
+  <line x1="60" y1="100" x2="140" y2="100" stroke="black" stroke-width="2"/>
+  
+  <line x1="60" y1="140" x2="140" y2="140" stroke="black" stroke-width="2"/>
+  <line x1="80" y1="160" x2="120" y2="160" stroke="black" stroke-width="2"/>
+  <line x1="60" y1="180" x2="140" y2="180" stroke="black" stroke-width="2"/>
+  
+  <line x1="60" y1="220" x2="140" y2="220" stroke="black" stroke-width="2"/>
+  <line x1="80" y1="240" x2="120" y2="240" stroke="black" stroke-width="2"/>
+  <line x1="60" y1="260" x2="140" y2="260" stroke="black" stroke-width="2"/>
+
+  <!-- Labels -->
+  <text x="30" y="40" font-family="Arial" font-size="12">5'</text>
+  <text x="170" y="40" font-family="Arial" font-size="12">3'</text>
+  <text x="30" y="360" font-family="Arial" font-size="12">3'</text>
+  <text x="170" y="360" font-family="Arial" font-size="12">5'</text>
+</svg>

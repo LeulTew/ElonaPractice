@@ -171,7 +171,7 @@ async function main() {
     fs.statSync(path.join(COURSES_DIR, file)).isDirectory()
   );
 
-  let sqlStatements: string[] = [];
+  const sqlStatements: string[] = [];
   
   // Start transaction
   sqlStatements.push('BEGIN;');

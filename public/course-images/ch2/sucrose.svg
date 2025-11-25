@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" width="400" height="200">
+  <text x="200" y="20" font-family="Arial" font-size="14" text-anchor="middle">Sucrose (Alpha-D-Glucopyranosyl-(1->2)-Beta-D-Fructofuranoside)</text>
+  
+  <!-- Glucose (Left) -->
+  <g transform="translate(100, 100)">
+    <polyline points="-40,-30 40,-30 60,20 40,70 -40,70 -60,20 -40,-30" stroke="black" stroke-width="2" fill="none"/>
+    <text x="40" y="-25" font-family="Arial" font-size="14" text-anchor="middle">O</text>
+    <line x1="60" y1="20" x2="100" y2="50" stroke="black" stroke-width="2"/> <!-- Glycosidic Bond -->
+  </g>
+
+  <!-- Fructose (Right) -->
+  <g transform="translate(250, 100)">
+    <polyline points="0,-30 50,0 30,50 -30,50 -50,0 0,-30" stroke="black" stroke-width="2" fill="none"/>
+    <text x="0" y="-25" font-family="Arial" font-size="14" text-anchor="middle">O</text>
+    <line x1="-50" y1="0" x2="-50" y2="50" stroke="black" stroke-width="2"/> <!-- Link -->
+  </g>
+  
+  <text x="175" y="60" font-family="Arial" font-size="12" text-anchor="middle">O</text> <!-- Glycosidic Oxygen -->
+</svg>

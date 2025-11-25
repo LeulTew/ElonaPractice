@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <text x="100" y="20" font-family="Arial" font-size="14" text-anchor="middle">Chiral Center (R/S)</text>
+  <g transform="translate(100, 100)">
+    <!-- Bonds -->
+    <line x1="0" y1="0" x2="0" y2="-50" stroke="black" stroke-width="2"/> <!-- Top -->
+    <line x1="0" y1="0" x2="43" y2="25" stroke="black" stroke-width="2"/> <!-- Right -->
+    <line x1="0" y1="0" x2="-43" y2="25" stroke="black" stroke-width="2"/> <!-- Left -->
+    <line x1="0" y1="0" x2="0" y2="50" stroke="black" stroke-width="2" stroke-dasharray="4"/> <!-- Bottom (Back) -->
+    
+    <!-- Atoms -->
+    <circle cx="0" cy="0" r="10" fill="black"/>
+    
+    <!-- Groups -->
+    <text x="0" y="-60" font-family="Arial" font-size="14" text-anchor="middle">Br (1)</text>
+    <text x="60" y="35" font-family="Arial" font-size="14" text-anchor="start">Cl (2)</text>
+    <text x="-60" y="35" font-family="Arial" font-size="14" text-anchor="end">F (3)</text>
+    <text x="0" y="70" font-family="Arial" font-size="14" text-anchor="middle">H (4)</text>
+  </g>
+</svg>

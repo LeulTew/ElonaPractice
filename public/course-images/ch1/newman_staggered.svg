@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" width="400" height="200">
+  <!-- Staggered -->
+  <g transform="translate(100, 100)">
+    <text x="0" y="-80" font-family="Arial" font-size="14" text-anchor="middle">Staggered</text>
+    <circle cx="0" cy="0" r="40" stroke="black" stroke-width="2" fill="white"/>
+    
+    <!-- Front Carbon (Y shape) -->
+    <line x1="0" y1="0" x2="0" y2="-40" stroke="black" stroke-width="2"/>
+    <line x1="0" y1="0" x2="35" y2="20" stroke="black" stroke-width="2"/>
+    <line x1="0" y1="0" x2="-35" y2="20" stroke="black" stroke-width="2"/>
+    
+    <!-- Back Carbon (Inverted Y visible parts) -->
+    <line x1="0" y1="40" x2="0" y2="60" stroke="black" stroke-width="2"/>
+    <line x1="-35" y1="-20" x2="-52" y2="-30" stroke="black" stroke-width="2"/>
+    <line x1="35" y1="-20" x2="52" y2="-30" stroke="black" stroke-width="2"/>
+  </g>
+
+  <!-- Eclipsed -->
+  <g transform="translate(300, 100)">
+    <text x="0" y="-80" font-family="Arial" font-size="14" text-anchor="middle">Eclipsed</text>
+    <circle cx="0" cy="0" r="40" stroke="black" stroke-width="2" fill="white"/>
+    
+    <!-- Front Carbon -->
+    <line x1="0" y1="0" x2="0" y2="-40" stroke="black" stroke-width="2"/>
+    <line x1="0" y1="0" x2="35" y2="20" stroke="black" stroke-width="2"/>
+    <line x1="0" y1="0" x2="-35" y2="20" stroke="black" stroke-width="2"/>
+
+    <!-- Back Carbon (Slightly offset) -->
+    <line x1="5" y1="0" x2="5" y2="-40" stroke="red" stroke-width="2" opacity="0.5"/>
+    <line x1="5" y1="0" x2="40" y2="20" stroke="red" stroke-width="2" opacity="0.5"/>
+    <line x1="5" y1="0" x2="-30" y2="20" stroke="red" stroke-width="2" opacity="0.5"/>
+  </g>
+</svg>

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 150" width="400" height="150">
+  <text x="200" y="20" font-family="Arial" font-size="14" text-anchor="middle">Cellulose (Beta-1,4-Glycosidic Bond)</text>
+  
+  <!-- Glucose Unit 1 (Up) -->
+  <g transform="translate(100, 80)">
+    <polyline points="-30,-20 30,-20 50,15 30,50 -30,50 -50,15 -30,-20" stroke="black" stroke-width="2" fill="none"/>
+    <text x="30" y="-15" font-family="Arial" font-size="14" text-anchor="middle">O</text>
+    <line x1="50" y1="15" x2="80" y2="-10" stroke="black" stroke-width="2"/> <!-- Bond Up -->
+  </g>
+
+  <!-- Glucose Unit 2 (Flipped/Down relative to bond) -->
+  <g transform="translate(230, 60)">
+    <polyline points="-30,-20 30,-20 50,15 30,50 -30,50 -50,15 -30,-20" stroke="black" stroke-width="2" fill="none"/>
+    <text x="30" y="-15" font-family="Arial" font-size="14" text-anchor="middle">O</text>
+    <line x1="-50" y1="15" x2="-80" y2="10" stroke="black" stroke-width="2"/> <!-- Bond Up -->
+  </g>
+  
+  <!-- Oxygen Bridge -->
+  <text x="165" y="5" font-family="Arial" font-size="14" text-anchor="middle">O</text>
+</svg>

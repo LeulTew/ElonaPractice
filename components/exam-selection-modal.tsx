@@ -2,9 +2,10 @@
 
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { X, Clock, BookOpen, Zap } from "lucide-react"
+import { X, Clock, BookOpen, Zap, ArrowRight } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { supabase } from "@/lib/supabase"
+import { Card } from "@/components/ui/card"
 
 interface Course {
   id: string
@@ -35,24 +36,24 @@ export function ExamSelectionModal({ course, isOpen, onClose }: ExamSelectionMod
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    async function fetchExams() {
+      setLoading(true)
+      const { data, error } = await supabase
+        .from('exams')
+        .select('*')
+        .eq('course_id', course.id)
+        .order('chapter_number', { ascending: true, nullsFirst: false })
+
+      if (!error && data) {
+        setExams(data)
+      }
+      setLoading(false)
+    }
+
     if (isOpen) {
       fetchExams()
     }
   }, [isOpen, course.id])
-
-  async function fetchExams() {
-    setLoading(true)
-    const { data, error } = await supabase
-      .from('exams')
-      .select('*')
-      .eq('course_id', course.id)
-      .order('chapter_number', { ascending: true, nullsFirst: false })
-
-    if (!error && data) {
-      setExams(data)
-    }
-    setLoading(false)
-  }
 
   function startExam(examId: string) {
     router.push(`/exam/${examId}?mode=${mode}`)
@@ -68,7 +69,7 @@ export function ExamSelectionModal({ course, isOpen, onClose }: ExamSelectionMod
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50"
+            className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50"
           />
 
           {/* Modal */}
@@ -77,96 +78,104 @@ export function ExamSelectionModal({ course, isOpen, onClose }: ExamSelectionMod
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative w-full max-w-2xl max-h-[90vh] overflow-hidden rounded-3xl bg-white dark:bg-gray-800"
+              className="relative w-full max-w-2xl max-h-[90vh] overflow-hidden rounded-3xl bg-card border border-border shadow-2xl"
             >
               {/* Header */}
-              <div className="relative bg-gradient-to-br from-indigo-600 to-purple-600 p-6">
+              <div className="relative p-6 border-b border-border">
                 <button
                   onClick={onClose}
-                  className="absolute top-4 right-4 rounded-full bg-white/20 p-2 hover:bg-white/30 transition-colors"
+                  className="absolute top-6 right-6 rounded-full p-2 hover:bg-secondary transition-colors"
                 >
-                  <X className="h-5 w-5 text-white" />
+                  <X className="h-5 w-5 text-muted-foreground" />
                 </button>
-                <h2 className="text-2xl font-bold text-white">{course.title}</h2>
-                <p className="text-white/80 mt-1">{course.code}</p>
+                <h2 className="text-2xl font-bold">{course.title}</h2>
+                <p className="text-muted-foreground mt-1 font-mono text-sm">{course.code}</p>
               </div>
 
               {/* Mode Toggle */}
-              <div className="p-6 border-b dark:border-gray-700">
-                <div className="flex gap-2 p-1 bg-gray-100 dark:bg-gray-700 rounded-xl">
+              <div className="p-6 border-b border-border bg-secondary/20">
+                <div className="flex gap-2 p-1 bg-secondary rounded-xl">
                   <button
                     onClick={() => setMode('PRACTICE')}
-                    className={`flex-1 py-2 px-4 rounded-lg font-medium transition-all ${
+                    className={`flex-1 py-2 px-4 rounded-lg font-medium transition-all flex items-center justify-center gap-2 ${
                       mode === 'PRACTICE'
-                        ? 'bg-white dark:bg-gray-600 text-indigo-600 dark:text-indigo-400 shadow-sm'
-                        : 'text-gray-600 dark:text-gray-400'
+                        ? 'bg-background text-primary shadow-sm'
+                        : 'text-muted-foreground hover:text-foreground'
                     }`}
                   >
-                    <Zap className="inline h-4 w-4 mr-2" />
+                    <Zap className="h-4 w-4" />
                     Practice Mode
                   </button>
                   <button
                     onClick={() => setMode('EXAM')}
-                    className={`flex-1 py-2 px-4 rounded-lg font-medium transition-all ${
+                    className={`flex-1 py-2 px-4 rounded-lg font-medium transition-all flex items-center justify-center gap-2 ${
                       mode === 'EXAM'
-                        ? 'bg-white dark:bg-gray-600 text-indigo-600 dark:text-indigo-400 shadow-sm'
-                        : 'text-gray-600 dark:text-gray-400'
+                        ? 'bg-background text-primary shadow-sm'
+                        : 'text-muted-foreground hover:text-foreground'
                     }`}
                   >
-                    <Clock className="inline h-4 w-4 mr-2" />
+                    <Clock className="h-4 w-4" />
                     Exam Mode
                   </button>
                 </div>
-                <p className="text-sm text-gray-600 dark:text-gray-400 mt-3">
+                <p className="text-sm text-muted-foreground mt-4 text-center">
                   {mode === 'PRACTICE' 
-                    ? '✨ Practice with hints and instant feedback'
-                    : '⏱️ Timed exam with grading at the end'}
+                    ? '✨ Practice with hints, instant feedback, and unlimited time'
+                    : '⏱️ Timed exam simulation with final grading and analytics'}
                 </p>
               </div>
 
               {/* Exam List */}
-              <div className="p-6 overflow-y-auto max-h-96">
+              <div className="p-6 overflow-y-auto max-h-[400px]">
                 {loading ? (
-                  <div className="text-center py-8 text-gray-500">Loading exams...</div>
+                  <div className="flex flex-col items-center justify-center py-12 gap-4">
+                    <div className="h-8 w-8 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+                    <p className="text-muted-foreground">Loading exams...</p>
+                  </div>
                 ) : exams.length === 0 ? (
-                  <div className="text-center py-8 text-gray-500">No exams available yet</div>
+                  <div className="text-center py-12 text-muted-foreground">
+                    No exams available for this course yet.
+                  </div>
                 ) : (
                   <div className="space-y-3">
                     {exams.map((exam, index) => (
-                      <motion.button
+                      <motion.div
                         key={exam.id}
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: index * 0.05 }}
-                        onClick={() => startExam(exam.id)}
-                        className="w-full text-left p-4 rounded-xl bg-gray-50 dark:bg-gray-700/50 hover:bg-gradient-to-r hover:from-indigo-50 hover:to-purple-50 dark:hover:from-indigo-900/20 dark:hover:to-purple-900/20 transition-all group"
                       >
-                        <div className="flex items-start justify-between">
-                          <div className="flex-1">
-                            <h3 className="font-semibold group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
-                              {exam.title}
-                            </h3>
-                            {exam.description && (
-                              <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                                {exam.description}
-                              </p>
-                            )}
-                            <div className="flex items-center gap-4 mt-2 text-xs text-gray-500">
-                              <span className="flex items-center gap-1">
-                                <Clock className="h-3 w-3" />
-                                {exam.duration_minutes} min
-                              </span>
-                              <span className="flex items-center gap-1">
-                                <BookOpen className="h-3 w-3" />
-                                Pass: {exam.passing_score}%
-                              </span>
+                        <Card 
+                          onClick={() => startExam(exam.id)}
+                          className="group cursor-pointer hover:border-primary/50 transition-all hover:shadow-md"
+                        >
+                          <div className="p-4 flex items-center justify-between">
+                            <div className="flex-1">
+                              <h3 className="font-semibold group-hover:text-primary transition-colors">
+                                {exam.title}
+                              </h3>
+                              {exam.description && (
+                                <p className="text-sm text-muted-foreground mt-1 line-clamp-1">
+                                  {exam.description}
+                                </p>
+                              )}
+                              <div className="flex items-center gap-4 mt-3 text-xs text-muted-foreground font-medium">
+                                <span className="flex items-center gap-1 bg-secondary px-2 py-1 rounded-md">
+                                  <Clock className="h-3 w-3" />
+                                  {exam.duration_minutes} min
+                                </span>
+                                <span className="flex items-center gap-1 bg-secondary px-2 py-1 rounded-md">
+                                  <BookOpen className="h-3 w-3" />
+                                  Pass: {exam.passing_score}%
+                                </span>
+                              </div>
+                            </div>
+                            <div className="ml-4 h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center text-primary opacity-0 group-hover:opacity-100 transition-all group-hover:translate-x-1">
+                              <ArrowRight className="h-4 w-4" />
                             </div>
                           </div>
-                          <div className="ml-4 text-indigo-600 dark:text-indigo-400 opacity-0 group-hover:opacity-100 transition-opacity">
-                            →
-                          </div>
-                        </div>
-                      </motion.button>
+                        </Card>
+                      </motion.div>
                     ))}
                   </div>
                 )}

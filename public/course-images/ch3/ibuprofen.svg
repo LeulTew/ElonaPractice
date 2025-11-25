@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" width="400" height="200">
+  <text x="200" y="20" font-family="Arial" font-size="14" text-anchor="middle">Ibuprofen Enantiomers</text>
+  
+  <!-- (S)-Ibuprofen -->
+  <g transform="translate(100, 100)">
+    <text x="0" y="-60" font-family="Arial" font-size="14" text-anchor="middle">(S)-Ibuprofen</text>
+    <!-- Benzene Ring -->
+    <polygon points="-20,-30 20,-30 40,0 20,30 -20,30 -40,0" stroke="black" stroke-width="2" fill="none"/>
+    <circle cx="0" cy="0" r="15" stroke="black" stroke-width="1" fill="none"/>
+    
+    <!-- Isobutyl Group -->
+    <line x1="-40" y1="0" x2="-70" y2="0" stroke="black" stroke-width="2"/>
+    <line x1="-70" y1="0" x2="-90" y2="-20" stroke="black" stroke-width="2"/>
+    <line x1="-70" y1="0" x2="-90" y2="20" stroke="black" stroke-width="2"/>
+    
+    <!-- Propionic Acid Group -->
+    <line x1="40" y1="0" x2="70" y2="0" stroke="black" stroke-width="2"/>
+    <line x1="70" y1="0" x2="90" y2="-30" stroke="black" stroke-width="2"/> <!-- CH3 (Wedge) -->
+    <line x1="70" y1="0" x2="90" y2="30" stroke="black" stroke-width="2"/> <!-- COOH -->
+    
+    <text x="0" y="60" font-family="Arial" font-size="12" fill="green">Active (Anti-inflammatory)</text>
+  </g>
+
+  <!-- (R)-Ibuprofen -->
+  <g transform="translate(300, 100)">
+    <text x="0" y="-60" font-family="Arial" font-size="14" text-anchor="middle">(R)-Ibuprofen</text>
+    <!-- Benzene Ring -->
+    <polygon points="-20,-30 20,-30 40,0 20,30 -20,30 -40,0" stroke="black" stroke-width="2" fill="none"/>
+    <circle cx="0" cy="0" r="15" stroke="black" stroke-width="1" fill="none"/>
+    
+    <!-- Isobutyl Group -->
+    <line x1="-40" y1="0" x2="-70" y2="0" stroke="black" stroke-width="2"/>
+    <line x1="-70" y1="0" x2="-90" y2="-20" stroke="black" stroke-width="2"/>
+    <line x1="-70" y1="0" x2="-90" y2="20" stroke="black" stroke-width="2"/>
+    
+    <!-- Propionic Acid Group -->
+    <line x1="40" y1="0" x2="70" y2="0" stroke="black" stroke-width="2"/>
+    <line x1="70" y1="0" x2="90" y2="-30" stroke="black" stroke-width="2" stroke-dasharray="4"/> <!-- CH3 (Dash) -->
+    <line x1="70" y1="0" x2="90" y2="30" stroke="black" stroke-width="2"/> <!-- COOH -->
+    
+    <text x="0" y="60" font-family="Arial" font-size="12" fill="gray">Inactive (In vitro)</text>
+  </g>
+</svg>

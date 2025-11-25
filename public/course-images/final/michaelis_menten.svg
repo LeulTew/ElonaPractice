@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <text x="200" y="20" font-family="Arial" font-size="14" text-anchor="middle">Michaelis-Menten Kinetics</text>
+  
+  <!-- Axes -->
+  <line x1="50" y1="250" x2="350" y2="250" stroke="black" stroke-width="2"/> <!-- X-axis [S] -->
+  <line x1="50" y1="250" x2="50" y2="50" stroke="black" stroke-width="2"/> <!-- Y-axis V -->
+  
+  <!-- Curve -->
+  <path d="M50,250 Q100,50 350,60" stroke="blue" stroke-width="3" fill="none"/>
+  
+  <!-- Vmax -->
+  <line x1="50" y1="55" x2="350" y2="55" stroke="gray" stroke-dasharray="4"/>
+  <text x="20" y="55" font-family="Arial" font-size="12">Vmax</text>
+  
+  <!-- 1/2 Vmax -->
+  <line x1="50" y1="152" x2="135" y2="152" stroke="gray" stroke-dasharray="4"/>
+  <text x="10" y="155" font-family="Arial" font-size="12">1/2 Vmax</text>
+  
+  <!-- Km -->
+  <line x1="135" y1="152" x2="135" y2="250" stroke="gray" stroke-dasharray="4"/>
+  <text x="135" y="265" font-family="Arial" font-size="12">Km</text>
+  
+  <!-- Labels -->
+  <text x="360" y="255" font-family="Arial" font-size="12">[S]</text>
+  <text x="40" y="40" font-family="Arial" font-size="12">V</text>
+</svg>

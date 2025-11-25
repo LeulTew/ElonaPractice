@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 150" width="300" height="150">
+  <text x="150" y="20" font-family="Arial" font-size="14" text-anchor="middle">Cyclohexane Chair Conformation</text>
+  <g transform="translate(150, 80)">
+    <!-- Chair Bonds -->
+    <polyline points="-60,-20 -20,20 60,20 20,-20 -20,-20 -60,20" stroke="black" stroke-width="2" fill="none"/>
+    <line x1="-60" y1="-20" x2="-20" y2="20" stroke="black" stroke-width="2"/>
+    <line x1="-20" y1="20" x2="60" y2="20" stroke="black" stroke-width="2"/>
+    <line x1="60" y1="20" x2="20" y2="-20" stroke="black" stroke-width="2"/>
+    <line x1="20" y1="-20" x2="-60" y2="-20" stroke="black" stroke-width="2"/>
+    
+    <!-- Axial/Equatorial Bonds (Simplified) -->
+    <line x1="-60" y1="-20" x2="-60" y2="-50" stroke="red" stroke-width="2"/> <!-- Axial Up -->
+    <line x1="-20" y1="20" x2="-20" y2="50" stroke="red" stroke-width="2"/> <!-- Axial Down -->
+    <line x1="20" y1="-20" x2="20" y2="-50" stroke="red" stroke-width="2"/> <!-- Axial Up -->
+    <line x1="60" y1="20" x2="60" y2="50" stroke="red" stroke-width="2"/> <!-- Axial Down -->
+    
+    <text x="-70" y="-55" font-family="Arial" font-size="12" fill="red">Axial</text>
+    <text x="70" y="55" font-family="Arial" font-size="12" fill="red">Axial</text>
+  </g>
+</svg>

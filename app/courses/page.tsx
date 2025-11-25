@@ -2,9 +2,10 @@
 
 import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
-import { FlaskConical } from "lucide-react"
+import { FlaskConical, ArrowRight } from "lucide-react"
 import { ExamSelectionModal } from "@/components/exam-selection-modal"
 import { supabase } from "@/lib/supabase"
+import { Card, CardContent } from "@/components/ui/card"
 
 interface Course {
   id: string
@@ -20,48 +21,48 @@ export default function CoursesPage() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    async function fetchCourses() {
+      const { data, error } = await supabase
+        .from('courses')
+        .select('*')
+      
+      if (data) {
+        setCourses(data)
+      }
+      if (error) {
+        console.error('Error fetching courses:', error)
+      }
+      setLoading(false)
+    }
+
     fetchCourses()
   }, [])
 
-  async function fetchCourses() {
-    const { data, error } = await supabase
-      .from('courses')
-      .select('*')
-    
-    if (data) {
-      setCourses(data)
-    }
-    if (error) {
-      console.error('Error fetching courses:', error)
-    }
-    setLoading(false)
-  }
-
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="text-center">
-          <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-indigo-600 border-r-transparent"></div>
-          <p className="mt-4 text-gray-600">Loading courses...</p>
+      <div className="flex min-h-screen items-center justify-center bg-background">
+        <div className="flex flex-col items-center gap-4">
+          <div className="h-12 w-12 animate-spin rounded-full border-4 border-primary border-t-transparent" />
+          <p className="text-muted-foreground animate-pulse">Loading courses...</p>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-purple-900/20 dark:to-indigo-900/20">
-      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-background p-8">
+      <div className="mx-auto max-w-7xl space-y-12">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mb-8"
+          className="flex flex-col gap-2"
         >
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-            Your Courses
+          <h1 className="text-4xl font-bold tracking-tight text-foreground">
+            Available Courses
           </h1>
-          <p className="mt-2 text-lg text-gray-600 dark:text-gray-300">
-            Select a course to start practicing
+          <p className="text-xl text-muted-foreground">
+            Select a course to start your mastery journey.
           </p>
         </motion.div>
 
@@ -73,46 +74,31 @@ export default function CoursesPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
-              whileHover={{ scale: 1.02, y: -4 }}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
               onClick={() => setSelectedCourse(course)}
-              className="group relative cursor-pointer overflow-hidden rounded-2xl bg-white dark:bg-gray-800 p-6"
             >
-              {/* Gradient overlay */}
-              <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-              
-              <div className="relative">
-                {/* Icon */}
-                <div className="mb-4 inline-flex rounded-xl bg-gradient-to-br from-indigo-500 to-purple-500 p-3">
-                  <FlaskConical className="h-6 w-6 text-white" />
-                </div>
+              <Card className="group relative cursor-pointer overflow-hidden h-full transition-all hover:shadow-lg hover:border-primary/50">
+                <CardContent className="p-8 flex flex-col h-full">
+                  <div className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                    <FlaskConical className="h-7 w-7" />
+                  </div>
 
-                {/* Content */}
-                <h3 className="text-xl font-bold mb-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
-                  {course.title}
-                </h3>
-                <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">
-                  {course.code}
-                </p>
-                <p className="text-sm text-gray-600 dark:text-gray-300">
-                  {course.description}
-                </p>
+                  <h3 className="text-2xl font-bold mb-2 group-hover:text-primary transition-colors">
+                    {course.title}
+                  </h3>
+                  <p className="text-sm font-mono text-muted-foreground mb-4">
+                    {course.code}
+                  </p>
+                  <p className="text-muted-foreground mb-8 flex-grow">
+                    {course.description}
+                  </p>
 
-                {/* Hover indicator */}
-                <motion.div
-                  className="mt-4 flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400"
-                  initial={{ x: 0 }}
-                  whileHover={{ x: 4 }}
-                >
-                  Start practicing →
-                </motion.div>
-              </div>
-
-              {/* Decorative element */}
-              <motion.div
-                className="absolute -bottom-8 -right-8 h-32 w-32 rounded-full bg-gradient-to-br from-indigo-500/20 to-purple-500/20"
-                animate={{ scale: [1, 1.1, 1] }}
-                transition={{ duration: 4, repeat: Infinity }}
-              />
+                  <div className="flex items-center gap-2 text-primary font-semibold group-hover:translate-x-1 transition-transform">
+                    Start Practicing <ArrowRight className="w-5 h-5" />
+                  </div>
+                </CardContent>
+              </Card>
             </motion.div>
           ))}
         </div>
