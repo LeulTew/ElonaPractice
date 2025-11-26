@@ -31,7 +31,7 @@ export function MobileNavWrapper() {
       id: 'profile', 
       icon: <User />, 
       label: 'Profile', 
-      onClick: () => {} // Placeholder
+      onClick: () => router.push('/profile')
     },
   ]
 
@@ -39,6 +39,7 @@ export function MobileNavWrapper() {
     if (pathname === '/dashboard') return 0
     if (pathname === '/courses') return 1
     if (pathname === '/about') return 2
+    if (pathname === '/profile') return 3
     return -1
   })()
 

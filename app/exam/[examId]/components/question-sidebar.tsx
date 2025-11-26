@@ -20,6 +20,7 @@ interface QuestionSidebarProps {
   markedQuestions: string[]
   onSelectQuestion: (index: number) => void
   isOpen: boolean
+  onClose?: () => void
 }
 
 export function QuestionSidebar({
@@ -28,7 +29,8 @@ export function QuestionSidebar({
   answers,
   markedQuestions,
   onSelectQuestion,
-  isOpen
+  isOpen,
+  onClose
 }: QuestionSidebarProps) {
   // Group questions by type
   const groupedQuestions = questions.reduce((acc, question, index) => {
@@ -53,7 +55,20 @@ export function QuestionSidebar({
       className="fixed md:relative z-40 h-[calc(100vh-4rem)] border-r border-border bg-card overflow-hidden flex flex-col"
     >
       <div className="p-4 border-b border-border">
-        <h3 className="font-semibold text-lg">Question Navigator</h3>
+        <div className="flex items-center justify-between">
+          <h3 className="font-semibold text-lg">Question Navigator</h3>
+          {onClose && (
+            <button
+              onClick={onClose}
+              className="md:hidden p-1 hover:bg-muted rounded-full transition-colors"
+              aria-label="Close sidebar"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          )}
+        </div>
         <div className="flex gap-4 mt-4 text-xs text-muted-foreground">
           <div className="flex items-center gap-1">
             <div className="w-2 h-2 rounded-full bg-primary" />

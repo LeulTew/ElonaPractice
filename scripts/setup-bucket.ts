@@ -25,7 +25,7 @@ async function setupBucket() {
     await supabase.storage.updateBucket('course-images', { public: true });
   } else {
     console.log('Bucket course-images does not exist. Creating...');
-    const { data, error: createError } = await supabase.storage.createBucket('course-images', {
+    const { error: createError } = await supabase.storage.createBucket('course-images', {
       public: true,
       fileSizeLimit: 10485760, // 10MB
       allowedMimeTypes: ['image/png', 'image/jpeg', 'image/svg+xml']

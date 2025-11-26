@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { Bot, Loader2, Copy, ExternalLink, Sparkles } from "lucide-react"
+import { Bot, Loader2, Copy, ExternalLink, Sparkles, Check } from "lucide-react"
 import { Modal } from "@/components/ui/modal"
 
 interface AIHelpButtonProps {
@@ -25,6 +25,7 @@ export function AIHelpButton({
   const [isOpen, setIsOpen] = useState(false)
   const [loading, setLoading] = useState(false)
   const [aiResponse, setAiResponse] = useState<string | null>(null)
+  const [copySuccess, setCopySuccess] = useState(false)
 
   const generatePrompt = () => {
     let prompt = `Can you help me with this chemistry question?\n\nQuestion: ${questionText}`
@@ -32,10 +33,12 @@ export function AIHelpButton({
       prompt += `\nOptions: ${options.join(', ')}`
     }
     if (imageUrl) {
-      prompt += `\n[Image: ${imageUrl}]`
+      // Note: Image URL included for reference
+      prompt += `\n\n[Note: This question includes a diagram/image. Please visit the original question to view it, or I can describe it if needed.]`
+      prompt += `\nImage URL: ${imageUrl}`
     }
     if (userAnswer) {
-      prompt += `\nMy Answer: ${JSON.stringify(userAnswer)}`
+      prompt += `\n\nMy Answer: ${JSON.stringify(userAnswer)}`
     }
     return prompt
   }
@@ -72,19 +75,40 @@ export function AIHelpButton({
   }
 
   const copyPrompt = async () => {
-    await navigator.clipboard.writeText(generatePrompt())
+    try {
+      const prompt = generatePrompt()
+      await navigator.clipboard.writeText(prompt)
+      setCopySuccess(true)
+      setTimeout(() => setCopySuccess(false), 2000)
+    } catch (err) {
+      console.error('Failed to copy:', err)
+      alert('Failed to copy to clipboard. Please try again.')
+    }
   }
 
   const openExternalAI = async (url: string, useQueryParam = false) => {
-    const prompt = generatePrompt()
-    await navigator.clipboard.writeText(prompt)
-    
-    let finalUrl = url
-    if (useQueryParam) {
-      finalUrl = `${url}?q=${encodeURIComponent(prompt)}`
+    try {
+      const prompt = generatePrompt()
+      
+      // Copy to clipboard first
+      try {
+        await navigator.clipboard.writeText(prompt)
+        setCopySuccess(true)
+        setTimeout(() => setCopySuccess(false), 2000)
+      } catch (clipErr) {
+        console.warn('Clipboard copy failed:', clipErr)
+      }
+      
+      // Then open URL
+      let finalUrl = url
+      if (useQueryParam) {
+        finalUrl = `${url}?q=${encodeURIComponent(prompt)}`
+      }
+      
+      window.open(finalUrl, "_blank")
+    } catch (err) {
+      console.error('Failed to open external AI:', err)
     }
-    
-    window.open(finalUrl, "_blank")
   }
 
   return (
@@ -132,7 +156,7 @@ export function AIHelpButton({
               <Button 
                 variant="outline" 
                 className="justify-start gap-2" 
-                onClick={() => openExternalAI("https://x.com/i/grok")}
+                onClick={() => openExternalAI("https://grok.com/")}
               >
                 <ExternalLink className="w-4 h-4" />
                 Grok
@@ -150,8 +174,8 @@ export function AIHelpButton({
                 className="justify-start gap-2" 
                 onClick={copyPrompt}
               >
-                <Copy className="w-4 h-4" />
-                Copy Prompt Only
+                {copySuccess ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
+                {copySuccess ? 'Copied!' : 'Copy Prompt Only'}
               </Button>
             </div>
           </div>

@@ -23,7 +23,6 @@ async function checkMetadata() {
   if (questions && questions.length > 0) {
     console.log(`Found ${questions.length} questions with images:`);
     questions.forEach(q => {
-      const url = q.metadata.image_url;
       console.log(`[${q.exam_id}] Q${q.order_index + 1} (${q.question_type}): ${q.metadata?.image_url ? q.metadata.image_url.split('/').pop() : 'No Image'}`);
     if (q.question_type === 'CASE_STUDY' || q.question_type === 'IDENTIFY_ERROR') {
       console.log(`   Answer: ${q.correct_answer ? 'Present' : 'MISSING'}`);

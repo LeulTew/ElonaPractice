@@ -80,7 +80,6 @@ export default function ExamPage() {
   const [showExitWarning, setShowExitWarning] = useState(false)
   const [showAIResponse, setShowAIResponse] = useState(false)
   const [aiResponse, setAiResponse] = useState('')
-  const [isAiLoading, setIsAiLoading] = useState(false)
   const [copied, setCopied] = useState(false)
 
   // Navigation Guard
@@ -290,6 +289,14 @@ export default function ExamPage() {
 
   return (
     <div className="flex h-screen w-full bg-background overflow-hidden">
+      {/* Mobile Backdrop */}
+      {sidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-30 md:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+      
       {/* Sidebar */}
       <QuestionSidebar
         questions={questions}
@@ -298,6 +305,7 @@ export default function ExamPage() {
         markedQuestions={markedQuestions}
         onSelectQuestion={setCurrentQuestionIndex}
         isOpen={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
       />
 
       {/* Main Content Wrapper */}
@@ -536,22 +544,35 @@ export default function ExamPage() {
 
 
                     {/* Short Answer / Case Study / Identify Error */}
-                    {['SHORT_ANSWER', 'CASE_STUDY', 'IDENTIFY_ERROR'].includes(currentQuestion.question_type) && (
-                      <div className="relative">
+                    {(() => {
+                      const type = currentQuestion.question_type?.trim().toUpperCase()
+                      // Explicitly check for text-based types OR fallback if not handled by others
+                      const isTextQuestion = ['SHORT_ANSWER', 'CASE_STUDY', 'IDENTIFY_ERROR'].includes(type) || 
+                                           !['MCQ', 'MULTI_SELECT', 'TRUE_FALSE', 'MATCHING', 'ORDER_SEQUENCE'].includes(type)
+                      
+                      if (isTextQuestion) {
+                        console.log('Rendering Text Input for type:', type)
+                      }
+                      return isTextQuestion
+                    })() && (
+                      <div className="relative space-y-3">
+                        <label className="block text-sm font-medium text-foreground">
+                          Your Answer:
+                        </label>
                         <Textarea
-                          placeholder="Type your explanation here..."
+                          placeholder="Type your detailed explanation or answer here..."
                           value={answers[currentQuestion.id] || ''}
                           onChange={(e) => handleAnswer(e.target.value)}
                           disabled={showAnswer}
                           className={cn(
-                            "min-h-[120px]",
-                            showAnswer && "border-primary"
+                            "min-h-[200px] text-base",
+                            showAnswer && "border-primary bg-muted/50"
                           )}
                         />
                         {showAnswer && (
-                          <div className="mt-4 p-4 bg-secondary/50 rounded-lg border border-border">
-                            <p className="text-sm font-medium mb-1 text-primary">Sample Answer / Key Points:</p>
-                            <p className="text-sm text-muted-foreground">{currentQuestion.correct_answer || "No answer key available."}</p>
+                          <div className="mt-4 p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border-2 border-green-500/50">
+                            <p className="text-sm font-bold mb-2 text-green-900 dark:text-green-100">Sample Answer / Key Points:</p>
+                            <p className="text-sm text-green-800 dark:text-green-200 whitespace-pre-wrap">{currentQuestion.correct_answer || "No answer key available."}</p>
                           </div>
                         )}
                       </div>
@@ -625,7 +646,7 @@ export default function ExamPage() {
         </main>
 
         {/* Sticky Bottom Navigation - Fixed Height */}
-        <footer className="h-20 shrink-0 border-t border-border bg-card flex items-center justify-between px-4 md:px-12 z-20 w-full">
+        <footer className="h-20 shrink-0 border-t border-border bg-card flex items-center justify-between px-4 md:px-12 z-20 w-full mb-16 md:mb-0">
           <Button
             variant="outline"
             onClick={() => setCurrentQuestionIndex(prev => Math.max(0, prev - 1))}
@@ -745,7 +766,7 @@ export default function ExamPage() {
                       </Button>
                     </div>
 
-                    {isAiLoading ? (
+                    {false ? (
                       <div className="flex flex-col items-center py-8 gap-4">
                         <div className="h-8 w-8 animate-spin rounded-full border-4 border-indigo-500 border-t-transparent" />
                         <p className="text-sm text-muted-foreground animate-pulse">Analyzing question...</p>

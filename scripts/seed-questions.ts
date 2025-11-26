@@ -65,7 +65,7 @@ async function seedQuestions() {
         ...((q as any).metadata || {}),
         image_url: q.image || null,
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        hint: (q as any).hint || (q.explanation ? `Hint: ${q.explanation.split('.')[0]}.` : "Review the key concepts related to this topic."),
+        hint: (q as any).hint || generateSubtleHint(q.content, q.type),
         original_type: isOrderSequence ? 'ORDER_SEQUENCE' : undefined
       };
       
@@ -98,6 +98,31 @@ async function seedQuestions() {
   }
 
   console.log('\n✅ Question seeding complete!');
+}
+
+function generateSubtleHint(content: string, type: string): string {
+  const lowerContent = content.toLowerCase();
+  
+  if (lowerContent.includes('chiral') || lowerContent.includes('enantiomer') || lowerContent.includes('stereocenter')) {
+    return "Consider the spatial arrangement of atoms and symmetry.";
+  }
+  if (lowerContent.includes('mechanism') || lowerContent.includes('reaction')) {
+    return "Focus on the movement of electrons and the stability of intermediates.";
+  }
+  if (lowerContent.includes('acid') || lowerContent.includes('base') || lowerContent.includes('pka')) {
+    return "Recall the definitions of acids/bases and factors affecting their strength.";
+  }
+  if (lowerContent.includes('nmr') || lowerContent.includes('spectroscopy') || lowerContent.includes('ir')) {
+    return "Think about the specific signals or peaks associated with functional groups.";
+  }
+  if (lowerContent.includes('isomer')) {
+    return "Review the different types of isomerism (structural, geometric, optical).";
+  }
+  if (type === 'CALCULATION' || type === 'CASE_STUDY') {
+    return "Break down the problem into smaller steps and identify the key variables.";
+  }
+  
+  return "Review the key concepts and definitions related to this topic.";
 }
 
 seedQuestions().catch(console.error);
