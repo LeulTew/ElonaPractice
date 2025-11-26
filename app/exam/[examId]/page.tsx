@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, useEffect, useCallback } from "react"
+import React, { useState, useEffect, useCallback, Suspense } from "react"
 import { useParams, useRouter, useSearchParams } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
 import { 
@@ -57,6 +57,14 @@ interface Exam {
 }
 
 export default function ExamPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center bg-background"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" /></div>}>
+      <ExamContent />
+    </Suspense>
+  )
+}
+
+function ExamContent() {
   const params = useParams()
   const searchParams = useSearchParams()
   const router = useRouter()
@@ -236,21 +244,45 @@ export default function ExamPage() {
     })
 
     // Save attempt
-    const { data: attempt } = await supabase
-      .from('exam_attempts')
-      .insert({
-        exam_id: examId,
-        mode,
-        score,
-        total_points: totalPoints,
-        status: 'COMPLETED',
-        time_spent_seconds: ((examData?.duration_minutes || 60) * 60) - timeLeft
-      })
-      .select()
-      .single()
+    try {
+      // Try to save with answers first
+      const { data: attempt, error } = await supabase
+        .from('exam_attempts')
+        .insert({
+          exam_id: examId,
+          mode,
+          score,
+          total_points: totalPoints,
+          status: 'COMPLETED',
+          time_spent_seconds: ((examData?.duration_minutes || 60) * 60) - timeLeft,
+          answers: answers // Save user answers
+        })
+        .select()
+        .single()
 
-    if (attempt) {
-      router.push(`/exam/${examId}/results?attemptId=${attempt.id}`)
+      if (error) throw error
+      if (attempt) {
+        router.push(`/exam/${examId}/results?attemptId=${attempt.id}`)
+      }
+    } catch (err) {
+      console.warn('Failed to save with answers, trying without...', err)
+      // Fallback: Save without answers (if column missing)
+      const { data: attempt } = await supabase
+        .from('exam_attempts')
+        .insert({
+          exam_id: examId,
+          mode,
+          score,
+          total_points: totalPoints,
+          status: 'COMPLETED',
+          time_spent_seconds: ((examData?.duration_minutes || 60) * 60) - timeLeft
+        })
+        .select()
+        .single()
+
+      if (attempt) {
+        router.push(`/exam/${examId}/results?attemptId=${attempt.id}`)
+      }
     }
   }, [questions, answers, examId, mode, examData, timeLeft, router])
 
