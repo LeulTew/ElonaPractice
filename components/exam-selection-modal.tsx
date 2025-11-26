@@ -104,7 +104,7 @@ export function ExamSelectionModal({ course, isOpen, onClose }: ExamSelectionMod
                     }`}
                   >
                     <Zap className="h-4 w-4" />
-                    Practice Mode
+                    <span className="text-[13px] sm:text-sm">Practice Mode</span>
                   </button>
                   <button
                     onClick={() => setMode('EXAM')}
@@ -115,7 +115,7 @@ export function ExamSelectionModal({ course, isOpen, onClose }: ExamSelectionMod
                     }`}
                   >
                     <Clock className="h-4 w-4" />
-                    Exam Mode
+                    <span className="text-[13px] sm:text-sm">Exam Mode</span>
                   </button>
                 </div>
                 <p className="text-sm text-muted-foreground mt-4 text-center flex items-center justify-center gap-2">

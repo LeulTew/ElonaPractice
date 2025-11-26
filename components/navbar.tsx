@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { usePathname, useSearchParams } from "next/navigation"
+import { usePathname } from "next/navigation"
 import { LayoutDashboard, BookOpen, Info, User } from "lucide-react"
 import { ModeToggle } from "./mode-toggle"
 
@@ -14,11 +14,9 @@ const navItems = [
 
 export function Navbar() {
   const pathname = usePathname()
-  const searchParams = useSearchParams()
-  const mode = searchParams.get('mode')
 
   // Hide Navbar in Exam Mode to prevent accidental exit
-  if (pathname?.startsWith('/exam/') && mode === 'EXAM') {
+  if (pathname?.startsWith('/exam/')) {
     return null
   }
 

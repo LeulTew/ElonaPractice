@@ -21,6 +21,7 @@ interface QuestionSidebarProps {
   onSelectQuestion: (index: number) => void
   isOpen: boolean
   onClose?: () => void
+  mobileOffset?: boolean
 }
 
 export function QuestionSidebar({
@@ -30,7 +31,8 @@ export function QuestionSidebar({
   markedQuestions,
   onSelectQuestion,
   isOpen,
-  onClose
+  onClose,
+  mobileOffset = false
 }: QuestionSidebarProps) {
   // Group questions by type
   const groupedQuestions = questions.reduce((acc, question, index) => {
@@ -52,7 +54,10 @@ export function QuestionSidebar({
         width: isOpen ? 320 : 0,
         opacity: isOpen ? 1 : 0
       }}
-      className="fixed md:relative z-40 h-[calc(100vh-4rem)] border-r border-border bg-card overflow-hidden flex flex-col"
+      className={cn(
+        "fixed md:relative z-40 border-r border-border bg-card overflow-hidden flex flex-col",
+        mobileOffset ? "h-screen" : "h-[calc(100vh-4rem)]"
+      )}
     >
       <div className="p-4 border-b border-border">
         <div className="flex items-center justify-between">
@@ -71,11 +76,11 @@ export function QuestionSidebar({
         </div>
         <div className="flex gap-4 mt-4 text-xs text-muted-foreground">
           <div className="flex items-center gap-1">
-            <div className="w-2 h-2 rounded-full bg-primary" />
+            <div className="w-2 h-2 rounded-full bg-emerald-500" />
             <span>Answered</span>
           </div>
           <div className="flex items-center gap-1">
-            <div className="w-2 h-2 rounded-full bg-yellow-500" />
+            <div className="w-2 h-2 rounded-full bg-amber-400" />
             <span>Marked</span>
           </div>
           <div className="flex items-center gap-1">
@@ -85,7 +90,7 @@ export function QuestionSidebar({
         </div>
       </div>
 
-      <ScrollArea className="flex-1">
+      <ScrollArea className={cn("flex-1", mobileOffset ? "pb-28 md:pb-0" : "")}>
         <div className="p-4 space-y-6">
           {Object.entries(groupedQuestions).map(([category, categoryQuestions]) => (
             <div key={category}>
@@ -108,9 +113,9 @@ export function QuestionSidebar({
                           ? "ring-2 ring-primary ring-offset-2 ring-offset-background z-10" 
                           : "",
                         isMarked
-                          ? "bg-yellow-500/10 text-yellow-600 dark:text-yellow-400 border border-yellow-500/50"
+                          ? "bg-amber-200 text-amber-900 border border-amber-400 dark:bg-amber-500/20 dark:text-amber-100"
                           : isAnswered
-                            ? "bg-primary text-primary-foreground"
+                            ? "bg-emerald-600 text-white border border-emerald-500"
                             : "bg-secondary text-muted-foreground hover:bg-secondary/80"
                       )}
                     >

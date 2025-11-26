@@ -87,7 +87,7 @@ function ResultsContent() {
         className="max-w-2xl w-full space-y-8"
       >
         <div className="text-center space-y-2">
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">
+          <h1 className="text-4xl font-bold bg-linear-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">
             Exam Completed!
           </h1>
           <p className="text-muted-foreground">Here is how you performed</p>

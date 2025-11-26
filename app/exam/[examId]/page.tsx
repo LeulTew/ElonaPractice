@@ -33,6 +33,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { QuestionSidebar } from "./components/question-sidebar"
 import { cn } from "@/lib/utils"
 import Image from "next/image"
+import { ModeToggle } from "@/components/mode-toggle"
 
 interface Question {
   id: string
@@ -305,15 +306,17 @@ function ExamContent() {
     <>
       <Button
         variant="outline"
+        size="sm"
         onClick={() => setCurrentQuestionIndex(prev => Math.max(0, prev - 1))}
         disabled={currentQuestionIndex === 0}
-        className="gap-2"
+        className="gap-2 rounded-xl h-9 md:h-10 px-4 md:px-6 text-sm md:text-base"
       >
         <ChevronLeft className="h-4 w-4" />
         Previous
       </Button>
 
       <Button
+        size="sm"
         onClick={() => {
           if (isLastQuestion) {
             if (mode === 'EXAM') {
@@ -325,7 +328,7 @@ function ExamContent() {
             setCurrentQuestionIndex(prev => Math.min(questions.length - 1, prev + 1))
           }
         }}
-        className="gap-2"
+        className="gap-2 rounded-xl h-9 md:h-10 px-4 md:px-6 text-sm md:text-base"
       >
         {isLastQuestion ? "Finish" : "Next"}
         {!isLastQuestion && <ChevronRight className="h-4 w-4" />}
@@ -352,29 +355,36 @@ function ExamContent() {
   }
 
   return (
-    <div className="flex h-screen w-full bg-background overflow-hidden">
+    <div className="flex flex-col w-full bg-background overflow-hidden min-h-screen">
       {/* Mobile Backdrop */}
-        {sidebarOpen && (
-          <div 
-            data-testid="sidebar-backdrop"
-            className="fixed inset-0 bg-black/50 z-30 md:hidden"
-            onClick={() => setSidebarOpen(false)}
-          />
-        )}
-      
-      {/* Sidebar */}
-      <QuestionSidebar
-        questions={questions}
-        currentQuestionIndex={currentQuestionIndex}
-        answers={answers}
-        markedQuestions={markedQuestions}
-        onSelectQuestion={setCurrentQuestionIndex}
-        isOpen={sidebarOpen}
-        onClose={() => setSidebarOpen(false)}
-      />
+      {sidebarOpen && (
+        <div 
+          data-testid="sidebar-backdrop"
+          className="fixed inset-0 bg-black/50 z-30 md:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
 
-      {/* Main Content Wrapper */}
-      <div className="flex-1 flex flex-col h-full min-w-0 relative overflow-hidden">
+      <div className="flex flex-1 w-full">
+        {/* Sidebar */}
+        <QuestionSidebar
+          questions={questions}
+          currentQuestionIndex={currentQuestionIndex}
+          answers={answers}
+          markedQuestions={markedQuestions}
+          onSelectQuestion={setCurrentQuestionIndex}
+          isOpen={sidebarOpen}
+          onClose={() => setSidebarOpen(false)}
+          mobileOffset={mode === 'PRACTICE'}
+        />
+
+        {/* Main Content Wrapper */}
+        <div
+          className={cn(
+            "flex-1 flex flex-col h-full min-w-0 relative overflow-hidden",
+            mode === 'PRACTICE' && 'lg:h-screen'
+          )}
+        >
         {/* Top Bar - Fixed Height */}
         <header className="h-16 shrink-0 border-b border-border bg-card flex items-center justify-between px-4 md:px-6 z-10">
           <div className="flex items-center gap-4 min-w-0">
@@ -425,6 +435,7 @@ function ExamContent() {
             </div>
 
             <div className="flex items-center gap-2">
+              <ModeToggle />
               <Button 
                 variant="ghost"
                 onClick={handleExit}
@@ -447,10 +458,14 @@ function ExamContent() {
 
         {/* Question Area - Scrollable */}
         <main className={cn(
-          "flex-1 overflow-y-auto p-4 md:p-8 lg:p-12",
-          mode === 'PRACTICE' && 'pb-32'
+          "flex-1 overflow-y-auto md:overflow-visible",
+          mode === 'EXAM' ? "p-4 md:p-6 lg:p-10" : "p-4 md:p-8 lg:p-12",
+          mode === 'PRACTICE' ? 'pb-32 md:pb-0' : ''
         )}>
-          <div className="max-w-4xl mx-auto space-y-8 pb-8">
+          <div className={cn(
+            "max-w-4xl mx-auto space-y-8",
+            mode === 'EXAM' ? 'pb-0' : 'pb-0'
+          )}>
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentQuestion.id}
@@ -466,7 +481,11 @@ function ExamContent() {
                   </span>
                 </div>
 
-                <Card className="p-8 md:p-12 border-slate-200 rounded-2xl">
+                <Card className={cn(
+                  "border border-border rounded-2xl",
+                  "md:max-h-none",
+                  mode === 'EXAM' ? "p-6 md:p-8" : "p-8 md:p-12"
+                )}>
                   <div className="flex justify-between items-start mb-8">
                     <div className="space-y-1">
                       <span className="text-4xl font-bold font-mono text-amber-500 block mb-2">
@@ -672,11 +691,12 @@ function ExamContent() {
 
                   {/* Practice Mode Actions */}
                   {mode === 'PRACTICE' && (
-                    <div className="mt-8 flex items-center gap-4 pt-6 border-t border-border">
+                    <div className="mt-8 flex flex-wrap items-center gap-3 sm:gap-4 pt-6 border-t border-border">
                       <Button
                         variant="outline"
+                        size="sm"
                         onClick={() => setShowAnswer(!showAnswer)}
-                        className="gap-2"
+                        className="gap-2 rounded-lg text-xs sm:text-sm md:text-base h-9 sm:h-10 md:h-11 px-3 sm:px-4 md:px-6"
                       >
                         <Eye className="h-4 w-4" />
                         {showAnswer ? "Hide Answer" : "Show Answer"}
@@ -696,8 +716,9 @@ function ExamContent() {
                       <div className="relative">
                         <Button
                           variant="ghost"
+                          size="sm"
                           onClick={() => setShowHint(!showHint)}
-                          className="text-muted-foreground text-xs md:text-sm tracking-wide uppercase"
+                          className="text-muted-foreground text-[11px] sm:text-xs md:text-sm tracking-wide uppercase h-8 sm:h-9"
                         >
                           Show Hint
                         </Button>
@@ -716,19 +737,24 @@ function ExamContent() {
                 </Card>
               </motion.div>
             </AnimatePresence>
+
+            {mode === 'PRACTICE' && (
+              <div className="sticky bottom-0 hidden w-full lg:block bg-background/95 backdrop-blur border-t border-border px-4 lg:px-0 py-4">
+                <div className="flex items-center justify-between gap-4">
+                  {navigationControls}
+                </div>
+              </div>
+            )}
           </div>
         </main>
 
-        {mode === 'PRACTICE' ? (
-          <div className="sticky bottom-0 bg-background/95 backdrop-blur border-t border-border px-4 md:px-12 py-3 flex items-center justify-between gap-4">
-            {navigationControls}
+        {mode === 'PRACTICE' && (
+          <div className="fixed inset-x-0 bottom-0 bg-background/95 backdrop-blur border-t border-border px-4 py-4 lg:hidden z-40">
+            <div className="mx-auto flex w-full max-w-4xl items-center justify-between gap-3">
+              {navigationControls}
+            </div>
           </div>
-        ) : (
-          <footer className="h-20 shrink-0 border-t border-border bg-card flex items-center justify-between px-4 md:px-12 z-20 w-full mb-16 md:mb-0">
-            {navigationControls}
-          </footer>
         )}
-
         {/* Submission Warning Modal */}
         <AnimatePresence>
           {showSubmitWarning && (
@@ -889,6 +915,15 @@ function ExamContent() {
         </AnimatePresence>
       </div>
     </div>
+
+    {mode === 'EXAM' && (
+      <footer className="h-16 shrink-0 border-t border-border bg-card flex items-center px-4 pt-0 pb-0 z-20 w-full">
+        <div className="mx-auto flex w-full max-w-4xl items-center justify-between gap-3 md:gap-4 pt-0 pb-0">
+          {navigationControls}
+        </div>
+      </footer>
+    )}
+  </div>
   )
 }
 
