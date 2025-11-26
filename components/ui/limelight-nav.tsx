@@ -96,6 +96,7 @@ export const LimelightNav = ({
 
       <div 
         ref={limelightRef}
+        data-testid="limelight-indicator"
         className={`absolute top-0 z-10 w-11 h-[5px] rounded-full bg-primary shadow-[0_50px_15px_var(--primary)] ${
           isReady ? 'transition-[left] duration-400 ease-in-out' : ''
         } ${limelightClassName}`}

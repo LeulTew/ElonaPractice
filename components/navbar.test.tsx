@@ -1,6 +1,13 @@
 import { render, screen } from '@testing-library/react'
 import { Navbar } from './navbar'
 import { ThemeProvider } from './theme-provider'
+import { vi } from 'vitest'
+
+// Mock next/navigation
+vi.mock('next/navigation', () => ({
+  usePathname: () => '/',
+  useSearchParams: () => new URLSearchParams(),
+}))
 
 describe('Navbar Integration', () => {
   it('renders title and navigation links', () => {

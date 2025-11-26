@@ -322,12 +322,13 @@ function ExamContent() {
   return (
     <div className="flex h-screen w-full bg-background overflow-hidden">
       {/* Mobile Backdrop */}
-      {sidebarOpen && (
-        <div 
-          className="fixed inset-0 bg-black/50 z-30 md:hidden"
-          onClick={() => setSidebarOpen(false)}
-        />
-      )}
+        {sidebarOpen && (
+          <div 
+            data-testid="sidebar-backdrop"
+            className="fixed inset-0 bg-black/50 z-30 md:hidden"
+            onClick={() => setSidebarOpen(false)}
+          />
+        )}
       
       {/* Sidebar */}
       <QuestionSidebar
@@ -348,7 +349,8 @@ function ExamContent() {
             <Button
               variant="ghost"
               size="icon"
-              onClick={() => setSidebarOpen(!sidebarOpen)}
+                aria-label="Toggle sidebar"
+                onClick={() => setSidebarOpen(!sidebarOpen)}
             >
               <Menu className="h-5 w-5" />
             </Button>
@@ -648,7 +650,10 @@ function ExamContent() {
                         imageUrl={currentQuestion.metadata?.image_url}
                         options={Array.isArray(currentQuestion.options) ? currentQuestion.options : null}
                         userAnswer={answers[currentQuestion.id]}
-                        onAIResponse={setAiResponse}
+                        onAIResponse={(response) => {
+                          setAiResponse(response)
+                          setShowAIResponse(true)
+                        }}
                       />
                       
                       <div className="relative">
@@ -717,6 +722,7 @@ function ExamContent() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 onClick={() => setShowSubmitWarning(false)}
+                data-testid="submit-warning-overlay"
                 className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50"
               />
               <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
@@ -770,6 +776,7 @@ function ExamContent() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 onClick={() => setShowAIResponse(false)}
+                data-testid="ai-response-overlay"
                 className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50"
               />
               <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
@@ -830,6 +837,7 @@ function ExamContent() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 onClick={() => setShowExitWarning(false)}
+                data-testid="exit-warning-overlay"
                 className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50"
               />
               <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
@@ -934,6 +942,7 @@ function MatchingQuestion({ question, answer, onAnswer, showAnswer }: MatchingQu
                         e.stopPropagation()
                         handleRemovePair(opt.left)
                       }}
+                      aria-label={`Remove match for ${opt.left}`}
                       className="p-1 hover:bg-red-100 rounded-full text-red-500"
                     >
                       <X className="h-3 w-3" />
@@ -1030,6 +1039,7 @@ function OrderSequenceQuestion({ question, answer, onAnswer, showAnswer }: Order
               <button
                 onClick={() => moveItem(idx, 'up')}
                 disabled={idx === 0 || showAnswer}
+                aria-label={`Move ${item} up`}
                 className="p-1 hover:bg-muted rounded disabled:opacity-30"
               >
                 <ArrowUp className="h-4 w-4" />
@@ -1037,12 +1047,13 @@ function OrderSequenceQuestion({ question, answer, onAnswer, showAnswer }: Order
               <button
                 onClick={() => moveItem(idx, 'down')}
                 disabled={idx === items.length - 1 || showAnswer}
+                aria-label={`Move ${item} down`}
                 className="p-1 hover:bg-muted rounded disabled:opacity-30"
               >
                 <ArrowDown className="h-4 w-4" />
               </button>
             </div>
-            <div className="flex-1 font-medium">{item}</div>
+            <div data-testid="order-item-label" className="flex-1 font-medium">{item}</div>
             <div className="text-2xl font-bold text-muted-foreground/20">
               {idx + 1}
             </div>

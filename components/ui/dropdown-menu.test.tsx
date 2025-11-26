@@ -10,6 +10,11 @@ import {
   DropdownMenuCheckboxItem,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
+  DropdownMenuGroup,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubTrigger,
+  DropdownMenuSubContent,
 } from './dropdown-menu'
 import { useState } from 'react'
 
@@ -93,5 +98,43 @@ describe('DropdownMenu', () => {
 
     await user.click(radioTwo)
     expect(radioTwo).toHaveAttribute('aria-checked', 'true')
+  })
+
+  it('renders sub-menu and other components', async () => {
+    const user = userEvent.setup()
+    render(
+      <DropdownMenu>
+        <DropdownMenuTrigger>Open</DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuGroup>
+            <DropdownMenuLabel>Group</DropdownMenuLabel>
+            <DropdownMenuItem>
+              Item with Shortcut <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
+            </DropdownMenuItem>
+          </DropdownMenuGroup>
+          <DropdownMenuSeparator />
+          <DropdownMenuSub>
+            <DropdownMenuSubTrigger>Sub Menu</DropdownMenuSubTrigger>
+            <DropdownMenuSubContent>
+              <DropdownMenuItem>Sub Item</DropdownMenuItem>
+            </DropdownMenuSubContent>
+          </DropdownMenuSub>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    )
+
+    await user.click(screen.getByText('Open'))
+
+    expect(screen.getByText('Group')).toBeInTheDocument()
+    expect(screen.getByText('⌘K')).toBeInTheDocument()
+    expect(screen.getByText('Sub Menu')).toBeInTheDocument()
+
+    // Open sub-menu
+    await user.hover(screen.getByText('Sub Menu'))
+    await user.click(screen.getByText('Sub Menu')) // Click might be needed depending on implementation/test env
+
+    await waitFor(() => {
+      expect(screen.getByText('Sub Item')).toBeInTheDocument()
+    })
   })
 })
