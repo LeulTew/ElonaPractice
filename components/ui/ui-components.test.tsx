@@ -8,7 +8,7 @@ describe('UI Components', () => {
     it('renders with default variant', () => {
       render(<Button>Click me</Button>)
       const button = screen.getByRole('button', { name: 'Click me' })
-      expect(button).toHaveClass('bg-primary')
+      expect(button).toHaveClass('bg-slate-900')
     })
 
     it('renders as child when asChild is true', () => {

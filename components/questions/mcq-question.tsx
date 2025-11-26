@@ -41,9 +41,11 @@ export function MCQQuestion({ question, mode, onAnswer }: MCQQuestionProps) {
     <div className="space-y-6">
       {/* Question Content */}
       <div className="space-y-4">
-        <p className="text-lg leading-relaxed">{question.content}</p>
+        <p className="text-base md:text-lg leading-relaxed text-[#1C1917] dark:text-foreground font-medium">
+          {question.content}
+        </p>
         {question.image_url && (
-          <div className="relative w-full h-[300px] rounded-xl overflow-hidden">
+          <div className="relative w-full h-[260px] md:h-[300px] rounded-2xl overflow-hidden border border-slate-200">
             <Image 
               src={question.image_url} 
               alt="Question diagram" 
@@ -68,20 +70,20 @@ export function MCQQuestion({ question, mode, onAnswer }: MCQQuestionProps) {
               whileTap={{ scale: submitted ? 1 : 0.99 }}
               onClick={() => handleSelect(option)}
               disabled={submitted && mode === 'EXAM'}
-              className={`w-full text-left p-4 rounded-xl transition-all ${
+              className={`w-full text-left p-4 rounded-2xl transition-colors border ${
                 isSelected
                   ? showCorrect
                     ? isThisCorrect
-                      ? 'bg-green-100 dark:bg-green-900/30 border-2 border-green-500'
-                      : 'bg-red-100 dark:bg-red-900/30 border-2 border-red-500'
-                    : 'bg-indigo-100 dark:bg-indigo-900/30 border-2 border-indigo-500'
+                      ? 'bg-green-50 border-green-500 ring-4 ring-green-500/20'
+                      : 'bg-red-50 border-red-500 ring-4 ring-red-500/20'
+                    : 'bg-amber-50 border-amber-500 ring-4 ring-amber-500/30'
                   : showCorrect && isThisCorrect
-                  ? 'bg-green-50 dark:bg-green-900/20 border-2 border-green-400'
-                  : 'bg-gray-50 dark:bg-gray-700/50 border-2 border-transparent hover:border-gray-300 dark:hover:border-gray-600'
+                  ? 'bg-green-50 border-green-500'
+                  : 'bg-white border-slate-200 hover:border-amber-400'
               }`}
             >
               <div className="flex items-center justify-between">
-                <span className="flex-1">{option}</span>
+                <span className="flex-1 font-medium text-slate-700">{option}</span>
                 {showCorrect && isThisCorrect && (
                   <Check className="h-5 w-5 text-green-600" />
                 )}
@@ -95,7 +97,7 @@ export function MCQQuestion({ question, mode, onAnswer }: MCQQuestionProps) {
       {mode === 'PRACTICE' && question.hint && !submitted && (
         <button
           onClick={() => setShowHint(!showHint)}
-          className="text-sm text-indigo-600 dark:text-indigo-400 hover:underline"
+          className="px-4 py-2 rounded-lg border border-slate-300 text-sm uppercase tracking-wide text-slate-700 font-semibold hover:border-amber-500 hover:text-amber-600 transition-colors"
         >
           {showHint ? 'Hide' : 'Show'} Hint
         </button>
@@ -106,10 +108,10 @@ export function MCQQuestion({ question, mode, onAnswer }: MCQQuestionProps) {
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="p-4 rounded-xl bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800"
+          className="p-4 rounded-xl bg-blue-50 border border-blue-200 text-sm"
         >
-          <div className="flex items-center gap-2 text-sm text-blue-900 dark:text-blue-100">
-            <Lightbulb className="w-4 h-4" />
+          <div className="flex items-center gap-2 text-sm text-blue-900">
+            <Lightbulb className="w-4 h-4 text-blue-500" />
             <p>{question.hint}</p>
           </div>
         </motion.div>
@@ -120,7 +122,7 @@ export function MCQQuestion({ question, mode, onAnswer }: MCQQuestionProps) {
         <button
           onClick={handleSubmit}
           disabled={!selectedAnswer}
-          className="w-full py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg transition-all"
+          className="w-full py-4 rounded-xl bg-slate-900 text-white font-semibold text-base uppercase tracking-wide hover:bg-amber-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
           Submit Answer
         </button>
@@ -133,20 +135,20 @@ export function MCQQuestion({ question, mode, onAnswer }: MCQQuestionProps) {
           animate={{ opacity: 1, y: 0 }}
           className={`p-4 rounded-xl ${
             isCorrect
-              ? 'bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800'
-              : 'bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800'
+              ? 'bg-green-50 border border-green-200'
+              : 'bg-red-50 border border-red-200'
           }`}
         >
-          <div className="flex items-center gap-2 font-medium">
+          <div className="flex items-center gap-2 font-medium font-mono">
             {isCorrect ? (
               <>
-                <CheckCircle className="w-5 h-5 text-green-600 dark:text-green-400" />
-                <span className="text-green-900 dark:text-green-100">Correct!</span>
+                <CheckCircle className="w-6 h-6 text-green-600" />
+                <span className="text-green-900 text-lg">CORRECT</span>
               </>
             ) : (
               <>
-                <XCircle className="w-5 h-5 text-red-600 dark:text-red-400" />
-                <span className="text-red-900 dark:text-red-100">Incorrect</span>
+                <XCircle className="w-6 h-6 text-red-600" />
+                <span className="text-red-900 text-lg">INCORRECT</span>
               </>
             )}
           </div>

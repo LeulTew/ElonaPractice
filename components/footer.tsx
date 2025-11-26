@@ -12,37 +12,46 @@ export function Footer() {
   }
 
   return (
-    <footer className="border-t border-border bg-card/50 backdrop-blur-sm py-8 mt-auto">
-      <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
-        <div className="text-sm text-muted-foreground">
-          © {new Date().getFullYear()} Elona Practice. All rights reserved.
+    <footer className="border-t border-slate-200 bg-white py-8 mt-auto text-slate-700 dark:bg-[#050505] dark:border-[#1a1a1a] dark:text-slate-200">
+      <div className="container mx-auto px-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div>
+          <p className="text-sm font-semibold tracking-wide uppercase text-[#1C1917] dark:text-slate-100">Dev: Leul Tewodros Agonafer</p>
+          <p className="text-xs text-slate-500 dark:text-slate-400">© {new Date().getFullYear()} Elona Practice.</p>
         </div>
         
-        <div className="flex items-center gap-6">
+        <div className="flex flex-wrap items-center gap-4 text-sm">
           <a 
-            href="mailto:leul@example.com" 
-            className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
-          >
-            <Mail className="h-4 w-4" />
-            <span>Contact</span>
-          </a>
-          <a 
-            href="https://linkedin.com/in/leul" 
+            href="https://www.linkedin.com/in/leul-t-agonafer-861bb3336/" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
+            className="flex items-center gap-2 hover:text-amber-600"
           >
             <Linkedin className="h-4 w-4" />
-            <span>LinkedIn</span>
+            LinkedIn
           </a>
           <a 
-            href="https://github.com/LeulTew" 
+            href="https://t.me/fabbin" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
+            className="flex items-center gap-2 hover:text-amber-600"
+          >
+            <span className="font-mono text-xs">@fabbin</span>
+          </a>
+          <a 
+            href="mailto:leulman2@gmail.com"
+            className="flex items-center gap-2 hover:text-amber-600"
+          >
+            <Mail className="h-4 w-4" />
+            leulman2@gmail.com
+          </a>
+          <a 
+            href="https://github.com/LeulTew"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 hover:text-amber-600"
           >
             <Github className="h-4 w-4" />
-            <span>GitHub</span>
+            GitHub
           </a>
         </div>
       </div>

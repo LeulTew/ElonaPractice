@@ -22,7 +22,7 @@ export function Modal({ isOpen, onClose, children, title }: ModalProps) {
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative bg-background rounded-xl border shadow-xl w-full max-w-lg overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+      <div className="relative bg-background rounded-xl border w-full max-w-lg overflow-hidden animate-in fade-in zoom-in-95 duration-200">
         <div className="flex items-center justify-between p-4 border-b">
           <h3 className="font-semibold">{title || 'Modal'}</h3>
           <button onClick={onClose} className="p-1 hover:bg-muted rounded-full transition-colors">

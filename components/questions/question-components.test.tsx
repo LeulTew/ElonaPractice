@@ -98,7 +98,7 @@ describe('Question Components', () => {
       const incorrectButton = screen.getByRole('button', { name: /Berlin/i })
 
       expect(correctButton.className).toContain('bg-green-50')
-      expect(incorrectButton.className).toContain('bg-red-100')
+      expect(incorrectButton.className).toContain('bg-red-50')
       expect(onAnswer).toHaveBeenCalledWith('Berlin', false)
     })
 

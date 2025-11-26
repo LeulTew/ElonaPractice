@@ -50,7 +50,7 @@ describe('Dashboard Page', () => {
 
     render(<Dashboard />)
 
-    expect(screen.getByText('Welcome back, Student')).toBeInTheDocument()
+    expect(screen.getByText('Welcome back, Elona')).toBeInTheDocument()
     
     // Wait for stats to load
     await waitFor(() => {

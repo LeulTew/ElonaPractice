@@ -1,4 +1,3 @@
-import type { ButtonHTMLAttributes, HTMLAttributes, PropsWithChildren } from 'react'
 import { render, screen, fireEvent, waitFor, within } from '@testing-library/react'
 import ExamPage from './page'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
@@ -130,21 +129,16 @@ vi.mock('@/lib/supabase', () => ({
   },
 }))
 
-type MotionDivProps = PropsWithChildren<HTMLAttributes<HTMLDivElement>>
-type MotionButtonProps = PropsWithChildren<ButtonHTMLAttributes<HTMLButtonElement>>
-type AnimatePresenceProps = PropsWithChildren<Record<string, unknown>>
-
-const MockMotionDiv = ({ children, ...props }: MotionDivProps) => <div {...props}>{children}</div>
-const MockMotionButton = ({ children, ...props }: MotionButtonProps) => <button {...props}>{children}</button>
-const MockAnimatePresence = ({ children }: AnimatePresenceProps) => <>{children}</>
-
 // Mock framer-motion
 vi.mock('framer-motion', () => ({
   motion: {
-    div: MockMotionDiv,
-    button: MockMotionButton,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    div: ({ children, ...props }: any) => <div {...props}>{children}</div>,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    button: ({ children, ...props }: any) => <button {...props}>{children}</button>,
   },
-  AnimatePresence: MockAnimatePresence,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  AnimatePresence: ({ children }: any) => <>{children}</>,
 }))
 
 // Mock AIHelpButton

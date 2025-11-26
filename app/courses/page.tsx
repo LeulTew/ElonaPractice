@@ -78,7 +78,7 @@ export default function CoursesPage() {
               whileTap={{ scale: 0.98 }}
               onClick={() => setSelectedCourse(course)}
             >
-              <Card className="group relative cursor-pointer overflow-hidden h-full transition-all hover:shadow-lg hover:border-primary/50">
+              <Card className="group relative cursor-pointer overflow-hidden h-full transition-colors hover:border-primary/50">
                 <CardContent className="p-8 flex flex-col h-full">
                   <div className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
                     <FlaskConical className="h-7 w-7" />

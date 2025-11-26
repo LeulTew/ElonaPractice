@@ -54,7 +54,7 @@ export function MobileNavWrapper() {
         key={pathname} // Force re-render on route change
         items={navItems}
         defaultActiveIndex={activeIndex}
-        className="bg-background/80 backdrop-blur-md border shadow-lg"
+        className="bg-background/90 backdrop-blur border"
       />
     </div>
   )

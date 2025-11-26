@@ -173,7 +173,7 @@ function ReviewContent() {
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.2 }}
             >
-              <Card className="p-6 md:p-8 shadow-lg border-border/50">
+              <Card className="p-6 md:p-8 border-border/50">
                 {/* Question Content */}
                 <div className="prose dark:prose-invert max-w-none mb-8">
                   <ReactMarkdown rehypePlugins={[rehypeRaw]}>

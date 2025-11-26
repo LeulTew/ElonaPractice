@@ -32,9 +32,9 @@ export function ShortAnswerQuestion({ question, mode, onAnswer }: ShortAnswerQue
     <div className="space-y-6">
       {/* Question Content */}
       <div className="space-y-4">
-        <p className="text-lg leading-relaxed">{question.content}</p>
+        <p className="text-base md:text-lg leading-relaxed text-[#1C1917] dark:text-foreground font-medium">{question.content}</p>
         {question.image_url && (
-          <div className="relative w-full h-[300px] rounded-xl overflow-hidden">
+          <div className="relative w-full h-[260px] md:h-[300px] rounded-2xl overflow-hidden border border-slate-200">
             <Image 
               src={question.image_url} 
               alt="Question diagram" 
@@ -52,14 +52,14 @@ export function ShortAnswerQuestion({ question, mode, onAnswer }: ShortAnswerQue
         disabled={submitted}
         placeholder="Type your answer here..."
         rows={6}
-        className="w-full p-4 rounded-xl border-2 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 focus:border-indigo-500 focus:outline-none transition-colors resize-none"
+        className="w-full p-4 rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#11100F] focus:border-amber-500 focus:outline-none transition-colors resize-none text-sm md:text-base"
       />
 
       {/* Hint Button (Practice Mode) */}
       {mode === 'PRACTICE' && question.hint && !submitted && (
         <button
           onClick={() => setShowHint(!showHint)}
-          className="text-sm text-indigo-600 dark:text-indigo-400 hover:underline"
+          className="px-4 py-2 rounded-lg border border-slate-300 text-xs font-semibold uppercase tracking-wide text-slate-700 hover:border-amber-500 hover:text-amber-600"
         >
           {showHint ? 'Hide' : 'Show'} Hint
         </button>
@@ -70,7 +70,7 @@ export function ShortAnswerQuestion({ question, mode, onAnswer }: ShortAnswerQue
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="p-4 rounded-xl bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800"
+          className="p-4 rounded-xl bg-blue-50 border border-blue-200 text-sm"
         >
           <div className="flex items-center gap-2 text-sm text-blue-900 dark:text-blue-100">
             <Lightbulb className="w-4 h-4" />
@@ -84,7 +84,7 @@ export function ShortAnswerQuestion({ question, mode, onAnswer }: ShortAnswerQue
         <button
           onClick={handleSubmit}
           disabled={!answer.trim()}
-          className="w-full py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg transition-all"
+          className="w-full py-3 rounded-xl bg-slate-900 text-white font-semibold uppercase tracking-wide hover:bg-amber-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
           Submit Answer
         </button>

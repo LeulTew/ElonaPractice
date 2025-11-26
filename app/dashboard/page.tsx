@@ -72,10 +72,10 @@ export default function Dashboard() {
         {/* Header */}
         <div className="flex flex-col gap-2">
           <h1 className="text-4xl font-bold tracking-tight text-foreground">
-            Welcome back, Student
+            Welcome back, Elona
           </h1>
           <p className="text-muted-foreground text-lg">
-            Ready to master Natural Product Chemistry?
+            Ready to master your next exam?
           </p>
         </div>
 
@@ -193,7 +193,7 @@ interface StatsCardProps {
 
 function StatsCard({ title, value, icon: Icon, description, color }: StatsCardProps) {
   return (
-    <Card className="overflow-hidden transition-all hover:shadow-lg hover:border-primary/20">
+    <Card className="overflow-hidden transition-colors hover:border-primary/20">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-sm font-medium text-muted-foreground">
           {title}

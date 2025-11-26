@@ -301,6 +301,38 @@ function ExamContent() {
   const progress = ((Object.keys(answers).length) / questions.length) * 100
   const isLastQuestion = currentQuestionIndex === questions.length - 1
 
+  const navigationControls = (
+    <>
+      <Button
+        variant="outline"
+        onClick={() => setCurrentQuestionIndex(prev => Math.max(0, prev - 1))}
+        disabled={currentQuestionIndex === 0}
+        className="gap-2"
+      >
+        <ChevronLeft className="h-4 w-4" />
+        Previous
+      </Button>
+
+      <Button
+        onClick={() => {
+          if (isLastQuestion) {
+            if (mode === 'EXAM') {
+              setShowSubmitWarning(true)
+            } else {
+              submitExam()
+            }
+          } else {
+            setCurrentQuestionIndex(prev => Math.min(questions.length - 1, prev + 1))
+          }
+        }}
+        className="gap-2"
+      >
+        {isLastQuestion ? "Finish" : "Next"}
+        {!isLastQuestion && <ChevronRight className="h-4 w-4" />}
+      </Button>
+    </>
+  )
+
   // Guard against undefined currentQuestion
   if (!currentQuestion) {
     return (
@@ -414,7 +446,10 @@ function ExamContent() {
         </header>
 
         {/* Question Area - Scrollable */}
-        <main className="flex-1 overflow-y-auto p-4 md:p-8 lg:p-12">
+        <main className={cn(
+          "flex-1 overflow-y-auto p-4 md:p-8 lg:p-12",
+          mode === 'PRACTICE' && 'pb-32'
+        )}>
           <div className="max-w-4xl mx-auto space-y-8 pb-8">
             <AnimatePresence mode="wait">
               <motion.div
@@ -426,28 +461,30 @@ function ExamContent() {
               >
                 {/* Question Type Badge */}
                 <div className="mb-6 flex justify-center">
-                  <span className="inline-flex items-center rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary shadow-sm backdrop-blur-sm">
+                  <span className="inline-flex items-center rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary">
                     {currentQuestion.question_type?.replace(/_/g, ' ')}
                   </span>
                 </div>
 
-                <Card className="p-6 md:p-8 shadow-lg border-border/50">
-                  <div className="flex justify-between items-start mb-6">
+                <Card className="p-8 md:p-12 border-slate-200 rounded-2xl">
+                  <div className="flex justify-between items-start mb-8">
                     <div className="space-y-1">
-                      <span className="text-sm font-medium text-muted-foreground">
+                      <span className="text-4xl font-bold font-mono text-amber-500 block mb-2">
+                        {String(currentQuestionIndex + 1).padStart(2, '0')}
+                      </span>
+                      <span className="text-sm font-medium text-slate-400 uppercase tracking-wider">
                         Question {currentQuestionIndex + 1} of {questions.length}
                       </span>
-
                     </div>
                     <Button
                       variant="ghost"
                       size="sm"
                       onClick={toggleMark}
                       className={cn(
-                        "gap-2",
+                        "gap-2 rounded-xl",
                         markedQuestions.includes(currentQuestion.id) 
-                          ? "text-yellow-500 hover:text-yellow-600 bg-yellow-500/10" 
-                          : "text-muted-foreground"
+                          ? "text-amber-500 hover:text-amber-600 bg-amber-50" 
+                          : "text-slate-400 hover:text-slate-600"
                       )}
                     >
                       <Flag className="h-4 w-4" />
@@ -483,7 +520,7 @@ function ExamContent() {
                                   placeholder="Type answer..."
                                 />
                                 {showAnswer && (
-                                  <div className="absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap bg-popover text-popover-foreground text-xs px-2 py-1 rounded shadow-md border z-10">
+                                  <div className="absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap bg-popover text-popover-foreground text-xs px-2 py-1 rounded border z-10">
                                     {currentQuestion.correct_answer}
                                   </div>
                                 )}
@@ -660,12 +697,12 @@ function ExamContent() {
                         <Button
                           variant="ghost"
                           onClick={() => setShowHint(!showHint)}
-                          className="text-muted-foreground"
+                          className="text-muted-foreground text-xs md:text-sm tracking-wide uppercase"
                         >
                           Show Hint
                         </Button>
                         {showHint && (
-                          <div className="absolute bottom-full left-0 mb-2 w-72 p-4 rounded-lg bg-popover border border-border shadow-xl text-sm z-20">
+                          <div className="absolute bottom-full left-0 mb-2 w-72 p-4 rounded-lg bg-popover border border-border text-sm z-20">
                             <p className="font-medium mb-1">Hint:</p>
                             <p className="text-muted-foreground">
                               {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
@@ -682,36 +719,15 @@ function ExamContent() {
           </div>
         </main>
 
-        {/* Sticky Bottom Navigation - Fixed Height */}
-        <footer className="h-20 shrink-0 border-t border-border bg-card flex items-center justify-between px-4 md:px-12 z-20 w-full mb-16 md:mb-0">
-          <Button
-            variant="outline"
-            onClick={() => setCurrentQuestionIndex(prev => Math.max(0, prev - 1))}
-            disabled={currentQuestionIndex === 0}
-            className="gap-2"
-          >
-            <ChevronLeft className="h-4 w-4" />
-            Previous
-          </Button>
-
-          <Button
-            onClick={() => {
-              if (isLastQuestion) {
-                if (mode === 'EXAM') {
-                  setShowSubmitWarning(true)
-                } else {
-                  submitExam()
-                }
-              } else {
-                setCurrentQuestionIndex(prev => Math.min(questions.length - 1, prev + 1))
-              }
-            }}
-            className="gap-2"
-          >
-            {isLastQuestion ? "Finish Exam" : "Next"}
-            {!isLastQuestion && <ChevronRight className="h-4 w-4" />}
-          </Button>
-        </footer>
+        {mode === 'PRACTICE' ? (
+          <div className="sticky bottom-0 bg-background/95 backdrop-blur border-t border-border px-4 md:px-12 py-3 flex items-center justify-between gap-4">
+            {navigationControls}
+          </div>
+        ) : (
+          <footer className="h-20 shrink-0 border-t border-border bg-card flex items-center justify-between px-4 md:px-12 z-20 w-full mb-16 md:mb-0">
+            {navigationControls}
+          </footer>
+        )}
 
         {/* Submission Warning Modal */}
         <AnimatePresence>
@@ -730,7 +746,7 @@ function ExamContent() {
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
-                  className="w-full max-w-md rounded-2xl bg-card border border-border p-6 shadow-2xl"
+                  className="w-full max-w-md rounded-2xl bg-card border border-border p-6"
                 >
                   <div className="flex items-center gap-4 mb-4 text-yellow-500">
                     <AlertTriangle className="h-8 w-8" />
@@ -784,7 +800,7 @@ function ExamContent() {
                   initial={{ opacity: 0, scale: 0.95, y: 20 }}
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                  className="w-full max-w-lg rounded-2xl bg-card border border-indigo-200 p-6 shadow-2xl"
+                  className="w-full max-w-lg rounded-2xl bg-card border border-indigo-200 p-6"
                 >
                   <div className="flex items-center gap-4 mb-4 text-indigo-600">
                     <Bot className="h-8 w-8" />
@@ -845,7 +861,7 @@ function ExamContent() {
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
-                  className="w-full max-w-md rounded-2xl bg-card border border-border p-6 shadow-2xl"
+                  className="w-full max-w-md rounded-2xl bg-card border border-border p-6"
                 >
                   <div className="flex items-center gap-4 mb-4 text-destructive">
                     <AlertTriangle className="h-8 w-8" />

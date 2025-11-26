@@ -93,7 +93,7 @@ function ResultsContent() {
           <p className="text-muted-foreground">Here is how you performed</p>
         </div>
 
-        <Card className="p-8 border-border shadow-xl bg-card/50 backdrop-blur">
+        <Card className="p-8 border-border bg-card/50 backdrop-blur">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
             {/* Score */}
             <div className="flex flex-col items-center p-4 bg-secondary/20 rounded-xl">

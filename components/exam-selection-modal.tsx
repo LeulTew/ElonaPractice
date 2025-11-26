@@ -78,7 +78,7 @@ export function ExamSelectionModal({ course, isOpen, onClose }: ExamSelectionMod
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative w-full max-w-2xl max-h-[90vh] overflow-hidden rounded-3xl bg-card border border-border shadow-2xl"
+              className="relative w-full max-w-2xl max-h-[90vh] overflow-hidden rounded-3xl bg-card border border-border"
             >
               {/* Header */}
               <div className="relative p-6 border-b border-border">
@@ -99,7 +99,7 @@ export function ExamSelectionModal({ course, isOpen, onClose }: ExamSelectionMod
                     onClick={() => setMode('PRACTICE')}
                     className={`flex-1 py-2 px-4 rounded-lg font-medium transition-all flex items-center justify-center gap-2 ${
                       mode === 'PRACTICE'
-                        ? 'bg-background text-primary shadow-sm'
+                        ? 'bg-background text-primary border border-primary/30'
                         : 'text-muted-foreground hover:text-foreground'
                     }`}
                   >
@@ -110,7 +110,7 @@ export function ExamSelectionModal({ course, isOpen, onClose }: ExamSelectionMod
                     onClick={() => setMode('EXAM')}
                     className={`flex-1 py-2 px-4 rounded-lg font-medium transition-all flex items-center justify-center gap-2 ${
                       mode === 'EXAM'
-                        ? 'bg-background text-primary shadow-sm'
+                        ? 'bg-background text-primary border border-primary/30'
                         : 'text-muted-foreground hover:text-foreground'
                     }`}
                   >
@@ -147,7 +147,7 @@ export function ExamSelectionModal({ course, isOpen, onClose }: ExamSelectionMod
                       >
                         <Card 
                           onClick={() => startExam(exam.id)}
-                          className="group cursor-pointer hover:border-primary/50 transition-all hover:shadow-md"
+                          className="group cursor-pointer hover:border-primary/50 transition-colors"
                         >
                           <div className="p-4 flex items-center justify-between">
                             <div className="flex-1">

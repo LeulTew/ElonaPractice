@@ -16,7 +16,7 @@ export default function AboutPage() {
         </div>
 
         {/* Mission */}
-        <div className="bg-card rounded-2xl p-8 border shadow-sm space-y-4">
+        <div className="bg-card rounded-2xl p-8 border space-y-4">
           <h2 className="text-2xl font-semibold text-foreground">Our Mission</h2>
           <p className="text-muted-foreground leading-relaxed">
             Elona Practice was built to transform how students prepare for complex chemistry exams. 
@@ -26,7 +26,7 @@ export default function AboutPage() {
         </div>
 
         {/* Developer Credits */}
-        <div className="bg-card rounded-2xl p-8 border shadow-sm space-y-6">
+        <div className="bg-card rounded-2xl p-8 border space-y-6">
           <h2 className="text-2xl font-semibold text-foreground">Developer</h2>
           <div className="flex flex-col sm:flex-row items-center gap-6">
             <div className="flex-1 space-y-2 text-center sm:text-left">
