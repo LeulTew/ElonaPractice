@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { X, Clock, BookOpen, Zap, ArrowRight } from "lucide-react"
+import { X, Zap, Clock, Sparkles, Timer, BookOpen, ArrowRight } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { supabase } from "@/lib/supabase"
 import { Card } from "@/components/ui/card"
@@ -118,10 +118,10 @@ export function ExamSelectionModal({ course, isOpen, onClose }: ExamSelectionMod
                     Exam Mode
                   </button>
                 </div>
-                <p className="text-sm text-muted-foreground mt-4 text-center">
+                <p className="text-sm text-muted-foreground mt-4 text-center flex items-center justify-center gap-2">
                   {mode === 'PRACTICE' 
-                    ? '✨ Practice with hints, instant feedback, and unlimited time'
-                    : '⏱️ Timed exam simulation with final grading and analytics'}
+                    ? <><Sparkles className="w-4 h-4 text-yellow-500" /> Practice with hints, instant feedback, and unlimited time</>
+                    : <><Timer className="w-4 h-4 text-red-500" /> Timed exam simulation with final grading and analytics</>}
                 </p>
               </div>
 

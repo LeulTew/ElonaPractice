@@ -2,7 +2,8 @@
 
 import { useState } from "react"
 import { motion } from "framer-motion"
-
+import Image from "next/image"
+import { Lightbulb, Loader2 } from "lucide-react"
 interface ShortAnswerQuestionProps {
   question: {
     id: string
@@ -33,11 +34,14 @@ export function ShortAnswerQuestion({ question, mode, onAnswer }: ShortAnswerQue
       <div className="space-y-4">
         <p className="text-lg leading-relaxed">{question.content}</p>
         {question.image_url && (
-          <img 
-            src={question.image_url} 
-            alt="Question diagram" 
-            className="max-w-full h-auto rounded-xl"
-          />
+          <div className="relative w-full h-[300px] rounded-xl overflow-hidden">
+            <Image 
+              src={question.image_url} 
+              alt="Question diagram" 
+              fill
+              className="object-contain"
+            />
+          </div>
         )}
       </div>
 
@@ -68,7 +72,10 @@ export function ShortAnswerQuestion({ question, mode, onAnswer }: ShortAnswerQue
           animate={{ opacity: 1, y: 0 }}
           className="p-4 rounded-xl bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800"
         >
-          <p className="text-sm text-blue-900 dark:text-blue-100">💡 {question.hint}</p>
+          <div className="flex items-center gap-2 text-sm text-blue-900 dark:text-blue-100">
+            <Lightbulb className="w-4 h-4" />
+            <p>{question.hint}</p>
+          </div>
         </motion.div>
       )}
 
@@ -102,9 +109,10 @@ export function ShortAnswerQuestion({ question, mode, onAnswer }: ShortAnswerQue
           animate={{ opacity: 1, y: 0 }}
           className="p-4 rounded-xl bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800"
         >
-          <p className="text-sm text-yellow-900 dark:text-yellow-100">
-            ⏳ Your answer has been submitted and will be reviewed manually.
-          </p>
+          <div className="flex items-center gap-2 text-sm text-yellow-900 dark:text-yellow-100">
+            <Loader2 className="w-4 h-4 animate-spin" />
+            <p>Your answer has been submitted and will be reviewed manually.</p>
+          </div>
         </motion.div>
       )}
     </div>

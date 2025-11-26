@@ -8,7 +8,7 @@ export const EXAM_3_CONTENT: QuestionData[] = [
     options: ["(R)-Thalidomide", "(S)-Thalidomide", "Both are safe", "Neither is active"],
     correctAnswer: "(S)-Thalidomide",
     explanation: "The (S)-enantiomer is teratogenic, while the (R)-enantiomer is a sedative. However, they racemize in vivo.",
-    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/course-images/ch3/thalidomide.svg"
+    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/Chemistry_of_Natural_Product_CNP/ch3/thalidomide.svg"
   },
   {
     content: "Look at the **Ibuprofen** enantiomers. Which one is the pharmacologically active anti-inflammatory agent?",
@@ -16,7 +16,7 @@ export const EXAM_3_CONTENT: QuestionData[] = [
     options: ["(S)-Ibuprofen", "(R)-Ibuprofen", "Both are equally active", "Neither"],
     correctAnswer: "(S)-Ibuprofen",
     explanation: "The (S)-enantiomer is the active COX inhibitor. The (R)-enantiomer is inactive but converts to (S) in the body.",
-    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/course-images/ch3/ibuprofen.svg"
+    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/Chemistry_of_Natural_Product_CNP/ch3/ibuprofen.svg"
   },
   {
     content: "In the **Thalidomide** molecule shown, identify the chiral center.",
@@ -24,7 +24,7 @@ export const EXAM_3_CONTENT: QuestionData[] = [
     options: ["The carbon in the glutarimide ring bonded to N", "The carbonyl carbon", "The nitrogen atom", "The benzene ring"],
     correctAnswer: "The carbon in the glutarimide ring bonded to N",
     explanation: "The chiral center is the carbon atom in the glutarimide ring attached to the nitrogen of the phthalimide group.",
-    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/course-images/ch3/thalidomide.svg"
+    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/Chemistry_of_Natural_Product_CNP/ch3/thalidomide.svg"
   },
   {
     content: "Based on the **Ibuprofen** diagram, what is the relationship between the (R) and (S) forms?",
@@ -32,7 +32,7 @@ export const EXAM_3_CONTENT: QuestionData[] = [
     options: ["Enantiomers", "Diastereomers", "Constitutional Isomers", "Identical"],
     correctAnswer: "Enantiomers",
     explanation: "They are non-superimposable mirror images of each other.",
-    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/course-images/ch3/ibuprofen.svg"
+    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/Chemistry_of_Natural_Product_CNP/ch3/ibuprofen.svg"
   },
   {
     content: "Which metabolic process converts the inactive (R)-Ibuprofen to the active (S)-Ibuprofen?",
@@ -40,7 +40,7 @@ export const EXAM_3_CONTENT: QuestionData[] = [
     options: ["Chiral Inversion", "Racemization", "Hydrolysis", "Oxidation"],
     correctAnswer: "Chiral Inversion",
     explanation: "Unidirectional chiral inversion transforms the distomer to the eutomer.",
-    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/course-images/ch3/ibuprofen.svg"
+    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/Chemistry_of_Natural_Product_CNP/ch3/ibuprofen.svg"
   },
   {
     content: "Why did the FDA issuing a policy statement in 1992 regarding stereoisomeric drugs?",
@@ -207,7 +207,7 @@ export const EXAM_3_CONTENT: QuestionData[] = [
     options: ["(R)-(+)-Limonene", "(S)-(-)-Limonene", "Both smell the same", "Neither has a smell"],
     correctAnswer: "(R)-(+)-Limonene",
     explanation: "(R)-Limonene smells like oranges, while (S)-Limonene smells like lemons/turpentine. This illustrates how our olfactory receptors are chiral.",
-    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/course-images/ch3/limonene_enantiomers.png"
+    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/Chemistry_of_Natural_Product_CNP/ch3/limonene_enantiomers.png"
   },
   {
     content: "Examine the reaction scheme for **Thalidomide**. What is the intermediate species shown in the racemization process?",
@@ -215,7 +215,7 @@ export const EXAM_3_CONTENT: QuestionData[] = [
     options: ["Enol", "Carbocation", "Carbanion", "Radical"],
     correctAnswer: "Enol",
     explanation: "The racemization proceeds via an achiral enol intermediate, allowing the chiral center to invert.",
-    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/course-images/ch3/thalidomide_racemization.png"
+    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/Chemistry_of_Natural_Product_CNP/ch3/thalidomide_racemization.png"
   },
 
   // --- Multi-Select (12 Questions) ---
@@ -711,7 +711,7 @@ export const EXAM_3_CONTENT: QuestionData[] = [
     options: ["Alpha-carbon", "Beta-carbon", "Carboxyl carbon", "Methyl carbon"],
     correctAnswer: "Alpha-carbon",
     explanation: "The carbon adjacent to the carboxyl group.",
-    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/course-images/Chemistry_of_Natural_Product(CNP)_ch3_slide12.png"
+    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/Chemistry_of_Natural_Product(CNP)_ch3_slide12.png"
   },
   {
     content: "Identify the functional group responsible for the acidity of Ibuprofen.",
@@ -719,7 +719,7 @@ export const EXAM_3_CONTENT: QuestionData[] = [
     options: ["Carboxylic acid", "Alcohol", "Ketone", "Amine"],
     correctAnswer: "Carboxylic acid",
     explanation: "COOH group.",
-    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/course-images/Chemistry_of_Natural_Product(CNP)_ch3_slide12.png"
+    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/Chemistry_of_Natural_Product(CNP)_ch3_slide12.png"
   },
   {
     content: "Which part of the Thalidomide molecule is the chiral center?",
@@ -727,7 +727,7 @@ export const EXAM_3_CONTENT: QuestionData[] = [
     options: ["Glutarimide ring carbon", "Phthalimide ring", "Amide nitrogen", "Carbonyl oxygen"],
     correctAnswer: "Glutarimide ring carbon",
     explanation: "C bonded to N and H.",
-    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/course-images/Chemistry_of_Natural_Product(CNP)_ch3_slide5.png"
+    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/Chemistry_of_Natural_Product(CNP)_ch3_slide5.png"
   },
   {
     content: "Identify the structure of Esomeprazole.",
@@ -735,7 +735,7 @@ export const EXAM_3_CONTENT: QuestionData[] = [
     options: ["S-isomer", "R-isomer", "Racemate"],
     correctAnswer: "S-isomer",
     explanation: "Single enantiomer.",
-    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/course-images/Chemistry_of_Natural_Product(CNP)_ch3_slide20.png"
+    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/Chemistry_of_Natural_Product(CNP)_ch3_slide20.png"
   },
   {
     content: "Identify the chiral center in Warfarin.",
@@ -743,7 +743,7 @@ export const EXAM_3_CONTENT: QuestionData[] = [
     options: ["Hemiketal carbon", "Phenyl ring", "Methyl group", "Ketone"],
     correctAnswer: "Hemiketal carbon",
     explanation: "C9.",
-    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/course-images/Chemistry_of_Natural_Product(CNP)_ch3_slide15.png"
+    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/Chemistry_of_Natural_Product(CNP)_ch3_slide15.png"
   },
   {
     content: "Which graph represents the plasma concentration of the Eutomer vs Distomer?",
@@ -751,7 +751,7 @@ export const EXAM_3_CONTENT: QuestionData[] = [
     options: ["Graph A (Higher curve)", "Graph B (Lower curve)"],
     correctAnswer: "Graph A (Higher curve)",
     explanation: "Depends on clearance, but usually different.",
-    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/course-images/Chemistry_of_Natural_Product(CNP)_ch3_slide30.png"
+    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/Chemistry_of_Natural_Product(CNP)_ch3_slide30.png"
   },
 
   // --- Case Study (2 Questions) ---

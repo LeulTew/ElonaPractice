@@ -8,7 +8,7 @@ export const EXAM_2_CONTENT: QuestionData[] = [
     options: ["D-Glucose", "D-Fructose", "D-Galactose", "D-Ribose"],
     correctAnswer: "D-Fructose",
     explanation: "The presence of a ketone group at C2 identifies this as a ketose, specifically D-Fructose.",
-    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/course-images/ch2/fischer_fructose.svg"
+    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/Chemistry_of_Natural_Product_CNP/ch2/fischer_fructose.svg"
   },
   {
     content: "Examine the **Haworth Projection**. Which anomer of glucose is shown?",
@@ -16,7 +16,7 @@ export const EXAM_2_CONTENT: QuestionData[] = [
     options: ["Alpha", "Beta", "Gamma", "Delta"],
     correctAnswer: "Alpha",
     explanation: "The anomeric hydroxyl group at C1 is pointing down (trans to the CH2OH group), indicating the alpha anomer.",
-    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/course-images/ch2/haworth_glucose_alpha.svg"
+    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/Chemistry_of_Natural_Product_CNP/ch2/haworth_glucose_alpha.svg"
   },
   {
     content: "Identify the disaccharide shown in the diagram.",
@@ -24,7 +24,7 @@ export const EXAM_2_CONTENT: QuestionData[] = [
     options: ["Maltose", "Lactose", "Sucrose", "Cellobiose"],
     correctAnswer: "Sucrose",
     explanation: "The structure shows a glycosidic bond between the anomeric carbons of glucose and fructose.",
-    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/course-images/ch2/sucrose.svg"
+    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/Chemistry_of_Natural_Product_CNP/ch2/sucrose.svg"
   },
   {
     content: "Based on the structure of **D-Fructose**, which carbon is the anomeric carbon in its cyclic form?",
@@ -32,7 +32,7 @@ export const EXAM_2_CONTENT: QuestionData[] = [
     options: ["C1", "C2", "C3", "C4"],
     correctAnswer: "C2",
     explanation: "In ketoses like fructose, the carbonyl group is at C2, which becomes the anomeric carbon upon cyclization.",
-    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/course-images/ch2/fischer_fructose.svg"
+    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/Chemistry_of_Natural_Product_CNP/ch2/fischer_fructose.svg"
   },
   {
     content: "Look at the **Sucrose** molecule. Why is it a non-reducing sugar?",
@@ -40,7 +40,7 @@ export const EXAM_2_CONTENT: QuestionData[] = [
     options: ["It has a free aldehyde group.", "Both anomeric carbons are involved in the bond.", "It is a monosaccharide.", "It contains a ketone."],
     correctAnswer: "Both anomeric carbons are involved in the bond.",
     explanation: "The glycosidic bond links C1 of glucose and C2 of fructose, locking both rings so they cannot open to form a reducing group.",
-    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/course-images/ch2/sucrose.svg"
+    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/Chemistry_of_Natural_Product_CNP/ch2/sucrose.svg"
   },
   {
     content: "Identify the polysaccharide structure shown. Note the alpha-1,4-glycosidic linkage.",
@@ -48,7 +48,7 @@ export const EXAM_2_CONTENT: QuestionData[] = [
     options: ["Amylose", "Cellulose", "Chitin", "Glycogen"],
     correctAnswer: "Amylose",
     explanation: "Amylose is a linear polymer of glucose linked by alpha-1,4 bonds, causing it to coil.",
-    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/course-images/ch2/amylose.svg"
+    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/Chemistry_of_Natural_Product_CNP/ch2/amylose.svg"
   },
   {
     content: "Examine the structure of **Cellulose**. What type of glycosidic bond connects the glucose units?",
@@ -56,7 +56,7 @@ export const EXAM_2_CONTENT: QuestionData[] = [
     options: ["Alpha-1,4", "Beta-1,4", "Alpha-1,6", "Beta-1,6"],
     correctAnswer: "Beta-1,4",
     explanation: "Cellulose contains beta-1,4 linkages, which allow the chains to form straight, rigid fibers.",
-    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/course-images/ch2/cellulose.svg"
+    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/Chemistry_of_Natural_Product_CNP/ch2/cellulose.svg"
   },
   {
     content: "Which of the following is the simplest aldose?",
@@ -552,7 +552,7 @@ export const EXAM_2_CONTENT: QuestionData[] = [
     options: ["C1", "C2", "C3", "C4"],
     correctAnswer: "C1",
     explanation: "Carbon bonded to two oxygens.",
-    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/course-images/Chemistry_of_Natural_Product(CNP)_ch2_slide5.png"
+    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/Chemistry_of_Natural_Product(CNP)_ch2_slide5.png"
   },
   {
     content: "Is this the alpha or beta anomer?",
@@ -560,7 +560,7 @@ export const EXAM_2_CONTENT: QuestionData[] = [
     options: ["Alpha", "Beta"],
     correctAnswer: "Beta",
     explanation: "OH is equatorial (cis to CH2OH).",
-    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/course-images/Chemistry_of_Natural_Product(CNP)_ch2_slide10.png"
+    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/Chemistry_of_Natural_Product(CNP)_ch2_slide10.png"
   },
   {
     content: "Identify the glycosidic bond type.",
@@ -576,7 +576,7 @@ export const EXAM_2_CONTENT: QuestionData[] = [
     options: ["D-Glucose", "L-Glucose", "D-Galactose", "D-Mannose"],
     correctAnswer: "D-Glucose",
     explanation: "Right-Left-Right-Right pattern.",
-    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/course-images/Chemistry_of_Natural_Product(CNP)_ch2_slide20.png"
+    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/Chemistry_of_Natural_Product(CNP)_ch2_slide20.png"
   },
   {
     content: "Identify the disaccharide.",
@@ -592,7 +592,7 @@ export const EXAM_2_CONTENT: QuestionData[] = [
     options: ["Pyranose", "Furanose"],
     correctAnswer: "Furanose",
     explanation: "5-membered ring.",
-    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/course-images/Chemistry_of_Natural_Product(CNP)_ch2_slide30.png"
+    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/Chemistry_of_Natural_Product(CNP)_ch2_slide30.png"
   },
 
   // --- Order/Sequence (5 Questions) ---

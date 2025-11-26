@@ -50,7 +50,7 @@ export function QuestionSidebar({
         width: isOpen ? 320 : 0,
         opacity: isOpen ? 1 : 0
       }}
-      className="h-[calc(100vh-4rem)] border-r border-border bg-card overflow-hidden flex flex-col"
+      className="fixed md:relative z-40 h-[calc(100vh-4rem)] border-r border-border bg-card overflow-hidden flex flex-col"
     >
       <div className="p-4 border-b border-border">
         <h3 className="font-semibold text-lg">Question Navigator</h3>
@@ -99,7 +99,7 @@ export function QuestionSidebar({
                             : "bg-secondary text-muted-foreground hover:bg-secondary/80"
                       )}
                     >
-                      {q.originalIndex || 0 + 1}
+                      {(q.originalIndex ?? 0) + 1}
                       {isMarked && (
                         <div className="absolute -top-1 -right-1">
                           <Flag className="h-3 w-3 fill-yellow-500 text-yellow-500" />

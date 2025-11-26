@@ -8,7 +8,7 @@ export const EXAM_FINAL_CONTENT: QuestionData[] = [
     options: ["Antiparallel strands", "Parallel strands", "Identical strands", "Single strand"],
     correctAnswer: "Antiparallel strands",
     explanation: "The two strands of DNA run in opposite directions (5'->3' and 3'->5').",
-    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/course-images/final/dna_helix.svg"
+    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/Chemistry_of_Natural_Product_CNP/final/dna_helix.svg"
   },
   {
     content: "Examine the **Michaelis-Menten Plot**. What does the parameter **Km** represent?",
@@ -16,7 +16,7 @@ export const EXAM_FINAL_CONTENT: QuestionData[] = [
     options: ["Substrate concentration at Vmax", "Substrate concentration at 1/2 Vmax", "Maximum velocity", "Enzyme concentration"],
     correctAnswer: "Substrate concentration at 1/2 Vmax",
     explanation: "Km is defined as the substrate concentration at which the reaction rate is half of Vmax.",
-    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/course-images/final/michaelis_menten.svg"
+    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/Chemistry_of_Natural_Product_CNP/final/michaelis_menten.svg"
   },
   {
     content: "Look at the **Peptide Bond Formation** diagram. What molecule is released during this reaction?",
@@ -24,7 +24,7 @@ export const EXAM_FINAL_CONTENT: QuestionData[] = [
     options: ["Water (H2O)", "Carbon Dioxide (CO2)", "Ammonia (NH3)", "Hydrogen (H2)"],
     correctAnswer: "Water (H2O)",
     explanation: "Peptide bond formation is a dehydration synthesis (condensation) reaction, releasing water.",
-    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/course-images/final/peptide_bond.svg"
+    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/Chemistry_of_Natural_Product_CNP/final/peptide_bond.svg"
   },
   {
     content: "Based on the **DNA** structure, which base pairs with Adenine (A)?",
@@ -32,7 +32,7 @@ export const EXAM_FINAL_CONTENT: QuestionData[] = [
     options: ["Thymine (T)", "Cytosine (C)", "Guanine (G)", "Uracil (U)"],
     correctAnswer: "Thymine (T)",
     explanation: "In DNA, Adenine pairs with Thymine via two hydrogen bonds.",
-    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/course-images/final/dna_helix.svg"
+    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/Chemistry_of_Natural_Product_CNP/final/dna_helix.svg"
   },
   {
     content: "In the **Michaelis-Menten** graph, what happens to the velocity (V) as substrate concentration [S] becomes very high?",
@@ -40,7 +40,7 @@ export const EXAM_FINAL_CONTENT: QuestionData[] = [
     options: ["It approaches Vmax", "It decreases to zero", "It increases linearly", "It becomes negative"],
     correctAnswer: "It approaches Vmax",
     explanation: "At saturating substrate concentrations, the enzyme is fully occupied, and the rate approaches Vmax.",
-    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/course-images/final/michaelis_menten.svg"
+    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/Chemistry_of_Natural_Product_CNP/final/michaelis_menten.svg"
   },
   {
     content: "Which of the following statements regarding the stereochemistry of glucose is **incorrect**?",
@@ -212,7 +212,7 @@ export const EXAM_FINAL_CONTENT: QuestionData[] = [
     options: ["Alpha-Beta phosphoanhydride", "Beta-Gamma phosphoanhydride", "Adenine-Ribose glycosidic", "Ribose-Phosphate ester"],
     correctAnswer: "Beta-Gamma phosphoanhydride",
     explanation: "Hydrolysis of the terminal phosphoanhydride bond releases a large amount of free energy.",
-    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/course-images/final/atp_structure.png"
+    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/Chemistry_of_Natural_Product_CNP/final/atp_structure.png"
   },
   {
     content: "Identify the secondary structure shown in the diagram. What type of bonds stabilize this structure?",
@@ -220,7 +220,7 @@ export const EXAM_FINAL_CONTENT: QuestionData[] = [
     options: ["Alpha-helix stabilized by Hydrogen bonds", "Beta-sheet stabilized by Disulfide bonds", "Alpha-helix stabilized by Ionic bonds", "Beta-sheet stabilized by Hydrogen bonds"],
     correctAnswer: "Alpha-helix stabilized by Hydrogen bonds",
     explanation: "The alpha-helix is stabilized by intrachain hydrogen bonds between the carbonyl oxygen and amide hydrogen.",
-    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/course-images/final/protein_alpha_helix.png"
+    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/Chemistry_of_Natural_Product_CNP/final/protein_alpha_helix.png"
   },
 
   // --- Multi-Select (12 Questions) ---
@@ -701,7 +701,7 @@ export const EXAM_FINAL_CONTENT: QuestionData[] = [
     options: ["Alpha-1,4", "Beta-1,4", "Alpha-1,6", "Beta-1,6"],
     correctAnswer: "Alpha-1,4",
     explanation: "Maltose consists of two glucose units linked by an alpha-1,4-glycosidic bond.",
-    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/course-images/Chemistry_of_Natural_Product(CNP)_ch2_slide83.png"
+    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/Chemistry_of_Natural_Product(CNP)_ch2_slide83.png"
   },
   {
     content: "Identify the anomer shown in the Haworth projection.",
@@ -709,7 +709,7 @@ export const EXAM_FINAL_CONTENT: QuestionData[] = [
     options: ["Alpha", "Beta"],
     correctAnswer: "Beta",
     explanation: "OH is up (equatorial).",
-    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/course-images/Chemistry_of_Natural_Product(CNP)_ch2_slide20.png"
+    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/Chemistry_of_Natural_Product(CNP)_ch2_slide20.png"
   },
   {
     content: "Identify the molecule shown.",
@@ -717,7 +717,7 @@ export const EXAM_FINAL_CONTENT: QuestionData[] = [
     options: ["Glucose", "Fructose", "Ribose", "Galactose"],
     correctAnswer: "Glucose",
     explanation: "Aldohexose structure.",
-    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/course-images/Chemistry_of_Natural_Product(CNP)_ch2_slide10.png"
+    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/Chemistry_of_Natural_Product(CNP)_ch2_slide10.png"
   },
   {
     content: "Is the linkage shown alpha or beta?",
@@ -725,7 +725,7 @@ export const EXAM_FINAL_CONTENT: QuestionData[] = [
     options: ["Alpha", "Beta"],
     correctAnswer: "Beta",
     explanation: "Bond points up.",
-    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/course-images/Chemistry_of_Natural_Product(CNP)_ch2_slide85.png"
+    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/Chemistry_of_Natural_Product(CNP)_ch2_slide85.png"
   },
   {
     content: "Identify the chiral center.",
@@ -733,7 +733,7 @@ export const EXAM_FINAL_CONTENT: QuestionData[] = [
     options: ["C1", "C2", "C3", "C4"],
     correctAnswer: "C2",
     explanation: "Asymmetric carbon.",
-    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/course-images/Chemistry_of_Natural_Product(CNP)_ch1_slide5.png"
+    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/Chemistry_of_Natural_Product(CNP)_ch1_slide5.png"
   },
   {
     content: "Which conformation is shown?",
@@ -741,7 +741,7 @@ export const EXAM_FINAL_CONTENT: QuestionData[] = [
     options: ["Chair", "Boat"],
     correctAnswer: "Chair",
     explanation: "Stable form.",
-    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/course-images/Chemistry_of_Natural_Product(CNP)_ch2_slide30.png"
+    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/Chemistry_of_Natural_Product(CNP)_ch2_slide30.png"
   },
 
   // --- Case Study (2 Questions) ---

@@ -13,7 +13,7 @@ export const EXAM_1_CONTENT: QuestionData[] = [
     ],
     correctAnswer: "Enantiomers",
     explanation: "The two structures are non-superimposable mirror images of each other, which defines them as enantiomers.",
-    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/course-images/ch1/lactic_acid_enantiomers.svg"
+    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/Chemistry_of_Natural_Product_CNP/ch1/lactic_acid_enantiomers.svg"
   },
   {
     content: "Look at the structure of **Meso-Tartaric Acid**. Why is this molecule optically inactive?",
@@ -21,7 +21,7 @@ export const EXAM_1_CONTENT: QuestionData[] = [
     options: ["It lacks chiral centers.", "It has a plane of symmetry.", "It is a racemic mixture.", "It has no double bonds."],
     correctAnswer: "It has a plane of symmetry.",
     explanation: "Despite having two chiral centers, the internal plane of symmetry makes the molecule achiral (meso).",
-    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/course-images/ch1/meso_tartaric_acid.svg"
+    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/Chemistry_of_Natural_Product_CNP/ch1/meso_tartaric_acid.svg"
   },
   {
     content: "Identify the conformation shown in the **Newman Projection** on the left.",
@@ -29,7 +29,7 @@ export const EXAM_1_CONTENT: QuestionData[] = [
     options: ["Staggered", "Eclipsed", "Boat", "Chair"],
     correctAnswer: "Staggered",
     explanation: "The substituents on the front and back carbons are 60 degrees apart, minimizing steric hindrance.",
-    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/course-images/ch1/newman_staggered.svg"
+    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/Chemistry_of_Natural_Product_CNP/ch1/newman_staggered.svg"
   },
   {
     content: "Compare the two alkene isomers shown. Which one is **cis-2-butene**?",
@@ -37,7 +37,7 @@ export const EXAM_1_CONTENT: QuestionData[] = [
     options: ["Structure A (Left)", "Structure B (Right)", "Both", "Neither"],
     correctAnswer: "Structure A (Left)",
     explanation: "In cis-2-butene, the two methyl groups are on the same side of the double bond.",
-    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/course-images/ch1/cis_2_butene.svg"
+    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/Chemistry_of_Natural_Product_CNP/ch1/cis_2_butene.svg"
   },
   {
     content: "Based on the **trans-2-butene** structure, what is the relationship between the two methyl groups?",
@@ -45,7 +45,7 @@ export const EXAM_1_CONTENT: QuestionData[] = [
     options: ["They are on the same side.", "They are on opposite sides.", "They are attached to the same carbon.", "They are perpendicular."],
     correctAnswer: "They are on opposite sides.",
     explanation: "Trans isomers have high-priority groups on opposite sides of the double bond.",
-    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/course-images/ch1/trans_2_butene.svg"
+    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/Chemistry_of_Natural_Product_CNP/ch1/trans_2_butene.svg"
   },
   {
     content: "Determine the **R/S configuration** of the chiral center shown in the diagram.",
@@ -53,7 +53,7 @@ export const EXAM_1_CONTENT: QuestionData[] = [
     options: ["R", "S", "E", "Z"],
     correctAnswer: "S",
     explanation: "Priorities: Br(1) > Cl(2) > F(3) > H(4). H is in the back (dashed). Sequence 1->2->3 is counter-clockwise, so it is S.",
-    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/course-images/ch1/rs_configuration.svg"
+    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/Chemistry_of_Natural_Product_CNP/ch1/rs_configuration.svg"
   },
   {
     content: "Identify the molecule shown in the **Fischer Projection**.",
@@ -61,7 +61,7 @@ export const EXAM_1_CONTENT: QuestionData[] = [
     options: ["D-Glucose", "L-Glucose", "D-Fructose", "D-Galactose"],
     correctAnswer: "D-Glucose",
     explanation: "The structure shows the characteristic OH pattern of D-Glucose (Right-Left-Right-Right).",
-    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/course-images/ch1/fischer_glucose.svg"
+    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/Chemistry_of_Natural_Product_CNP/ch1/fischer_glucose.svg"
   },
   {
     content: "Examine the **Cyclohexane Chair** conformation. Which bonds are highlighted in red?",
@@ -69,7 +69,7 @@ export const EXAM_1_CONTENT: QuestionData[] = [
     options: ["Axial", "Equatorial", "Allylic", "Vinylic"],
     correctAnswer: "Axial",
     explanation: "The bonds pointing straight up and down are axial bonds.",
-    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/course-images/ch1/cyclohexane_chair.svg"
+    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/Chemistry_of_Natural_Product_CNP/ch1/cyclohexane_chair.svg"
   },
   {
     content: "Compare the two structures of **2,3-dichlorobutane**. What is their relationship?",
@@ -77,7 +77,7 @@ export const EXAM_1_CONTENT: QuestionData[] = [
     options: ["Enantiomers", "Diastereomers", "Identical", "Constitutional Isomers"],
     correctAnswer: "Diastereomers",
     explanation: "Structure A is (2R,3R) and Structure B is (2R,3S) Meso. They are stereoisomers but not mirror images, so they are diastereomers.",
-    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/course-images/ch1/diastereomers.svg"
+    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/Chemistry_of_Natural_Product_CNP/ch1/diastereomers.svg"
   },
   {
     content: "Which of the following is NOT a requirement for a molecule to be chiral?",
@@ -639,7 +639,7 @@ export const EXAM_1_CONTENT: QuestionData[] = [
     options: ["Carbon A", "Carbon B", "Carbon C", "None"],
     correctAnswer: "Carbon B",
     explanation: "Carbon B is bonded to 4 different groups.",
-    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/course-images/Chemistry_of_Natural_Product(CNP)_ch1_slide5.png"
+    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/Chemistry_of_Natural_Product(CNP)_ch1_slide5.png"
   },
   {
     content: "Determine if the molecule shown is R or S.",
@@ -647,7 +647,7 @@ export const EXAM_1_CONTENT: QuestionData[] = [
     options: ["R", "S"],
     correctAnswer: "S",
     explanation: "Priorities 1->2->3 are counter-clockwise with H in back.",
-    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/course-images/Chemistry_of_Natural_Product(CNP)_ch1_slide10.png"
+    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/Chemistry_of_Natural_Product(CNP)_ch1_slide10.png"
   },
   {
     content: "Is this molecule Chiral or Achiral (Meso)?",
@@ -655,7 +655,7 @@ export const EXAM_1_CONTENT: QuestionData[] = [
     options: ["Chiral", "Achiral (Meso)"],
     correctAnswer: "Achiral (Meso)",
     explanation: "Plane of symmetry is visible.",
-    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/course-images/Chemistry_of_Natural_Product(CNP)_ch1_slide15.png"
+    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/Chemistry_of_Natural_Product(CNP)_ch1_slide15.png"
   },
   {
     content: "Identify the relationship between Structure A and Structure B.",
@@ -663,7 +663,7 @@ export const EXAM_1_CONTENT: QuestionData[] = [
     options: ["Enantiomers", "Diastereomers", "Identical"],
     correctAnswer: "Diastereomers",
     explanation: "One center inverted, one same.",
-    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/course-images/Chemistry_of_Natural_Product(CNP)_ch1_slide20.png"
+    image: "https://ykskwxkgcapkflfpgiww.supabase.co/storage/v1/object/public/course-images/Chemistry_of_Natural_Product(CNP)_ch1_slide20.png"
   },
   {
     content: "Which projection is shown?",

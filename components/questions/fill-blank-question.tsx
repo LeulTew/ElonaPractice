@@ -1,7 +1,11 @@
+
 "use client"
 
 import { useState } from "react"
 import { motion } from "framer-motion"
+import Image from "next/image"
+
+import { Lightbulb, CheckCircle, XCircle } from "lucide-react"
 
 interface FillBlankQuestionProps {
   question: {
@@ -61,11 +65,14 @@ export function FillBlankQuestion({ question, mode, onAnswer }: FillBlankQuestio
         </div>
 
         {question.image_url && (
-          <img 
-            src={question.image_url} 
-            alt="Question diagram" 
-            className="max-w-full h-auto rounded-xl"
-          />
+          <div className="relative w-full h-[300px] rounded-xl overflow-hidden">
+            <Image 
+              src={question.image_url} 
+              alt="Question diagram" 
+              fill
+              className="object-contain"
+            />
+          </div>
         )}
       </div>
 
@@ -86,7 +93,10 @@ export function FillBlankQuestion({ question, mode, onAnswer }: FillBlankQuestio
           animate={{ opacity: 1, y: 0 }}
           className="p-4 rounded-xl bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800"
         >
-          <p className="text-sm text-blue-900 dark:text-blue-100">💡 {question.hint}</p>
+          <div className="flex items-center gap-2 text-sm text-blue-900 dark:text-blue-100">
+            <Lightbulb className="w-4 h-4" />
+            <p>{question.hint}</p>
+          </div>
         </motion.div>
       )}
 
@@ -101,22 +111,33 @@ export function FillBlankQuestion({ question, mode, onAnswer }: FillBlankQuestio
         </button>
       )}
 
-      {/* Feedback (Practice Mode) */}
-      {submitted && mode === 'PRACTICE' && (
+      {/* Feedback */}
+      {submitted && ( // Changed condition to just 'submitted' to show feedback in both modes if applicable
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className={`p-4 rounded-xl ${
-            isCorrect
-              ? 'bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800'
-              : 'bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800'
+          className={`p-4 rounded-lg border ${
+            isCorrect 
+              ? 'bg-green-50 border-green-200 text-green-800 dark:bg-green-900/20 dark:border-green-800 dark:text-green-300' 
+              : 'bg-red-50 border-red-200 text-red-800 dark:bg-red-900/20 dark:border-red-800 dark:text-red-300'
           }`}
         >
-          <p className={`font-medium ${isCorrect ? 'text-green-900 dark:text-green-100' : 'text-red-900 dark:text-red-100'}`}>
-            {isCorrect ? '✅ Correct!' : `❌ Incorrect. The answer is: ${question.correct_answer}`}
-          </p>
+          <div className="flex items-center gap-2 font-medium">
+            {isCorrect ? (
+              <>
+                <CheckCircle className="w-5 h-5" />
+                <span>Correct!</span>
+              </>
+            ) : (
+              <>
+                <XCircle className="w-5 h-5" />
+                <span>Incorrect. The answer is: {question.correct_answer}</span>
+              </>
+            )}
+          </div>
         </motion.div>
       )}
     </div>
   )
 }
+

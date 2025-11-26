@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" width="400" height="200">
+  <!-- (S)-Lactic Acid -->
+  <g transform="translate(50, 50)">
+    <text x="50" y="20" font-family="Arial" font-size="14" text-anchor="middle">(S)-Lactic Acid</text>
+    <line x1="50" y1="50" x2="50" y2="80" stroke="black" stroke-width="2"/> <!-- C-C -->
+    <line x1="50" y1="80" x2="20" y2="100" stroke="black" stroke-width="2"/> <!-- C-OH -->
+    <line x1="50" y1="80" x2="80" y2="100" stroke="black" stroke-width="2"/> <!-- C-H -->
+    <line x1="50" y1="80" x2="50" y2="130" stroke="black" stroke-width="2"/> <!-- C-COOH -->
+    
+    <!-- Groups -->
+    <text x="50" y="45" font-family="Arial" font-size="12" text-anchor="middle">CH3</text>
+    <text x="10" y="110" font-family="Arial" font-size="12" text-anchor="end">HO</text>
+    <text x="90" y="110" font-family="Arial" font-size="12" text-anchor="start">H</text>
+    <text x="50" y="145" font-family="Arial" font-size="12" text-anchor="middle">COOH</text>
+  </g>
+
+  <!-- Mirror Plane -->
+  <line x1="200" y1="20" x2="200" y2="180" stroke="gray" stroke-dasharray="4" />
+
+  <!-- (R)-Lactic Acid -->
+  <g transform="translate(250, 50)">
+    <text x="50" y="20" font-family="Arial" font-size="14" text-anchor="middle">(R)-Lactic Acid</text>
+    <line x1="50" y1="50" x2="50" y2="80" stroke="black" stroke-width="2"/> <!-- C-C -->
+    <line x1="50" y1="80" x2="80" y2="100" stroke="black" stroke-width="2"/> <!-- C-OH -->
+    <line x1="50" y1="80" x2="20" y2="100" stroke="black" stroke-width="2"/> <!-- C-H -->
+    <line x1="50" y1="80" x2="50" y2="130" stroke="black" stroke-width="2"/> <!-- C-COOH -->
+
+    <!-- Groups -->
+    <text x="50" y="45" font-family="Arial" font-size="12" text-anchor="middle">CH3</text>
+    <text x="90" y="110" font-family="Arial" font-size="12" text-anchor="start">OH</text>
+    <text x="10" y="110" font-family="Arial" font-size="12" text-anchor="end">H</text>
+    <text x="50" y="145" font-family="Arial" font-size="12" text-anchor="middle">COOH</text>
+  </g>
+</svg>

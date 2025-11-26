@@ -29,6 +29,7 @@ export function QuestionCard({ question, courseName }: QuestionCardProps) {
           </Badge>
         </div>
         <AIHelpButton 
+          questionId={question.id}
           questionText={question.content} 
           imageUrl={question.image_url} 
         />

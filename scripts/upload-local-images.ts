@@ -33,10 +33,13 @@ async function uploadImages() {
   let uploadCount = 0;
 
   for (const filePath of files) {
-    const relativePath = path.relative(PUBLIC_DIR, filePath); // e.g., course-images/ch1/file.svg
-    const webPath = '/' + relativePath; // e.g., /course-images/ch1/file.svg
+    const relativePath = path.relative(IMAGES_DIR, filePath); // e.g., Chemistry_of_Natural_Product_CNP/ch1/file.svg
+    const webPath = '/course-images/' + relativePath; 
     
-    // Skip non-image files if any (though we mostly have images)
+    // Skip if it's a directory (getFiles returns files, but just in case)
+    if (fs.lstatSync(filePath).isDirectory()) continue;
+
+    // Skip non-image files
     if (!['.svg', '.png', '.jpg', '.jpeg'].includes(path.extname(filePath).toLowerCase())) {
       continue;
     }

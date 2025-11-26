@@ -42,15 +42,35 @@ async function seedQuestions() {
     }
 
     // Insert new questions
-    const questionsToInsert = questions.map((q, index) => {
-      // Map ORDER_SEQUENCE to MATCHING with metadata flag
-      const questionType = q.type === 'ORDER_SEQUENCE' ? 'MATCHING' : q.type;
+    // Filter out questions with images that are NOT in the new structure
+    const validQuestions = questions.filter(q => {
+      if (!q.image) return true; // Keep text-only questions
+      return q.image.includes('Chemistry_of_Natural_Product_CNP');
+    });
+
+    // Map types first (ORDER_SEQUENCE -> MATCHING) so they sort together
+    const mappedQuestions = validQuestions.map(q => ({
+      ...q,
+      type: q.type === 'ORDER_SEQUENCE' ? 'MATCHING' : q.type,
+      _originalType: q.type
+    }));
+
+    // Sort questions by type to ensure sequential numbering in groups
+    const sortedQuestions = [...mappedQuestions].sort((a, b) => a.type.localeCompare(b.type));
+
+    const questionsToInsert = sortedQuestions.map((q, index) => {
+      const isOrderSequence = q._originalType === 'ORDER_SEQUENCE';
       const metadata: Record<string, unknown> = {
-        ...(q.metadata || {}),
-        image_url: q.image || null
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        ...((q as any).metadata || {}),
+        image_url: q.image || null,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        hint: (q as any).hint || (q.explanation ? `Hint: ${q.explanation.split('.')[0]}.` : "Review the key concepts related to this topic."),
+        original_type: isOrderSequence ? 'ORDER_SEQUENCE' : undefined
       };
       
-      if (q.type === 'ORDER_SEQUENCE') {
+      const questionType = q.type; // Already mapped to MATCHING if needed
+      if (isOrderSequence) { // Added this if block to correctly set real_type
         metadata.real_type = 'ORDER_SEQUENCE';
       }
 
@@ -60,8 +80,7 @@ async function seedQuestions() {
         question_type: questionType,
         options: q.options || null,
         correct_answer: q.correctAnswer,
-        explanation: q.explanation || null,
-        points: 1,
+        explanation: q.explanation,
         order_index: index,
         metadata
       };

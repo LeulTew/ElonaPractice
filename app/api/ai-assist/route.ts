@@ -3,22 +3,48 @@ import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
   try {
-    const { questionId, type, userAnswer } = await request.json();
+    const { questionId, type, userAnswer, questionContent, options, imageUrl } = await request.json();
     
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
     const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
     
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    // Fetch question details
-    const { data: question, error } = await supabase
-      .from('questions')
-      .select('*')
-      .eq('id', questionId)
-      .single();
+    // Fetch question details only if context is missing
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let question: any = {
+      content: questionContent,
+      options,
+      image_url: imageUrl,
+      correct_answer: null, // We might need this for grading, so fetch if needed
+      explanation: null
+    };
 
-    if (error || !question) {
-      return NextResponse.json({ error: 'Question not found' }, { status: 404 });
+    if (!questionContent) {
+      const { data: dbQuestion, error } = await supabase
+        .from('questions')
+        .select('*')
+        .eq('id', questionId)
+        .single();
+
+      if (error || !dbQuestion) {
+        return NextResponse.json({ error: 'Question not found' }, { status: 404 });
+      }
+      question = dbQuestion;
+    } else {
+      // If we have context but need correct answer/explanation
+      if (type === 'grade' || type === 'explain' || type === 'hint') {
+         const { data: dbQuestion } = await supabase
+          .from('questions')
+          .select('correct_answer, explanation')
+          .eq('id', questionId)
+          .single();
+          
+          if (dbQuestion) {
+            question.correct_answer = dbQuestion.correct_answer;
+            question.explanation = dbQuestion.explanation;
+          }
+      }
     }
 
     let responseText = '';

@@ -24,6 +24,7 @@ import {
 import ReactMarkdown from 'react-markdown'
 import rehypeRaw from 'rehype-raw'
 import { supabase } from "@/lib/supabase"
+import { AIHelpButton } from "@/components/ui/ai-help-button"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
@@ -31,6 +32,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { QuestionSidebar } from "./components/question-sidebar"
 import { cn } from "@/lib/utils"
+import Image from "next/image"
 
 interface Question {
   id: string
@@ -67,7 +69,7 @@ export default function ExamPage() {
   const [answers, setAnswers] = useState<Record<string, any>>({})
   const [markedQuestions, setMarkedQuestions] = useState<string[]>([])
   const [loading, setLoading] = useState(true)
-  const [sidebarOpen, setSidebarOpen] = useState(true)
+  const [sidebarOpen, setSidebarOpen] = useState(false) // Default closed for mobile
   const [timeLeft, setTimeLeft] = useState<number>(0)
   const [examData, setExamData] = useState<Exam | null>(null)
   
@@ -94,6 +96,10 @@ export default function ExamPage() {
   }, [mode])
 
   useEffect(() => {
+    // Open sidebar on desktop by default
+    if (window.innerWidth >= 1024) {
+      setSidebarOpen(true)
+    }
     fetchExamData()
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [examId])
@@ -183,31 +189,6 @@ export default function ExamPage() {
 
   function confirmExit() {
     router.push('/courses')
-  }
-
-  async function handleAIHelp() {
-    setIsAiLoading(true)
-    setShowAIResponse(true)
-    setAiResponse('') // Clear previous
-    try {
-      const currentQuestion = questions[currentQuestionIndex]
-      const res = await fetch('/api/ai-assist', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          questionId: currentQuestion.id,
-          type: 'explain',
-          userAnswer: answers[currentQuestion.id]
-        })
-      })
-      const data = await res.json()
-      setAiResponse(data.message || data.error)
-    } catch (err) {
-      console.error('AI Help error:', err)
-      setAiResponse("Failed to get AI help. Please try again.")
-    } finally {
-      setIsAiLoading(false)
-    }
   }
 
   const copyToClipboard = () => {
@@ -487,11 +468,14 @@ export default function ExamPage() {
                       )}>
                         {/* Image Column for Diagram Questions */}
                         {currentQuestion.metadata?.image_url && (
-                          <div className="rounded-xl overflow-hidden border border-border bg-muted/30 flex items-center justify-center p-4 h-fit">
-                            <img 
+                          <div className="rounded-xl overflow-hidden border border-border bg-muted/30 flex items-center justify-center p-4 h-fit relative min-h-[200px]">
+                            <Image 
                               src={currentQuestion.metadata.image_url} 
                               alt="Question Diagram" 
-                              className="max-h-[400px] w-full object-contain"
+                              width={800}
+                              height={400}
+                              className="w-full h-auto object-contain"
+                              priority
                             />
                           </div>
                         )}
@@ -551,8 +535,8 @@ export default function ExamPage() {
                     {/* Fill in Blank */}
 
 
-                    {/* Short Answer */}
-                    {currentQuestion.question_type === 'SHORT_ANSWER' && (
+                    {/* Short Answer / Case Study / Identify Error */}
+                    {['SHORT_ANSWER', 'CASE_STUDY', 'IDENTIFY_ERROR'].includes(currentQuestion.question_type) && (
                       <div className="relative">
                         <Textarea
                           placeholder="Type your explanation here..."
@@ -567,7 +551,7 @@ export default function ExamPage() {
                         {showAnswer && (
                           <div className="mt-4 p-4 bg-secondary/50 rounded-lg border border-border">
                             <p className="text-sm font-medium mb-1 text-primary">Sample Answer / Key Points:</p>
-                            <p className="text-sm text-muted-foreground">{currentQuestion.correct_answer}</p>
+                            <p className="text-sm text-muted-foreground">{currentQuestion.correct_answer || "No answer key available."}</p>
                           </div>
                         )}
                       </div>
@@ -605,15 +589,14 @@ export default function ExamPage() {
                         <Eye className="h-4 w-4" />
                         {showAnswer ? "Hide Answer" : "Show Answer"}
                       </Button>
-                      <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={handleAIHelp}
-                      className="gap-2 text-indigo-500 border-indigo-200 hover:bg-indigo-50 hover:text-indigo-600"
-                    >
-                      <Bot className="h-4 w-4" />
-                      <span className="hidden sm:inline">AI Help</span>
-                    </Button>
+                      <AIHelpButton 
+                        questionId={currentQuestion.id}
+                        questionText={currentQuestion.content}
+                        imageUrl={currentQuestion.metadata?.image_url}
+                        options={Array.isArray(currentQuestion.options) ? currentQuestion.options : null}
+                        userAnswer={answers[currentQuestion.id]}
+                        onAIResponse={setAiResponse}
+                      />
                       
                       <div className="relative">
                         <Button
@@ -627,7 +610,8 @@ export default function ExamPage() {
                           <div className="absolute bottom-full left-0 mb-2 w-72 p-4 rounded-lg bg-popover border border-border shadow-xl text-sm z-20">
                             <p className="font-medium mb-1">Hint:</p>
                             <p className="text-muted-foreground">
-                              {currentQuestion.explanation || "No hint available for this question."}
+                              {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                              {currentQuestion.metadata?.hint || (currentQuestion as any).hint || "No hint available for this question."}
                             </p>
                           </div>
                         )}
@@ -981,7 +965,7 @@ function OrderSequenceQuestion({ question, answer, onAnswer, showAnswer }: Order
       <div className="space-y-2">
         {items.map((item, idx) => (
           <div 
-            key={item}
+            key={`${item}-${idx}`}
             className={cn(
               "flex items-center gap-4 p-4 rounded-lg border-2 bg-card transition-all",
               showAnswer 
