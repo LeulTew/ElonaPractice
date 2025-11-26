@@ -11,8 +11,22 @@ scripts/db-setup/node_modules
 !.yarn/releases
 !.yarn/versions
 
-# testing
-/coverage
+# turbo / build caches
+/.turbo
+
+# testing & coverage output
+/coverage/
+/coverage-final.json
+/coverage-summary.json
+
+# playwright & e2e artifacts
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/
+/e2e/.auth/
+/e2e/.cache/
 
 # next.js
 /.next/
@@ -22,7 +36,6 @@ scripts/db-setup/node_modules
 /build
 
 # misc
-.DS_Store
 *.pem
 
 # debug
@@ -40,3 +53,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# editors & os files
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
