@@ -102,7 +102,7 @@ export const LimelightNav = ({
         } ${limelightClassName}`}
         style={{ left: '-999px' }}
       >
-        <div className="absolute left-[-30%] top-[5px] w-[160%] h-14 [clip-path:polygon(5%_100%,25%_0,75%_0,95%_100%)] bg-gradient-to-b from-primary/30 to-transparent pointer-events-none" />
+        <div className="absolute left-[-30%] top-[5px] w-[160%] h-14 [clip-path:polygon(5%_100%,25%_0,75%_0,95%_100%)] bg-linear-to-b from-primary/30 to-transparent pointer-events-none" />
       </div>
     </nav>
   );

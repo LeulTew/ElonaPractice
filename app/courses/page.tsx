@@ -90,7 +90,7 @@ export default function CoursesPage() {
                   <p className="text-sm font-mono text-muted-foreground mb-4">
                     {course.code}
                   </p>
-                  <p className="text-muted-foreground mb-8 flex-grow">
+                  <p className="text-muted-foreground mb-8 grow">
                     {course.description}
                   </p>
 

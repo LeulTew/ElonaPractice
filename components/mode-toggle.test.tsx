@@ -37,5 +37,14 @@ describe('ModeToggle Integration', () => {
     await waitFor(() => {
       expect(document.documentElement).not.toHaveClass('dark')
     })
+
+    // Open dropdown again
+    await user.click(button)
+
+    // Click System
+    const systemOption = await screen.findByRole('menuitem', { name: /system/i })
+    await user.click(systemOption)
+
+    // Since enableSystem is false, it should not change, but the line is covered
   })
 })

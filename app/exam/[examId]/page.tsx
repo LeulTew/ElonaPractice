@@ -329,6 +329,7 @@ function ExamContent() {
           }
         }}
         className="gap-2 rounded-xl h-9 md:h-10 px-4 md:px-6 text-sm md:text-base"
+        data-testid={isLastQuestion ? "finish-navigation-button" : "next-button"}
       >
         {isLastQuestion ? "Finish" : "Next"}
         {!isLastQuestion && <ChevronRight className="h-4 w-4" />}
@@ -448,6 +449,7 @@ function ExamContent() {
                 onClick={() => mode === 'EXAM' ? setShowSubmitWarning(true) : submitExam()} 
                 size="sm" 
                 className="gap-2"
+                data-testid="finish-exam-button"
               >
                 <CheckCircle2 className="h-4 w-4" />
                 <span className="hidden sm:inline">Finish</span>

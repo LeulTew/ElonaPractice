@@ -41,6 +41,22 @@ const mocks = vi.hoisted(() => ({
       options: ['First', 'Second', 'Third'],
       correct_answer: ['First', 'Second', 'Third'],
       points: 1
+    },
+    {
+      id: 'q5',
+      content: 'Fill blank question',
+      question_type: 'FILL_BLANK',
+      options: [],
+      correct_answer: 'Sample answer',
+      points: 1
+    },
+    {
+      id: 'q6',
+      content: 'Short answer question',
+      question_type: 'SHORT_ANSWER',
+      options: [],
+      correct_answer: 'Sample answer',
+      points: 1
     }
   ],
   exam: {
@@ -179,7 +195,7 @@ describe('ExamPage Integration', () => {
       expect(screen.getByText('Question 1')).toBeInTheDocument()
     })
 
-    const nextButton = screen.getByRole('button', { name: /next/i })
+    const nextButton = screen.getAllByRole('button', { name: /next/i })[0]
     fireEvent.click(nextButton)
 
     expect(screen.getByText('Question 2')).toBeInTheDocument()
@@ -193,12 +209,12 @@ describe('ExamPage Integration', () => {
     })
 
     // Go to last question
-    const nextButton = screen.getByRole('button', { name: /next/i })
-    fireEvent.click(nextButton)
+    const q4SidebarBtn = screen.getByRole('button', { name: /4/i })
+    fireEvent.click(q4SidebarBtn)
 
-    await screen.findByText('Question 2')
+    await screen.findByText('Order Items')
 
-    expect(await screen.findByRole('button', { name: /Finish/i })).toBeInTheDocument()
+    expect(screen.getByTestId('finish-exam-button')).toBeInTheDocument()
   })
 
   it('shows hint when requested', async () => {
@@ -277,11 +293,11 @@ describe('ExamPage Integration', () => {
     fireEvent.click(optionA)
 
     // Go to last question
-    const nextButton = screen.getByRole('button', { name: /next/i })
-    fireEvent.click(nextButton)
+    const q4SidebarBtn = screen.getByRole('button', { name: /4/i })
+    fireEvent.click(q4SidebarBtn)
 
     // Finish - Use regex to match either "Finish" or "Finish Exam"
-    const finishButton = await screen.findByRole('button', { name: /Finish/i })
+    const finishButton = screen.getByTestId('finish-exam-button')
     fireEvent.click(finishButton)
 
     await waitFor(() => {
@@ -393,13 +409,13 @@ describe('ExamPage Integration', () => {
       expect(screen.getByText('Question 1')).toBeInTheDocument()
     })
 
-    fireEvent.click(screen.getByRole('button', { name: /^Next$/i }))
+    fireEvent.click(screen.getAllByRole('button', { name: /^Next$/i })[0])
 
     await waitFor(() => {
       expect(screen.getByText('Question 2')).toBeInTheDocument()
     })
 
-    fireEvent.click(screen.getByRole('button', { name: /^Previous$/i }))
+    fireEvent.click(screen.getAllByRole('button', { name: /^Previous$/i })[0])
 
     await waitFor(() => {
       expect(screen.getByText('Question 1')).toBeInTheDocument()
@@ -473,6 +489,7 @@ describe('ExamPage Integration', () => {
         options: ['Option A', 'Option B'],
         correct_answer: 'Option A',
         points: 1,
+        hint: 'Hint for solo question',
       },
     ]
     const insertHandler = vi.fn()
@@ -489,7 +506,7 @@ describe('ExamPage Integration', () => {
 
     fireEvent.click(screen.getByText('Option A'))
 
-    const finishButton = screen.getByRole('button', { name: /Finish Exam/i })
+    const finishButton = screen.getByTestId('finish-exam-button')
     fireEvent.click(finishButton)
 
     await waitFor(() => {
@@ -763,7 +780,7 @@ describe('ExamPage Integration', () => {
     fireEvent.click(nextButton)
     fireEvent.click(nextButton)
 
-    const finishButton = await screen.findByRole('button', { name: /Finish Exam/i })
+    const finishButton = screen.getByTestId('finish-exam-button')
     fireEvent.click(finishButton)
 
     expect(await screen.findByText('Submit Exam?')).toBeInTheDocument()
@@ -865,7 +882,7 @@ describe('ExamPage Integration', () => {
     fireEvent.click(optionC) // unselect
     fireEvent.click(optionC) // reselect
 
-    const finishButton = screen.getByRole('button', { name: /Finish Exam/i })
+    const finishButton = screen.getByTestId('finish-exam-button')
     fireEvent.click(finishButton)
 
     await waitFor(() => {
@@ -891,7 +908,8 @@ describe('ExamPage Integration', () => {
       },
     ]
     const insertHandler = vi.fn().mockResolvedValue({ data: { id: 'attempt-objects' }, error: null })
-    setupSupabase({ questionsData: matchingOnly, insertHandler })
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    setupSupabase({ questionsData: matchingOnly as any, insertHandler })
 
     render(<ExamPage />)
 
@@ -911,7 +929,7 @@ describe('ExamPage Integration', () => {
     selectPair('Hydrogen', 'H')
     selectPair('Oxygen', 'O')
 
-    fireEvent.click(screen.getByRole('button', { name: /^Finish$/i }))
+    fireEvent.click(screen.getByTestId('finish-exam-button'))
 
     await waitFor(() => {
       expect(insertHandler).toHaveBeenCalled()

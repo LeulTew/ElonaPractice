@@ -5,10 +5,11 @@ import { useRouter, useSearchParams, useParams } from "next/navigation"
 import { supabase } from "@/lib/supabase"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { CheckCircle, ArrowLeft, ArrowRight, Download } from "lucide-react"
+import { CheckCircle, ArrowLeft, ArrowRight, Download, Menu } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import ReactMarkdown from "react-markdown"
 import rehypeRaw from "rehype-raw"
+import { Modal } from "@/components/ui/modal"
 
 interface Question {
   id: string
@@ -50,6 +51,7 @@ function ReviewContent() {
   const [questions, setQuestions] = useState<Question[]>([])
   const [currentIndex, setCurrentIndex] = useState(0)
   const [loading, setLoading] = useState(true)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   useEffect(() => {
     async function fetchData() {
@@ -174,6 +176,13 @@ function ReviewContent() {
               transition={{ duration: 0.2 }}
             >
               <Card className="p-6 md:p-8 border-border/50">
+                {/* Question Number */}
+                <div className="mb-6 flex justify-center">
+                  <span className="text-4xl font-bold font-mono text-amber-500 block mb-2">
+                    {String(currentIndex + 1).padStart(2, '0')}
+                  </span>
+                </div>
+
                 {/* Question Content */}
                 <div className="prose dark:prose-invert max-w-none mb-8">
                   <ReactMarkdown rehypePlugins={[rehypeRaw]}>
@@ -284,6 +293,45 @@ function ReviewContent() {
             })}
           </div>
         </aside>
+      </div>
+
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Questions">
+        <div className="grid grid-cols-5 gap-2">
+          {questions.map((q, idx) => {
+            const qAnswer = attempt?.answers?.[q.id]
+            const qCorrect = checkAnswer(q, qAnswer)
+            return (
+              <button
+                key={q.id}
+                onClick={() => {
+                  setCurrentIndex(idx)
+                  setIsModalOpen(false)
+                }}
+                className={`aspect-square rounded-lg flex items-center justify-center text-sm font-medium transition-colors ${
+                  currentIndex === idx ? 'ring-2 ring-primary ring-offset-2' : ''
+                } ${
+                  qCorrect 
+                    ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 hover:bg-green-200 dark:hover:bg-green-900/50' 
+                    : 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400 hover:bg-red-200 dark:hover:bg-red-900/50'
+                }`}
+              >
+                {idx + 1}
+              </button>
+            )
+          })}
+        </div>
+      </Modal>
+
+      {/* Floating Questions Button */}
+      <div className="fixed bottom-4 right-4 z-50 xl:hidden">
+        <Button
+          variant="default"
+          size="icon"
+          onClick={() => setIsModalOpen(true)}
+          className="rounded-full shadow-lg"
+        >
+          <Menu className="h-5 w-5" />
+        </Button>
       </div>
 
       {/* Print View */}
