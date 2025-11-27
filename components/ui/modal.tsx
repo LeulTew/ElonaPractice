@@ -25,7 +25,7 @@ export function Modal({ isOpen, onClose, children, title }: ModalProps) {
       <div className="relative bg-background sm:rounded-xl rounded-t-xl border w-full sm:max-w-lg max-w-full overflow-hidden animate-in fade-in sm:zoom-in-95 slide-in-from-bottom-4 duration-200">
         <div className="flex items-center justify-between p-4 border-b">
           <h3 className="font-semibold">{title || 'Modal'}</h3>
-          <button onClick={onClose} className="p-1 hover:bg-muted rounded-full transition-colors">
+          <button onClick={onClose} className="p-1 hover:bg-muted rounded-full transition-colors" aria-label="Close">
             <X className="w-4 h-4" />
           </button>
         </div>

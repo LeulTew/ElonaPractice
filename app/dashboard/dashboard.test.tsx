@@ -59,19 +59,48 @@ describe('Dashboard Page', () => {
     })
   })
 
-  it('handles empty stats', async () => {
-    // Mock empty stats (first time user)
-    const mockSingle = vi.fn().mockResolvedValue({ data: null, error: null })
+  it('handles stats fetch error', async () => {
+    // Mock error in stats fetch
+    const mockSingle = vi.fn().mockResolvedValue({ data: null, error: { message: 'Database error' } })
     const mockSelect = vi.fn().mockReturnValue({ single: mockSingle })
     const mockFrom = vi.fn().mockReturnValue({ select: mockSelect })
     
     // @ts-expect-error - mocking supabase client
     supabase.from.mockImplementation(mockFrom)
 
+    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+
     render(<Dashboard />)
 
+    // Should still render with default stats (0 values)
     await waitFor(() => {
+      expect(screen.getByText('Welcome back, Elona')).toBeInTheDocument()
       expect(screen.getByText('0%')).toBeInTheDocument()
     })
+
+    expect(consoleSpy).toHaveBeenCalledWith('Failed to fetch dashboard stats:', expect.any(Object))
+    consoleSpy.mockRestore()
+  })
+
+  it('handles exception during stats fetch', async () => {
+    // Mock exception during fetch
+    const mockFrom = vi.fn().mockImplementation(() => {
+      throw new Error('Network error')
+    })
+    
+    // @ts-expect-error - mocking supabase client
+    supabase.from.mockImplementation(mockFrom)
+
+    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+
+    render(<Dashboard />)
+
+    // Should render with default stats
+    await waitFor(() => {
+      expect(screen.getByText('Welcome back, Elona')).toBeInTheDocument()
+    })
+
+    expect(consoleSpy).toHaveBeenCalledWith('Failed to fetch dashboard stats:', expect.any(Error))
+    consoleSpy.mockRestore()
   })
 })

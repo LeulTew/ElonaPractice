@@ -10,6 +10,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import ReactMarkdown from "react-markdown"
 import rehypeRaw from "rehype-raw"
 import { Modal } from "@/components/ui/modal"
+import Image from "next/image"
 
 interface Question {
   id: string
@@ -189,11 +190,13 @@ function ReviewContent() {
                     {currentQuestion.content}
                   </ReactMarkdown>
                   {typeof currentQuestion.metadata?.image_url === 'string' && (
-                    /* eslint-disable-next-line @next/next/no-img-element */
-                    <img 
+                    <Image 
                       src={currentQuestion.metadata.image_url} 
                       alt="Question Diagram" 
-                      className="mt-4 rounded-lg max-h-96 object-contain"
+                      width={800}
+                      height={400}
+                      className="mt-4 rounded-lg max-h-96 w-full h-auto object-contain"
+                      priority
                     />
                   )}
                 </div>
@@ -296,7 +299,7 @@ function ReviewContent() {
       </div>
 
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Questions">
-        <div className="grid grid-cols-5 gap-2">
+        <div className="grid grid-cols-6 sm:grid-cols-8 md:grid-cols-10 gap-1 sm:gap-2">
           {questions.map((q, idx) => {
             const qAnswer = attempt?.answers?.[q.id]
             const qCorrect = checkAnswer(q, qAnswer)
@@ -307,7 +310,7 @@ function ReviewContent() {
                   setCurrentIndex(idx)
                   setIsModalOpen(false)
                 }}
-                className={`aspect-square rounded-lg flex items-center justify-center text-sm font-medium transition-colors ${
+                className={`w-11 h-11 sm:w-14 sm:h-14 rounded-lg flex items-center justify-center text-xs font-medium transition-colors ${
                   currentIndex === idx ? 'ring-2 ring-primary ring-offset-2' : ''
                 } ${
                   qCorrect 
@@ -329,6 +332,7 @@ function ReviewContent() {
           size="icon"
           onClick={() => setIsModalOpen(true)}
           className="rounded-full shadow-lg"
+          aria-label="Open questions menu"
         >
           <Menu className="h-5 w-5" />
         </Button>
@@ -353,11 +357,13 @@ function ReviewContent() {
                     {q.content}
                   </ReactMarkdown>
                   {typeof q.metadata?.image_url === 'string' && (
-                    /* eslint-disable-next-line @next/next/no-img-element */
-                    <img 
+                    <Image 
                       src={q.metadata.image_url} 
                       alt="Diagram" 
-                      className="mt-4 max-h-64 object-contain"
+                      width={800}
+                      height={400}
+                      className="mt-4 max-h-64 w-full h-auto object-contain"
+                      priority
                     />
                   )}
                 </div>

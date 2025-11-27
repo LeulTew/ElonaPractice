@@ -90,4 +90,11 @@ describe('LimelightNav', () => {
       vi.useRealTimers()
     }
   })
+
+  it('handles invalid active index gracefully', () => {
+    render(<LimelightNav items={items} defaultActiveIndex={99} />)
+    // Should not crash
+    const limelight = screen.getByTestId('limelight-indicator')
+    expect(limelight).toBeInTheDocument()
+  })
 })

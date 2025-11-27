@@ -118,6 +118,59 @@ describe('Question Components', () => {
       expect(optionButton).toBeDisabled()
     })
 
+    it('does not change selection when clicked after submission in exam mode', () => {
+      render(
+        <MCQQuestion
+          question={mockQuestion}
+          mode="EXAM"
+          onAnswer={() => {}}
+        />
+      )
+
+      // Select Paris and submit
+      fireEvent.click(screen.getByText('Paris'))
+      fireEvent.click(screen.getByRole('button', { name: /Submit Answer/i }))
+
+      // Try to select Berlin
+      const berlinButton = screen.getByRole('button', { name: /Berlin/i })
+      fireEvent.click(berlinButton)
+
+      // Paris should still be selected (checked by class or other means)
+      // In this component, selected option has specific styling.
+      // We can check if Berlin became selected.
+      // If selected, it would have 'bg-amber-50' or similar if not submitted, 
+      // but since it is submitted, it might have different classes.
+      // However, since we are in EXAM mode, if we could change selection, 
+      // the UI might not update to show correctness immediately, but the internal state would change.
+      // Actually, in EXAM mode, after submission, the UI doesn't show correctness (green/red) until the end?
+      // Wait, let's check the component.
+      
+      // In EXAM mode, `showCorrect` is false (line 64: `const showCorrect = submitted && mode === 'PRACTICE'`).
+      // So `isSelected` determines the class.
+      // If `isSelected` is true, it uses `bg-amber-50` (line 79).
+      // So if we successfully changed selection to Berlin, Berlin would have `bg-amber-50`.
+      
+      expect(berlinButton.className).not.toContain('bg-amber-50')
+      expect(berlinButton.className).toContain('bg-white') // Default
+    })
+
+    it('does not submit when no answer selected', () => {
+      const onAnswer = vi.fn()
+      render(
+        <MCQQuestion
+          question={mockQuestion}
+          mode="PRACTICE"
+          onAnswer={onAnswer}
+        />
+      )
+
+      const submitButton = screen.getByRole('button', { name: /Submit Answer/i })
+      // Button is disabled, but we force click to test the guard
+      fireEvent.click(submitButton)
+
+      expect(onAnswer).not.toHaveBeenCalled()
+    })
+
     it('renders the question image when provided', () => {
       render(
         <MCQQuestion
@@ -311,6 +364,23 @@ describe('Question Components', () => {
       expect(screen.getByText('It starts with T')).toBeInTheDocument()
       expect(screen.getByAltText('Question diagram')).toBeInTheDocument()
     })
+
+    it('does not submit when answer is empty', () => {
+      const onAnswer = vi.fn()
+      render(
+        <FillBlankQuestion
+          question={mockQuestion}
+          mode="PRACTICE"
+          onAnswer={onAnswer}
+        />
+      )
+
+      const submitButton = screen.getByRole('button', { name: /Submit Answer/i })
+      // Button is disabled, but force click
+      fireEvent.click(submitButton)
+
+      expect(onAnswer).not.toHaveBeenCalled()
+    })
   })
 
   describe('MatchingQuestion', () => {
@@ -431,6 +501,65 @@ describe('Question Components', () => {
 
       expect(screen.getByText('Paris').className).toContain('border-red-500')
       expect(screen.getByText('Tokyo').className).toContain('border-red-500')
+    })
+
+    it('does not match when right item clicked without left selection', () => {
+      render(
+        <MatchingQuestion
+          question={mockQuestion}
+          mode="PRACTICE"
+          onAnswer={() => {}}
+        />
+      )
+
+      fireEvent.click(screen.getByText('Paris'))
+      // Should not be matched (no visual indication of match on Paris alone, usually)
+      // We can check internal state if we could, but here we can check if it allows submitting (it shouldn't)
+      expect(screen.getByRole('button', { name: /Submit Answer/i })).toBeDisabled()
+    })
+
+    it('does not match when right item is already matched', () => {
+      render(
+        <MatchingQuestion
+          question={mockQuestion}
+          mode="PRACTICE"
+          onAnswer={() => {}}
+        />
+      )
+
+      // Match France -> Paris
+      fireEvent.click(screen.getByText('France'))
+      fireEvent.click(screen.getByText('Paris'))
+
+      // Try to match Japan -> Paris
+      fireEvent.click(screen.getByText('Japan'))
+      fireEvent.click(screen.getByText('Paris'))
+
+      // Paris should still be matched to France (implied by not changing)
+      // If it changed, Japan would be matched.
+      // We can check if Japan is selected (it should still be selected as left item because match failed?)
+      // Actually, if match fails, selectedLeft remains 'Japan'.
+      // The component doesn't clear selectedLeft if match fails.
+      // So Japan should be highlighted as selected.
+      expect(screen.getByText('Japan').className).toContain('border-primary')
+    })
+
+    it('renders gracefully without metadata', () => {
+      const brokenQuestion = {
+        id: '5',
+        content: 'Broken Matching',
+        // metadata missing
+      } as any
+
+      render(
+        <MatchingQuestion
+          question={brokenQuestion}
+          mode="PRACTICE"
+          onAnswer={() => {}}
+        />
+      )
+
+      expect(screen.getByText('Broken Matching')).toBeInTheDocument()
     })
   })
 })

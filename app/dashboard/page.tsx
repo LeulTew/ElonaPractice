@@ -32,19 +32,28 @@ export default function Dashboard() {
   })
   useEffect(() => {
     async function fetchStats() {
-      // Fetch user stats
-      const { data: statsData } = await supabase
-        .from('user_stats')
-        .select('*')
-        .single()
+      try {
+        // Fetch user stats
+        const { data: statsData, error } = await supabase
+          .from('user_stats')
+          .select('*')
+          .single()
 
-      if (statsData) {
-        setStats({
-          totalAttempts: statsData.total_attempts || 0,
-          avgScore: Math.round(statsData.avg_score || 0),
-          totalTimeMinutes: statsData.total_time_minutes || 0,
-          questionsAnswered: statsData.questions_answered || 0,
-        })
+        if (error) {
+          console.error('Failed to fetch dashboard stats:', error)
+          return
+        }
+
+        if (statsData) {
+          setStats({
+            totalAttempts: statsData.total_attempts || 0,
+            avgScore: Math.round(statsData.avg_score || 0),
+            totalTimeMinutes: statsData.total_time_minutes || 0,
+            questionsAnswered: statsData.questions_answered || 0,
+          })
+        }
+      } catch (error) {
+        console.error('Failed to fetch dashboard stats:', error)
       }
     }
 

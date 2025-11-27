@@ -1,4 +1,7 @@
 import { render, screen, fireEvent, waitFor, within } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+
+
 import ExamPage from './page'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 
@@ -824,7 +827,7 @@ describe('ExamPage Integration', () => {
     })
 
     const copyButton = screen.getByRole('button', { name: /Copy Context/i })
-    fireEvent.click(copyButton)
+    await userEvent.click(copyButton)
 
     await waitFor(() => {
       expect(clipboardMock.writeText).toHaveBeenCalledWith(expect.stringContaining('Question:'))
@@ -966,5 +969,75 @@ describe('ExamPage Integration', () => {
     })
 
     errorSpy.mockRestore()
+  })
+
+  it('renders order sequence question gracefully when options are missing', async () => {
+    const brokenQuestion = [
+      {
+        id: 'broken-order',
+        content: 'Broken Order',
+        question_type: 'ORDER_SEQUENCE',
+        // options missing
+        correct_answer: ['A', 'B'],
+        points: 1,
+      },
+    ] as unknown as typeof mocks.questions
+    setupSupabase({ questionsData: brokenQuestion })
+
+    render(<ExamPage />)
+
+    await waitFor(() => {
+      expect(screen.getByText('Broken Order')).toBeInTheDocument()
+    })
+    
+    const listItems = screen.queryAllByTestId('order-item-label')
+    expect(listItems).toHaveLength(0)
+  })
+
+  it('prevents reordering when answer is shown', async () => {
+    const user = userEvent.setup()
+    const orderQuestion = [
+      {
+        id: 'order-1',
+        content: 'Order Items',
+        question_type: 'ORDER_SEQUENCE',
+        options: ['A', 'B'],
+        correct_answer: ['A', 'B'],
+        points: 1,
+      },
+    ]
+    setupSupabase({ questionsData: orderQuestion })
+
+    render(<ExamPage />)
+
+    await waitFor(() => {
+      expect(screen.getByText('Order Items')).toBeInTheDocument()
+    })
+
+    // Show Answer
+    await user.click(screen.getByRole('button', { name: /Show Answer/i }))
+    
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: /Hide Answer/i })).toBeInTheDocument()
+    })
+
+    // Get current order
+    const labels = screen.getAllByTestId('order-item-label')
+    const firstLabel = labels[0].textContent
+    const secondLabel = labels[1].textContent
+
+    // Try to move the first item down
+    const moveDownBtn = screen.getByRole('button', { name: new RegExp(`Move ${firstLabel} down`, 'i') })
+    
+    // It should be disabled
+    expect(moveDownBtn).toBeDisabled()
+    
+    // Force click
+    await user.click(moveDownBtn)
+
+    // Order should not change
+    const newLabels = screen.getAllByTestId('order-item-label')
+    expect(newLabels[0]).toHaveTextContent(firstLabel!)
+    expect(newLabels[1]).toHaveTextContent(secondLabel!)
   })
 })

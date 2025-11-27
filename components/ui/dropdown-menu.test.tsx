@@ -4,6 +4,7 @@ import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
+  DropdownMenuPortal,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
@@ -136,5 +137,25 @@ describe('DropdownMenu', () => {
     await waitFor(() => {
       expect(screen.getByText('Sub Item')).toBeInTheDocument()
     })
+    await waitFor(() => {
+      expect(screen.getByText('Sub Item')).toBeInTheDocument()
+    })
+  })
+
+  it('renders with portal', async () => {
+    const user = userEvent.setup()
+    render(
+      <DropdownMenu>
+        <DropdownMenuTrigger>Open</DropdownMenuTrigger>
+        <DropdownMenuPortal>
+          <DropdownMenuContent>
+            <DropdownMenuItem>Item 1</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenuPortal>
+      </DropdownMenu>
+    )
+
+    await user.click(screen.getByText('Open'))
+    expect(await screen.findByText('Item 1')).toBeInTheDocument()
   })
 })

@@ -44,6 +44,7 @@ describe('ExamSelectionModal', () => {
     id: 'course-1',
     title: 'Test Course',
     code: 'TEST101',
+    description: 'Test Description',
   }
 
   const mockExams = [
