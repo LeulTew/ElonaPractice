@@ -21,6 +21,15 @@ interface DashboardStats {
   avgScore: number
   totalTimeMinutes: number
   questionsAnswered: number
+  recentAttempts: Array<{
+    id: string
+    score: number
+    total_points: number
+    time_spent_seconds: number
+    started_at: string
+    mode: string
+    exam_id: string
+  }>
 }
 
 export default function Dashboard() {
@@ -29,6 +38,7 @@ export default function Dashboard() {
     avgScore: 0,
     totalTimeMinutes: 0,
     questionsAnswered: 0,
+    recentAttempts: []
   })
   useEffect(() => {
     async function fetchStats() {
@@ -36,7 +46,8 @@ export default function Dashboard() {
         // Fetch all exam attempts for the user
         const { data: attempts, error: attemptsError } = await supabase
           .from('exam_attempts')
-          .select('id, score, total_points, time_spent_seconds')
+          .select('id, score, total_points, time_spent_seconds, started_at, mode, exam_id')
+          .order('started_at', { ascending: false })
         
         if (attemptsError) {
           console.error('Failed to fetch exam attempts:', attemptsError)
@@ -49,6 +60,7 @@ export default function Dashboard() {
             avgScore: 0,
             totalTimeMinutes: 0,
             questionsAnswered: 0,
+            recentAttempts: []
           })
           return
         }
@@ -81,6 +93,7 @@ export default function Dashboard() {
           avgScore,
           totalTimeMinutes,
           questionsAnswered: questionsAnswered || 0,
+          recentAttempts: attempts.slice(0, 3)
         })
 
       } catch (error) {
@@ -206,15 +219,86 @@ export default function Dashboard() {
             className="space-y-4"
           >
             <h2 className="text-2xl font-semibold tracking-tight">Recent Activity</h2>
-            <Card className="h-[300px] flex items-center justify-center text-muted-foreground border-dashed">
-              <div className="text-center space-y-2">
-                <Activity className="h-8 w-8 mx-auto opacity-50" />
-                <p>No recent activity found</p>
-                <Button variant="link" asChild>
-                  <Link href="/courses">Start your first exam</Link>
-                </Button>
-              </div>
-            </Card>
+            {stats.recentAttempts.length > 0 ? (
+              <Card className="overflow-hidden">
+                <div className="max-h-[400px] overflow-y-auto">
+                  <div className="divide-y divide-border">
+                    {stats.recentAttempts.map((attempt) => (
+                      <Link 
+                        key={attempt.id} 
+                        href={`/exam/${attempt.exam_id}/results?attemptId=${attempt.id}`}
+                        className="block"
+                      >
+                        <div className="p-4 hover:bg-muted/50 transition-all group cursor-pointer">
+                          <div className="flex items-start gap-3 sm:gap-4">
+                            {/* Icon */}
+                            <div className={`flex h-10 w-10 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-full transition-transform group-hover:scale-110 ${
+                              attempt.mode === 'EXAM' 
+                                ? 'bg-gradient-to-br from-red-500/10 to-orange-500/10 text-red-600 dark:from-red-500/20 dark:to-orange-500/20' 
+                                : 'bg-gradient-to-br from-blue-500/10 to-cyan-500/10 text-blue-600 dark:from-blue-500/20 dark:to-cyan-500/20'
+                            }`}>
+                              {attempt.mode === 'EXAM' ? <Trophy className="h-5 w-5 sm:h-6 sm:w-6" /> : <Activity className="h-5 w-5 sm:h-6 sm:w-6" />}
+                            </div>
+                            
+                            {/* Content */}
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-start justify-between gap-2">
+                                <div className="flex-1 min-w-0">
+                                  <p className="font-semibold text-sm sm:text-base truncate group-hover:text-primary transition-colors">
+                                    {attempt.mode === 'EXAM' ? 'Exam Mode' : 'Practice Mode'}
+                                  </p>
+                                  <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 mt-1">
+                                    <p className="text-xs sm:text-sm text-muted-foreground">
+                                      {new Date(attempt.started_at).toLocaleDateString('en-US', { 
+                                        month: 'short', 
+                                        day: 'numeric', 
+                                        year: 'numeric' 
+                                      })}
+                                    </p>
+                                    <span className="hidden sm:inline text-muted-foreground">•</span>
+                                    <p className="text-xs sm:text-sm text-muted-foreground">
+                                      {new Date(attempt.started_at).toLocaleTimeString('en-US', { 
+                                        hour: '2-digit', 
+                                        minute: '2-digit' 
+                                      })}
+                                    </p>
+                                  </div>
+                                </div>
+                                
+                                {/* Score Badge */}
+                                <div className="flex flex-col items-end gap-1 shrink-0">
+                                  <div className={`px-2.5 py-1 rounded-full text-xs sm:text-sm font-bold ${
+                                    Math.round((attempt.score / attempt.total_points) * 100) >= 70
+                                      ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
+                                      : 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400'
+                                  }`}>
+                                    {Math.round((attempt.score / attempt.total_points) * 100)}%
+                                  </div>
+                                  <p className="text-xs text-muted-foreground flex items-center gap-1">
+                                    <Clock className="h-3 w-3" />
+                                    {Math.floor(attempt.time_spent_seconds / 60)}m
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </Card>
+            ) : (
+              <Card className="h-[300px] flex items-center justify-center text-muted-foreground border-dashed">
+                <div className="text-center space-y-2">
+                  <Activity className="h-8 w-8 mx-auto opacity-50" />
+                  <p>No recent activity found</p>
+                  <Button variant="link" asChild>
+                    <Link href="/courses">Start your first exam</Link>
+                  </Button>
+                </div>
+              </Card>
+            )}
           </motion.div>
         </div>
       </div>

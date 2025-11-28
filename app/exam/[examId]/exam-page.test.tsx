@@ -1,7 +1,6 @@
 import { render, screen, fireEvent, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-
 import ExamPage, { Question } from './page'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 

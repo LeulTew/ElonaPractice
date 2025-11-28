@@ -448,4 +448,120 @@ describe('ReviewPage', () => {
     // Don't restore mocks for the last test
     vi.restoreAllMocks()
   })
+
+  // Helper to setup default mock with 2 questions
+  const setupDefaultMock = () => {
+    vi.mocked(supabase.from).mockImplementation((table) => {
+      if (table === 'exam_attempts') {
+        return {
+          select: vi.fn(() => ({
+            eq: vi.fn(() => ({
+              single: vi.fn(() => Promise.resolve({
+                data: {
+                  id: 'attempt-123',
+                  score: 8,
+                  total_points: 10,
+                  answers: { 'q1': 'A', 'q2': 'B' }
+                },
+                error: null
+              }))
+            }))
+          }))
+        } as unknown as ReturnType<typeof supabase.from>
+      } else if (table === 'questions') {
+        return {
+          select: vi.fn(() => ({
+            eq: vi.fn(() => ({
+              order: vi.fn(() => Promise.resolve({
+                data: [
+                  {
+                    id: 'q1',
+                    content: 'Test question 1',
+                    question_type: 'MCQ',
+                    options: ['A', 'B'],
+                    correct_answer: 'A',
+                    explanation: 'Test explanation 1',
+                    order_index: 0,
+                    points: 1
+                  },
+                  {
+                    id: 'q2',
+                    content: 'Test question 2',
+                    question_type: 'MCQ',
+                    options: ['C', 'D'],
+                    correct_answer: 'C',
+                    explanation: 'Test explanation 2',
+                    order_index: 1,
+                    points: 1
+                  }
+                ],
+                error: null
+              }))
+            }))
+          }))
+        } as unknown as ReturnType<typeof supabase.from>
+      }
+      return {} as unknown as ReturnType<typeof supabase.from>
+    })
+  }
+
+  it('navigates back when back button is clicked', async () => {
+    setupDefaultMock()
+    render(<ReviewPage />)
+    await waitFor(() => expect(screen.getByText('01')).toBeInTheDocument())
+    
+    const backButton = screen.getByText('Back')
+    fireEvent.click(backButton)
+    
+    expect(mockRouter.back).toHaveBeenCalled()
+  })
+
+  it('navigates via sidebar', async () => {
+    setupDefaultMock()
+    // Mock large screen
+    Object.defineProperty(window, 'innerWidth', { writable: true, value: 1280 })
+    render(<ReviewPage />)
+    await waitFor(() => expect(screen.getByText('01')).toBeInTheDocument())
+    
+    // Find sidebar buttons (they contain just the number)
+    // The sidebar is rendered before the modal in the DOM
+    const question2Buttons = screen.getAllByText('2')
+    fireEvent.click(question2Buttons[0])
+    
+    await waitFor(() => {
+      expect(screen.getByText('02')).toBeInTheDocument()
+    })
+  })
+
+  it('navigates via modal', async () => {
+    setupDefaultMock()
+    Object.defineProperty(window, 'innerWidth', { writable: true, value: 375 })
+    render(<ReviewPage />)
+    await waitFor(() => expect(screen.getByText('01')).toBeInTheDocument())
+    
+    // Open modal
+    const menuButton = screen.getByLabelText('Open questions menu')
+    fireEvent.click(menuButton)
+    
+    // Click question 2 in modal
+    // Since modal is open, we should be able to find it.
+    // It might be the second "2" if sidebar is still in DOM but hidden
+    const question2Buttons = screen.getAllByText('2')
+    fireEvent.click(question2Buttons[question2Buttons.length - 1])
+    
+    await waitFor(() => {
+      expect(screen.getByText('02')).toBeInTheDocument()
+    })
+  })
+
+  it('handles print functionality', async () => {
+    setupDefaultMock()
+    render(<ReviewPage />)
+    await waitFor(() => expect(screen.getByText('01')).toBeInTheDocument())
+    
+    const printButton = screen.getByText('Download PDF')
+    fireEvent.click(printButton)
+    
+    expect(window.print).toHaveBeenCalled()
+  })
 })

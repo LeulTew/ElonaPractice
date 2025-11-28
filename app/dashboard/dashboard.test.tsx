@@ -32,11 +32,11 @@ describe('Dashboard Page', () => {
     vi.clearAllMocks()
   })
 
-  it('renders dashboard with stats', async () => {
+  it('renders dashboard with stats and recent activity', async () => {
     // Mock successful attempts fetch
     const mockAttempts = [
-      { id: '1', score: 8, total_points: 10, time_spent_seconds: 900 }, // 15 mins
-      { id: '2', score: 9, total_points: 10, time_spent_seconds: 900 }  // 15 mins
+      { id: '1', score: 8, total_points: 10, time_spent_seconds: 900, started_at: '2023-01-01', mode: 'PRACTICE', exam_id: 'exam-1' }, // 15 mins
+      { id: '2', score: 9, total_points: 10, time_spent_seconds: 900, started_at: '2023-01-02', mode: 'EXAM', exam_id: 'exam-1' }  // 15 mins
     ]
     
     // Mock successful answers count fetch
@@ -46,7 +46,8 @@ describe('Dashboard Page', () => {
     const mockIn = vi.fn().mockResolvedValue({ count: mockAnswersCount, error: null })
     const mockSelectAnswers = vi.fn().mockReturnValue({ in: mockIn })
     
-    const mockSelectAttempts = vi.fn().mockResolvedValue({ data: mockAttempts, error: null })
+    const mockOrder = vi.fn().mockResolvedValue({ data: mockAttempts, error: null })
+    const mockSelectAttempts = vi.fn().mockReturnValue({ order: mockOrder })
 
     const mockFrom = vi.fn((table) => {
       if (table === 'exam_attempts') {
@@ -74,11 +75,19 @@ describe('Dashboard Page', () => {
       expect(screen.getByText('50')).toBeInTheDocument()
       expect(screen.getByText('0h 30m')).toBeInTheDocument()
     })
+
+    // Check recent activity
+    expect(screen.getByText('Recent Activity')).toBeInTheDocument()
+    expect(screen.getByText('Practice Mode')).toBeInTheDocument()
+    expect(screen.getByText('Exam Mode')).toBeInTheDocument()
+    expect(screen.getByText('80%')).toBeInTheDocument()
+    expect(screen.getByText('90%')).toBeInTheDocument()
   })
 
   it('handles empty attempts', async () => {
     // Mock empty attempts
-    const mockSelectAttempts = vi.fn().mockResolvedValue({ data: [], error: null })
+    const mockOrder = vi.fn().mockResolvedValue({ data: [], error: null })
+    const mockSelectAttempts = vi.fn().mockReturnValue({ order: mockOrder })
     const mockFrom = vi.fn((table) => {
       if (table === 'exam_attempts') {
         return { select: mockSelectAttempts }
@@ -96,11 +105,16 @@ describe('Dashboard Page', () => {
       const zeros = screen.getAllByText('0')
       expect(zeros.length).toBeGreaterThanOrEqual(1)
     })
+
+    // Check empty state for recent activity
+    expect(screen.getByText('No recent activity found')).toBeInTheDocument()
+    expect(screen.getByText('Start your first exam')).toBeInTheDocument()
   })
 
   it('handles stats fetch error', async () => {
     // Mock error in attempts fetch
-    const mockSelectAttempts = vi.fn().mockResolvedValue({ data: null, error: { message: 'Database error' } })
+    const mockOrder = vi.fn().mockResolvedValue({ data: null, error: { message: 'Database error' } })
+    const mockSelectAttempts = vi.fn().mockReturnValue({ order: mockOrder })
     const mockFrom = vi.fn((table) => {
       if (table === 'exam_attempts') {
         return { select: mockSelectAttempts }

@@ -40,8 +40,10 @@ describe('Analytics Page', () => {
   it('renders analytics with data', async () => {
     // Mock attempts data
     const mockAttempts = [
-      { id: '1', score: 8, total_points: 10, time_spent_seconds: 600, started_at: '2023-01-01' },
-      { id: '2', score: 9, total_points: 10, time_spent_seconds: 1200, started_at: '2023-01-02' }
+      { id: '1', score: 8, total_points: 10, time_spent_seconds: 600, started_at: '2023-01-01' }, // 10m
+      { id: '2', score: 9, total_points: 10, time_spent_seconds: 1200, started_at: '2023-01-02' }, // 20m
+      { id: '3', score: 10, total_points: 10, time_spent_seconds: 2400, started_at: '2023-01-03' }, // 40m
+      { id: '4', score: 7, total_points: 10, time_spent_seconds: 4000, started_at: '2023-01-04' }  // 66m
     ]
 
     const mockOrder = vi.fn().mockResolvedValue({ data: mockAttempts, error: null })
@@ -75,13 +77,13 @@ describe('Analytics Page', () => {
     await waitFor(() => {
       // KPIs
       expect(screen.getByText('Total Attempts')).toBeInTheDocument()
-      expect(screen.getByText('2')).toBeInTheDocument() // Total attempts count
+      expect(screen.getByText('4')).toBeInTheDocument() // Total attempts count
       
       expect(screen.getByText('Average Score')).toBeInTheDocument()
-      expect(screen.getByText('85%')).toBeInTheDocument() // (80+90)/2
+      expect(screen.getByText('85%')).toBeInTheDocument() // (80+90+100+70)/4
       
       expect(screen.getByText('Time Spent')).toBeInTheDocument()
-      expect(screen.getByText('0h 30m')).toBeInTheDocument() // (600+1200)/60 = 30 mins
+      expect(screen.getByText('2h 16m')).toBeInTheDocument() // 8200s = 136.66m = 2h 16m
 
       expect(screen.getByText('Questions')).toBeInTheDocument()
       expect(screen.getByText('20')).toBeInTheDocument() // Mocked count
