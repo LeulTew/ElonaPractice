@@ -1,0 +1,321 @@
+
+> web@0.1.0 test /home/leul/Documents/github/ElonaPractice
+> vitest run app/dashboard/analytics/analytics.test.tsx
+
+
+[1m[46m RUN [49m[22m [36mv4.0.13 [39m[90m/home/leul/Documents/github/ElonaPractice[39m
+
+[90mstderr[2m | app/dashboard/analytics/analytics.test.tsx[2m > [22m[2mAnalytics Page[2m > [22m[2mrenders analytics with data
+[22m[39mDEBUG: supabase.from called with exam_attempts
+DEBUG: mockSelect called with [ [32m'*'[39m ]
+DEBUG: mockEq called with [ [32m'mode'[39m, [32m'PRACTICE'[39m ]
+DEBUG: mockOrder called with [ [32m'started_at'[39m, { ascending: [33mtrue[39m } ]
+
+[90mstderr[2m | app/dashboard/analytics/analytics.test.tsx[2m > [22m[2mAnalytics Page[2m > [22m[2mrenders analytics with data
+[22m[39mDEBUG: attempts [{"id":"1","score":8,"total_points":10,"time_spent_seconds":600,"started_at":"2023-01-01"},{"id":"2","score":9,"total_points":10,"time_spent_seconds":1200,"started_at":"2023-01-02"}]
+DEBUG: error [1mnull[22m
+DEBUG: supabase.from called with user_answers
+
+[90mstderr[2m | app/dashboard/analytics/analytics.test.tsx[2m > [22m[2mAnalytics Page[2m > [22m[2mhandles empty data gracefully
+[22m[39mDEBUG: attempts []
+DEBUG: error [1mnull[22m
+
+[90mstderr[2m | app/dashboard/analytics/analytics.test.tsx[2m > [22m[2mAnalytics Page[2m > [22m[2mswitches modes
+[22m[39mDEBUG: attempts []
+DEBUG: error [1mnull[22m
+
+[90mstderr[2m | app/dashboard/analytics/analytics.test.tsx[2m > [22m[2mAnalytics Page[2m > [22m[2mswitches modes
+[22m[39mDEBUG: attempts []
+DEBUG: error [1mnull[22m
+
+ [31m❯[39m app/dashboard/analytics/analytics.test.tsx [2m([22m[2m4 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[33m 1161[2mms[22m[39m
+[31m     [31m×[31m renders analytics with data[39m[33m 1037[2mms[22m[39m
+     [32m✓[39m handles empty data gracefully[32m 10[2mms[22m[39m
+     [32m✓[39m switches modes[32m 106[2mms[22m[39m
+     [32m✓[39m handles fetch error[32m 7[2mms[22m[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m app/dashboard/analytics/analytics.test.tsx[2m > [22mAnalytics Page[2m > [22mrenders analytics with data
+[31m[1mTestingLibraryElementError[22m[39m: Unable to find an element with the text: 20. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"min-h-screen bg-background p-8"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"mx-auto max-w-7xl space-y-8"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"flex flex-col md:flex-row md:items-center justify-between gap-4"[39m
+        [36m>[39m
+          [36m<div>[39m
+            [36m<h1[39m
+              [33mclass[39m=[32m"text-4xl font-bold tracking-tight text-foreground"[39m
+            [36m>[39m
+              [0mAnalytics[0m
+            [36m</h1>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"text-muted-foreground text-lg"[39m
+            [36m>[39m
+              [0mTrack your performance and progress[0m
+            [36m</p>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"w-[400px]"[39m
+            [33mdata-orientation[39m=[32m"horizontal"[39m
+            [33mdir[39m=[32m"ltr"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33maria-orientation[39m=[32m"horizontal"[39m
+              [33mclass[39m=[32m"h-10 items-center justify-center rounded-md bg-muted p-1 text-muted-foreground grid w-full grid-cols-2"[39m
+              [33mdata-orientation[39m=[32m"horizontal"[39m
+              [33mrole[39m=[32m"tablist"[39m
+              [33mstyle[39m=[32m"outline: none;"[39m
+              [33mtabindex[39m=[32m"0"[39m
+            [36m>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"radix-_r_0_-content-PRACTICE"[39m
+                [33maria-selected[39m=[32m"true"[39m
+                [33mclass[39m=[32m"inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"[39m
+                [33mdata-orientation[39m=[32m"horizontal"[39m
+                [33mdata-radix-collection-item[39m=[32m""[39m
+                [33mdata-state[39m=[32m"active"[39m
+                [33mid[39m=[32m"radix-_r_0_-trigger-PRACTICE"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0mPractice Mode[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"radix-_r_0_-content-EXAM"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"[39m
+                [33mdata-orientation[39m=[32m"horizontal"[39m
+                [33mdata-radix-collection-item[39m=[32m""[39m
+                [33mdata-state[39m=[32m"inactive"[39m
+                [33mid[39m=[32m"radix-_r_0_-trigger-EXAM"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0mExam Mode[0m
+              [36m</button>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"grid gap-4 md:grid-cols-2 lg:grid-cols-4"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"bg-card text-card-foreground flex flex-col gap-6 rounded-2xl border py-6 overflow-hidden hover:border-primary/20 transition-colors"[39m
+              [33mdata-slot[39m=[32m"card"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"@container/card-header auto-rows-min grid-rows-[auto_auto] gap-2 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6 flex flex-row items-center justify-between space-y-0 pb-2"[39m
+                [33mdata-slot[39m=[32m"card-header"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"text-sm font-medium text-muted-foreground"[39m
+                  [33mdata-slot[39m=[32m"card-title"[39m
+                [36m>[39m
+                  [0mTotal Attempts[0m
+                [36m</div>[39m
+                [36m<svg[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"lucide lucide-target h-4 w-4 text-blue-500"[39m
+                  [33mfill[39m=[32m"none"[39m
+                  [33mheight[39m=[32m"24"[39m
+                  [33mstroke[39m=[32m"currentColor"[39m
+                  [33mstroke-linecap[39m=[32m"round"[39m
+                  [33mstroke-linejoin[39m=[32m"round"[39m
+                  [33mstroke-width[39m=[32m"2"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"24"[39m
+                  [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                [36m>[39m
+                  [36m<circle[39m
+                    [33mcx[39m=[32m"12"[39m
+                    [33mcy[39m=[32m"12"[39m
+                    [33mr[39m=[32m"10"[39m
+                  [36m/>[39m
+                  [36m<circle[39m
+                    [33mcx[39m=[32m"12"[39m
+                    [33mcy[39m=[32m"12"[39m
+                    [33mr[39m=[32m"6"[39m
+                  [36m/>[39m
+                  [36m<circle[39m
+                    [33mcx[39m=[32m"12"[39m
+                    [33mcy[39m=[32m"12"[39m
+                    [33mr[39m=[32m"2"[39m
+                  [36m/>[39m
+                [36m</svg>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"px-6"[39m
+                [33mdata-slot[39m=[32m"card-content"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"text-2xl font-bold"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"text-2xl font-bold"[39m
+                  [36m>[39m
+                    [0m2[0m
+                  [36m</div>[39m
+                [36m</div>[39m
+                [36m<p[39m
+                  [33mclass[39m=[32m"text-xs tex...
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"min-h-screen bg-background p-8"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"mx-auto max-w-7xl space-y-8"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"flex flex-col md:flex-row md:items-center justify-between gap-4"[39m
+          [36m>[39m
+            [36m<div>[39m
+              [36m<h1[39m
+                [33mclass[39m=[32m"text-4xl font-bold tracking-tight text-foreground"[39m
+              [36m>[39m
+                [0mAnalytics[0m
+              [36m</h1>[39m
+              [36m<p[39m
+                [33mclass[39m=[32m"text-muted-foreground text-lg"[39m
+              [36m>[39m
+                [0mTrack your performance and progress[0m
+              [36m</p>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"w-[400px]"[39m
+              [33mdata-orientation[39m=[32m"horizontal"[39m
+              [33mdir[39m=[32m"ltr"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33maria-orientation[39m=[32m"horizontal"[39m
+                [33mclass[39m=[32m"h-10 items-center justify-center rounded-md bg-muted p-1 text-muted-foreground grid w-full grid-cols-2"[39m
+                [33mdata-orientation[39m=[32m"horizontal"[39m
+                [33mrole[39m=[32m"tablist"[39m
+                [33mstyle[39m=[32m"outline: none;"[39m
+                [33mtabindex[39m=[32m"0"[39m
+              [36m>[39m
+                [36m<button[39m
+                  [33maria-controls[39m=[32m"radix-_r_0_-content-PRACTICE"[39m
+                  [33maria-selected[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"[39m
+                  [33mdata-orientation[39m=[32m"horizontal"[39m
+                  [33mdata-radix-collection-item[39m=[32m""[39m
+                  [33mdata-state[39m=[32m"active"[39m
+                  [33mid[39m=[32m"radix-_r_0_-trigger-PRACTICE"[39m
+                  [33mrole[39m=[32m"tab"[39m
+                  [33mtabindex[39m=[32m"-1"[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [0mPractice Mode[0m
+                [36m</button>[39m
+                [36m<button[39m
+                  [33maria-controls[39m=[32m"radix-_r_0_-content-EXAM"[39m
+                  [33maria-selected[39m=[32m"false"[39m
+                  [33mclass[39m=[32m"inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"[39m
+                  [33mdata-orientation[39m=[32m"horizontal"[39m
+                  [33mdata-radix-collection-item[39m=[32m""[39m
+                  [33mdata-state[39m=[32m"inactive"[39m
+                  [33mid[39m=[32m"radix-_r_0_-trigger-EXAM"[39m
+                  [33mrole[39m=[32m"tab"[39m
+                  [33mtabindex[39m=[32m"-1"[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [0mExam Mode[0m
+                [36m</button>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"grid gap-4 md:grid-cols-2 lg:grid-cols-4"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"bg-card text-card-foreground flex flex-col gap-6 rounded-2xl border py-6 overflow-hidden hover:border-primary/20 transition-colors"[39m
+                [33mdata-slot[39m=[32m"card"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"@container/card-header auto-rows-min grid-rows-[auto_auto] gap-2 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6 flex flex-row items-center justify-between space-y-0 pb-2"[39m
+                  [33mdata-slot[39m=[32m"card-header"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"text-sm font-medium text-muted-foreground"[39m
+                    [33mdata-slot[39m=[32m"card-title"[39m
+                  [36m>[39m
+                    [0mTotal Attempts[0m
+                  [36m</div>[39m
+                  [36m<svg[39m
+                    [33maria-hidden[39m=[32m"true"[39m
+                    [33mclass[39m=[32m"lucide lucide-target h-4 w-4 text-blue-500"[39m
+                    [33mfill[39m=[32m"none"[39m
+                    [33mheight[39m=[32m"24"[39m
+                    [33mstroke[39m=[32m"currentColor"[39m
+                    [33mstroke-linecap[39m=[32m"round"[39m
+                    [33mstroke-linejoin[39m=[32m"round"[39m
+                    [33mstroke-width[39m=[32m"2"[39m
+                    [33mviewBox[39m=[32m"0 0 24 24"[39m
+                    [33mwidth[39m=[32m"24"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<circle[39m
+                      [33mcx[39m=[32m"12"[39m
+                      [33mcy[39m=[32m"12"[39m
+                      [33mr[39m=[32m"10"[39m
+                    [36m/>[39m
+                    [36m<circle[39m
+                      [33mcx[39m=[32m"12"[39m
+                      [33mcy[39m=[32m"12"[39m
+                      [33mr[39m=[32m"6"[39m
+                    [36m/>[39m
+                    [36m<circle[39m
+                      [33mcx[39m=[32m"12"[39m
+                      [33mcy[39m=[32m"12"[39m
+                      [33mr[39m=[32m"2"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                [36m</div>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"px-6"[39m
+                  [33mdata-slot[39m=[32m"card-content"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"text-2xl font-bold"[39m
+                  [36m>[39m
+                    [...
+[90m [2m❯[22m Proxy.waitForWrapper node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/wait-for.js:[2m163:27[22m[39m
+[36m [2m❯[22m app/dashboard/analytics/analytics.test.tsx:[2m79:11[22m[39m
+    [90m 77| [39m    [34mexpect[39m(screen[33m.[39m[34mgetByText[39m([32m'Analytics'[39m))[33m.[39m[34mtoBeInTheDocument[39m()
+    [90m 78| [39m    
+    [90m 79| [39m    [35mawait[39m [34mwaitFor[39m(() [33m=>[39m {
+    [90m   | [39m          [31m^[39m
+    [90m 80| [39m      [90m// KPIs[39m
+    [90m 81| [39m      [34mexpect[39m(screen[33m.[39m[34mgetByText[39m([32m'Total Attempts'[39m))[33m.[39m[34mtoBeInTheDocument[39m()
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m3 passed[39m[22m[90m (4)[39m
+[2m   Start at [22m 16:06:31
+[2m   Duration [22m 1.94s[2m (transform 91ms, setup 53ms, collect 239ms, tests 1.16s, environment 333ms, prepare 5ms)[22m
+
+ ELIFECYCLE  Test failed. See above for more details.

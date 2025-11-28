@@ -20,7 +20,7 @@ export default function ProfilePage() {
         const { data: attempts } = await supabase
           .from('exam_attempts')
           .select('score, total_questions')
-          .order('created_at', { ascending: false })
+          .order('started_at', { ascending: false })
 
         if (attempts && attempts.length > 0) {
           const totalAttempts = attempts.length
@@ -43,11 +43,11 @@ export default function ProfilePage() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8 max-w-6xl">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+          <h1 className="text-4xl font-bold text-foreground">
             Profile
           </h1>
           <p className="text-muted-foreground mt-2">Manage your account and view your progress</p>
@@ -57,8 +57,8 @@ export default function ProfilePage() {
           {/* Profile Card */}
           <Card className="lg:col-span-1 p-6">
             <div className="flex flex-col items-center text-center space-y-4">
-              <div className="w-24 h-24 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center">
-                <User className="w-12 h-12 text-white" />
+              <div className="w-24 h-24 rounded-full bg-primary/10 flex items-center justify-center">
+                <User className="w-12 h-12 text-primary" />
               </div>
               <div>
                 <h2 className="text-2xl font-bold">Elona Student</h2>
@@ -76,7 +76,7 @@ export default function ProfilePage() {
 
           {/* Stats Grid */}
           <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <Card className="p-6 hover:shadow-lg transition-shadow">
+            <Card className="p-6 hover:border-primary/20 transition-colors">
               <div className="flex items-center gap-4">
                 <div className="p-3 rounded-lg bg-blue-500/10">
                   <BookOpen className="w-6 h-6 text-blue-500" />
@@ -88,7 +88,7 @@ export default function ProfilePage() {
               </div>
             </Card>
 
-            <Card className="p-6 hover:shadow-lg transition-shadow">
+            <Card className="p-6 hover:border-primary/20 transition-colors">
               <div className="flex items-center gap-4">
                 <div className="p-3 rounded-lg bg-green-500/10">
                   <Trophy className="w-6 h-6 text-green-500" />
@@ -100,7 +100,7 @@ export default function ProfilePage() {
               </div>
             </Card>
 
-            <Card className="p-6 hover:shadow-lg transition-shadow">
+            <Card className="p-6 hover:border-primary/20 transition-colors">
               <div className="flex items-center gap-4">
                 <div className="p-3 rounded-lg bg-purple-500/10">
                   <Calendar className="w-6 h-6 text-purple-500" />
@@ -112,10 +112,10 @@ export default function ProfilePage() {
               </div>
             </Card>
 
-            <Card className="p-6 hover:shadow-lg transition-shadow">
+            <Card className="p-6 hover:border-primary/20 transition-colors">
               <div className="flex items-center gap-4">
-                <div className="p-3 rounded-lg bg-orange-500/10">
-                  <BookOpen className="w-6 h-6 text-orange-500" />
+                <div className="p-3 rounded-lg bg-amber-500/10">
+                  <BookOpen className="w-6 h-6 text-amber-500" />
                 </div>
                 <div>
                   <p className="text-sm text-muted-foreground">Questions Answered</p>
@@ -125,16 +125,6 @@ export default function ProfilePage() {
             </Card>
           </div>
         </div>
-
-        {/* Recent Activity */}
-        <Card className="mt-6 p-6">
-          <h3 className="text-xl font-bold mb-4">Recent Activity</h3>
-          <div className="space-y-4">
-            <p className="text-muted-foreground text-center py-8">
-              Your recent exam attempts will appear here
-            </p>
-          </div>
-        </Card>
       </div>
     </div>
   )

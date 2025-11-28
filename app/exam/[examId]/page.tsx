@@ -35,17 +35,16 @@ import { cn } from "@/lib/utils"
 import Image from "next/image"
 import { ModeToggle } from "@/components/mode-toggle"
 
-interface Question {
+export interface Question {
   id: string
   content: string
   question_type: string
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  options: any
+
+  options: string[] | { left: string; right: string }[] | null
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   correct_answer: any
   explanation?: string
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  metadata?: any
+  metadata?: Record<string, unknown>
   image_url?: string
   points: number
 }
@@ -74,12 +73,13 @@ function ExamContent() {
 
   const [questions, setQuestions] = useState<Question[]>([])
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [answers, setAnswers] = useState<Record<string, any>>({})
+  const [answers, setAnswers] = useState<Record<string, unknown>>({})
   const [markedQuestions, setMarkedQuestions] = useState<string[]>([])
   const [loading, setLoading] = useState(true)
   const [sidebarOpen, setSidebarOpen] = useState(false) // Default closed for mobile
   const [timeLeft, setTimeLeft] = useState<number>(0)
+  const [startTime] = useState<number>(Date.now())
+  const [elapsedTime, setElapsedTime] = useState<number>(0)
   const [examData, setExamData] = useState<Exam | null>(null)
   
   // New states
@@ -125,9 +125,14 @@ function ExamContent() {
         })
       }, 1000)
       return () => clearInterval(timer)
+    } else if (mode === 'PRACTICE') {
+      const timer = setInterval(() => {
+        setElapsedTime(Math.floor((Date.now() - startTime) / 1000))
+      }, 1000)
+      return () => clearInterval(timer)
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [examData, mode, timeLeft])
+  }, [examData, mode, timeLeft, startTime])
 
   // Reset local states when question changes
   useEffect(() => {
@@ -246,8 +251,12 @@ function ExamContent() {
 
     // Save attempt
     try {
-      // Try to save with answers first
-      const { data: attempt, error } = await supabase
+      const timeSpent = mode === 'EXAM' 
+        ? ((examData?.duration_minutes || 60) * 60) - timeLeft 
+        : Math.floor((Date.now() - startTime) / 1000)
+
+      // 1. Create the attempt
+      const { data: attempt, error: attemptError } = await supabase
         .from('exam_attempts')
         .insert({
           exam_id: examId,
@@ -255,37 +264,64 @@ function ExamContent() {
           score,
           total_points: totalPoints,
           status: 'COMPLETED',
-          time_spent_seconds: ((examData?.duration_minutes || 60) * 60) - timeLeft,
-          answers: answers // Save user answers
+          time_spent_seconds: timeSpent
         })
         .select()
         .single()
 
-      if (error) throw error
+      if (attemptError) throw attemptError
+
       if (attempt) {
+        // 2. Bulk insert answers
+        const userAnswersToInsert = questions.map(q => {
+          const userAnswer = answers[q.id]
+          const correctAnswer = q.correct_answer
+          
+          let isCorrect = false
+          // Re-evaluate correctness for the record
+          if (Array.isArray(correctAnswer)) {
+            if (Array.isArray(userAnswer) && 
+                userAnswer.length === correctAnswer.length && 
+                userAnswer.every(val => correctAnswer.includes(val))) {
+              isCorrect = true
+            }
+          } else if (typeof correctAnswer === 'string') {
+            if (typeof userAnswer === 'string' && 
+                userAnswer.trim().toLowerCase() === correctAnswer.trim().toLowerCase()) {
+              isCorrect = true
+            }
+          } else {
+            if (JSON.stringify(userAnswer) === JSON.stringify(correctAnswer)) {
+              isCorrect = true
+            }
+          }
+
+          return {
+            attempt_id: attempt.id,
+            question_id: q.id,
+            user_answer: userAnswer, // Supabase handles JSONB conversion
+            is_correct: isCorrect,
+            points_earned: isCorrect ? q.points : 0,
+            time_spent_seconds: 0 // We don't track per-question time yet
+          }
+        })
+
+        const { error: answersError } = await supabase
+          .from('user_answers')
+          .insert(userAnswersToInsert)
+
+        if (answersError) {
+          console.error('Error saving answers:', answersError)
+          // We still proceed to results, but maybe warn?
+        }
+
         router.push(`/exam/${examId}/results?attemptId=${attempt.id}`)
       }
     } catch (err) {
-      console.warn('Failed to save with answers, trying without...', err)
-      // Fallback: Save without answers (if column missing)
-      const { data: attempt } = await supabase
-        .from('exam_attempts')
-        .insert({
-          exam_id: examId,
-          mode,
-          score,
-          total_points: totalPoints,
-          status: 'COMPLETED',
-          time_spent_seconds: ((examData?.duration_minutes || 60) * 60) - timeLeft
-        })
-        .select()
-        .single()
-
-      if (attempt) {
-        router.push(`/exam/${examId}/results?attemptId=${attempt.id}`)
-      }
+      console.error('Failed to save exam attempt:', err)
+      // Handle error (maybe show toast)
     }
-  }, [questions, answers, examId, mode, examData, timeLeft, router])
+  }, [questions, answers, examId, mode, examData, timeLeft, startTime, router])
 
   if (loading) {
     return (
@@ -415,7 +451,7 @@ function ExamContent() {
           </div>
 
           <div className="flex items-center gap-4 md:gap-6 shrink-0">
-            {mode === 'EXAM' && (
+            {mode === 'EXAM' ? (
               <div className="flex items-center gap-2 font-mono text-lg font-medium">
                 <Clock className={cn(
                   "h-5 w-5",
@@ -423,6 +459,13 @@ function ExamContent() {
                 )} />
                 <span className={timeLeft < 300 ? "text-red-500" : ""}>
                   {Math.floor(timeLeft / 60)}:{String(timeLeft % 60).padStart(2, '0')}
+                </span>
+              </div>
+            ) : (
+              <div className="flex items-center gap-2 font-mono text-lg font-medium text-muted-foreground">
+                <Clock className="h-5 w-5" />
+                <span>
+                  {Math.floor(elapsedTime / 60)}:{String(elapsedTime % 60).padStart(2, '0')}
                 </span>
               </div>
             )}
@@ -533,16 +576,16 @@ function ExamContent() {
                                     showAnswer && !isInputCorrect(answers[currentQuestion.id], currentQuestion.correct_answer) && "border-red-500 text-red-600"
                                   )}
                                   style={{ 
-                                    width: `${Math.max(120, (answers[currentQuestion.id]?.length || 0) * 12)}px`
+                                    width: `${Math.max(120, ((answers[currentQuestion.id] as string)?.length || 0) * 12)}px`
                                   }}
-                                  value={answers[currentQuestion.id] || ''}
+                                  value={(answers[currentQuestion.id] as string) || ''}
                                   onChange={(e) => handleAnswer(e.target.value)}
                                   disabled={showAnswer}
                                   placeholder="Type answer..."
                                 />
                                 {showAnswer && (
                                   <div className="absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap bg-popover text-popover-foreground text-xs px-2 py-1 rounded border z-10">
-                                    {currentQuestion.correct_answer}
+                                    {currentQuestion.correct_answer as React.ReactNode}
                                   </div>
                                 )}
                               </div>
@@ -570,7 +613,7 @@ function ExamContent() {
                         {currentQuestion.metadata?.image_url && (
                           <div className="rounded-xl overflow-hidden border border-border bg-muted/30 flex items-center justify-center p-4 h-fit relative min-h-[200px]">
                             <Image 
-                              src={currentQuestion.metadata.image_url} 
+                              src={currentQuestion.metadata.image_url as string} 
                               alt="Question Diagram" 
                               width={800}
                               height={400}
@@ -582,13 +625,13 @@ function ExamContent() {
 
                         {/* Options Column */}
                         <div className="space-y-3">
-                          {currentQuestion.options?.map((option: string, idx: number) => {
+                          {(currentQuestion.options as string[])?.map((option: string, idx: number) => {
                             const isSelected = Array.isArray(answers[currentQuestion.id]) 
-                              ? answers[currentQuestion.id].includes(option)
+                              ? (answers[currentQuestion.id] as string[]).includes(option)
                               : answers[currentQuestion.id] === option
                               
                             const isCorrect = Array.isArray(currentQuestion.correct_answer)
-                              ? currentQuestion.correct_answer.includes(option)
+                              ? (currentQuestion.correct_answer as string[]).includes(option)
                               : currentQuestion.correct_answer === option
                               
 
@@ -599,7 +642,7 @@ function ExamContent() {
                                 onClick={() => {
                                   if (!showAnswer) {
                                     if (currentQuestion.question_type === 'MULTI_SELECT') {
-                                      const current = answers[currentQuestion.id] || []
+                                      const current = (answers[currentQuestion.id] as string[]) || []
                                       const next = current.includes(option)
                                         ? current.filter((i: string) => i !== option)
                                         : [...current, option]
@@ -653,7 +696,7 @@ function ExamContent() {
                         </label>
                         <Textarea
                           placeholder="Type your detailed explanation or answer here..."
-                          value={answers[currentQuestion.id] || ''}
+                          value={(answers[currentQuestion.id] as string) || ''}
                           onChange={(e) => handleAnswer(e.target.value)}
                           disabled={showAnswer}
                           className={cn(
@@ -674,7 +717,7 @@ function ExamContent() {
                     {currentQuestion.question_type === 'MATCHING' && currentQuestion.metadata?.real_type !== 'ORDER_SEQUENCE' && (
                        <MatchingQuestion 
                          question={currentQuestion} 
-                         answer={answers[currentQuestion.id] || {}} 
+                         answer={(answers[currentQuestion.id] as Record<string, string>) || {}} 
                          onAnswer={handleAnswer}
                          showAnswer={showAnswer}
                        />
@@ -684,7 +727,7 @@ function ExamContent() {
                     {(currentQuestion.question_type === 'ORDER_SEQUENCE' || currentQuestion.metadata?.real_type === 'ORDER_SEQUENCE') && (
                       <OrderSequenceQuestion
                         question={currentQuestion}
-                        answer={answers[currentQuestion.id]}
+                        answer={answers[currentQuestion.id] as string[]}
                         onAnswer={handleAnswer}
                         showAnswer={showAnswer}
                       />
@@ -706,8 +749,8 @@ function ExamContent() {
                       <AIHelpButton 
                         questionId={currentQuestion.id}
                         questionText={currentQuestion.content}
-                        imageUrl={currentQuestion.metadata?.image_url}
-                        options={Array.isArray(currentQuestion.options) ? currentQuestion.options : null}
+                        imageUrl={currentQuestion.metadata?.image_url as string}
+                        options={Array.isArray(currentQuestion.options) ? currentQuestion.options as string[] : null}
                         userAnswer={answers[currentQuestion.id]}
                         onAIResponse={(response) => {
                           setAiResponse(response)
@@ -729,7 +772,7 @@ function ExamContent() {
                             <p className="font-medium mb-1">Hint:</p>
                             <p className="text-muted-foreground">
                               {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                              {currentQuestion.metadata?.hint || (currentQuestion as any).hint || "No hint available for this question."}
+                              {currentQuestion.metadata?.hint as string || (currentQuestion as any).hint || "No hint available for this question."}
                             </p>
                           </div>
                         )}
@@ -970,7 +1013,8 @@ function MatchingQuestion({ question, answer, onAnswer, showAnswer }: MatchingQu
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="space-y-3">
           <h3 className="font-medium text-muted-foreground text-center mb-2">Items</h3>
-          {question.options?.map((opt: { left: string, right: string }, idx: number) => {
+          {question.options?.map((opt: { left: string, right: string } | string, idx: number) => {
+            if (typeof opt === 'string') return null // Should not happen for matching
             const isMatched = answer[opt.left] !== undefined
             const isSelected = selectedLeft === opt.left
             return (
@@ -1057,7 +1101,7 @@ interface OrderSequenceProps {
 function OrderSequenceQuestion({ question, answer, onAnswer, showAnswer }: OrderSequenceProps) {
   const [items, setItems] = useState<string[]>(() => {
     if (answer && answer.length > 0) return answer
-    if (question.options) return [...question.options].sort(() => Math.random() - 0.5)
+    if (question.options) return [...question.options as string[]].sort(() => Math.random() - 0.5)
     return []
   })
 

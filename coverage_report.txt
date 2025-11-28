@@ -1,0 +1,221 @@
+
+> web@0.1.0 test /home/leul/Documents/github/ElonaPractice
+> vitest run --coverage
+
+
+[1m[46m RUN [49m[22m [36mv4.0.13 [39m[90m/home/leul/Documents/github/ElonaPractice[39m
+      [2mCoverage enabled with [22m[33mv8[39m
+
+ [32m✓[39m components/ui/layout-components.test.tsx [2m([22m[2m4 tests[22m[2m)[22m[32m 233[2mms[22m[39m
+ [32m✓[39m app/dashboard/analytics/analytics.test.tsx [2m([22m[2m4 tests[22m[2m)[22m[33m 326[2mms[22m[39m
+[90mstdout[2m | app/exam/[examId]/exam-page.test.tsx[2m > [22m[2mExamPage Integration[2m > [22m[2mrenders exam title and first question
+[22m[39mFetched questions: [33m6[39m for exam: exam-123
+
+[90mstdout[2m | app/exam/[examId]/exam-page.test.tsx[2m > [22m[2mExamPage Integration[2m > [22m[2mnavigates to next question
+[22m[39mFetched questions: [33m6[39m for exam: exam-123
+
+[90mstdout[2m | app/exam/[examId]/exam-page.test.tsx[2m > [22m[2mExamPage Integration[2m > [22m[2mshows submit button on last question
+[22m[39mFetched questions: [33m6[39m for exam: exam-123
+
+ [32m✓[39m components/mode-toggle.test.tsx [2m([22m[2m1 test[22m[2m)[22m[33m 1105[2mms[22m[39m
+     [33m[2m✓[22m[39m changes theme using real provider [33m 1103[2mms[22m[39m
+[90mstdout[2m | app/exam/[examId]/exam-page.test.tsx[2m > [22m[2mExamPage Integration[2m > [22m[2mshows hint when requested
+[22m[39mFetched questions: [33m6[39m for exam: exam-123
+
+[90mstdout[2m | app/exam/[examId]/exam-page.test.tsx[2m > [22m[2mExamPage Integration[2m > [22m[2mrenders timer in exam mode
+[22m[39mFetched questions: [33m6[39m for exam: exam-123
+
+ [32m✓[39m components/ui/limelight-nav.test.tsx [2m([22m[2m7 tests[22m[2m)[22m[32m 181[2mms[22m[39m
+[90mstdout[2m | app/exam/[examId]/exam-page.test.tsx[2m > [22m[2mExamPage Integration[2m > [22m[2mtoggles mark on question
+[22m[39mFetched questions: [33m6[39m for exam: exam-123
+
+ [32m✓[39m components/ui/dropdown-menu.test.tsx [2m([22m[2m5 tests[22m[2m)[22m[33m 1288[2mms[22m[39m
+     [33m[2m✓[22m[39m renders trigger and opens content [33m 371[2mms[22m[39m
+     [33m[2m✓[22m[39m renders checkbox items [33m 306[2mms[22m[39m
+ [32m✓[39m components/questions/question-components.test.tsx [2m([22m[2m27 tests[22m[2m)[22m[33m 1418[2mms[22m[39m
+[90mstdout[2m | app/exam/[examId]/exam-page.test.tsx[2m > [22m[2mExamPage Integration[2m > [22m[2mnavigates via sidebar
+[22m[39mFetched questions: [33m6[39m for exam: exam-123
+
+ [32m✓[39m components/navbar.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[32m 211[2mms[22m[39m
+[90mstdout[2m | app/exam/[examId]/exam-page.test.tsx[2m > [22m[2mExamPage Integration[2m > [22m[2msubmits exam and saves attempt
+[22m[39mFetched questions: [33m6[39m for exam: exam-123
+
+ [32m✓[39m app/exam/[examId]/review/page.test.tsx [2m([22m[2m13 tests[22m[2m)[22m[33m 1580[2mms[22m[39m
+     [33m[2m✓[22m[39m opens questions modal on mobile [33m 497[2mms[22m[39m
+     [33m[2m✓[22m[39m handles navigation between questions [33m 595[2mms[22m[39m
+[90mstdout[2m | app/exam/[examId]/exam-page.test.tsx[2m > [22m[2mExamPage Integration[2m > [22m[2mshows exit warning in exam mode
+[22m[39mFetched questions: [33m6[39m for exam: exam-123
+
+ [32m✓[39m components/exam-selection-modal.test.tsx [2m([22m[2m10 tests[22m[2m)[22m[32m 215[2mms[22m[39m
+ [32m✓[39m components/ui/form-elements.test.tsx [2m([22m[2m8 tests[22m[2m)[22m[32m 193[2mms[22m[39m
+[90mstdout[2m | app/exam/[examId]/exam-page.test.tsx[2m > [22m[2mExamPage Integration[2m > [22m[2mhandles matching question interaction
+[22m[39mFetched questions: [33m6[39m for exam: exam-123
+
+ [32m✓[39m components/ui/ai-help-button.test.tsx [2m([22m[2m12 tests[22m[2m)[22m[32m 249[2mms[22m[39m
+ [32m✓[39m components/ui/modal.test.tsx [2m([22m[2m5 tests[22m[2m)[22m[32m 178[2mms[22m[39m
+ [32m✓[39m components/ui/ui-components.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[32m 241[2mms[22m[39m
+[90mstdout[2m | app/exam/[examId]/exam-page.test.tsx[2m > [22m[2mExamPage Integration[2m > [22m[2mhandles order sequence interaction
+[22m[39mFetched questions: [33m6[39m for exam: exam-123
+
+ [32m✓[39m components/ui/tabs.test.tsx [2m([22m[2m1 test[22m[2m)[22m[32m 138[2mms[22m[39m
+[90mstdout[2m | app/exam/[examId]/exam-page.test.tsx[2m > [22m[2mExamPage Integration[2m > [22m[2mreturns to the previous question using footer navigation
+[22m[39mFetched questions: [33m6[39m for exam: exam-123
+
+ [32m✓[39m app/dashboard/dashboard.test.tsx [2m([22m[2m4 tests[22m[2m)[22m[32m 128[2mms[22m[39m
+[90mstdout[2m | app/exam/[examId]/exam-page.test.tsx[2m > [22m[2mExamPage Integration[2m > [22m[2mcloses the sidebar using the inline close button on mobile
+[22m[39mFetched questions: [33m6[39m for exam: exam-123
+
+[90mstdout[2m | app/exam/[examId]/exam-page.test.tsx[2m > [22m[2mExamPage Integration[2m > [22m[2mnavigates back to courses immediately in practice mode when exiting
+[22m[39mFetched questions: [33m6[39m for exam: exam-123
+
+ [32m✓[39m app/profile/profile.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[32m 92[2mms[22m[39m
+[90mstdout[2m | app/exam/[examId]/exam-page.test.tsx[2m > [22m[2mExamPage Integration[2m > [22m[2mrenders fallback when no questions are returned
+[22m[39mFetched questions: [33m0[39m for exam: exam-123
+
+[90mstdout[2m | app/exam/[examId]/exam-page.test.tsx[2m > [22m[2mExamPage Integration[2m > [22m[2mrenders fill-in-the-blank inputs and shows correct answer when toggled
+[22m[39mFetched questions: [33m1[39m for exam: exam-123
+
+ [32m✓[39m app/courses/courses.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[32m 99[2mms[22m[39m
+[90mstdout[2m | app/exam/[examId]/exam-page.test.tsx[2m > [22m[2mExamPage Integration[2m > [22m[2mrenders fill-in-the-blank inputs and shows correct answer when toggled
+[22m[39mRendering Text Input for type: FILL_BLANK
+
+ [32m✓[39m components/question-card.test.tsx [2m([22m[2m4 tests[22m[2m)[22m[32m 56[2mms[22m[39m
+[90mstdout[2m | app/exam/[examId]/exam-page.test.tsx[2m > [22m[2mExamPage Integration[2m > [22m[2mrenders fill-in-the-blank inputs and shows correct answer when toggled
+[22m[39mRendering Text Input for type: FILL_BLANK
+Rendering Text Input for type: FILL_BLANK
+
+[90mstdout[2m | app/exam/[examId]/exam-page.test.tsx[2m > [22m[2mExamPage Integration[2m > [22m[2mrenders text-based questions with the textarea fallback and sample answer
+[22m[39mFetched questions: [33m1[39m for exam: exam-123
+
+[90mstdout[2m | app/exam/[examId]/exam-page.test.tsx[2m > [22m[2mExamPage Integration[2m > [22m[2mrenders text-based questions with the textarea fallback and sample answer
+[22m[39mRendering Text Input for type: SHORT_ANSWER
+
+[90mstdout[2m | app/exam/[examId]/review/review.test.tsx[2m > [22m[2mReviewPage[2m > [22m[2mfetches and displays review data correctly
+[22m[39m[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"min-h-screen flex items-center justify-center bg-background"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"animate-spin rounded-full h-8 w-8 border-b-2 border-primary"[39m
+      [36m/>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+
+ [32m✓[39m components/ui/logo.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[32m 26[2mms[22m[39m
+ [32m✓[39m app/exam/[examId]/review/review.test.tsx [2m([22m[2m1 test[22m[2m)[22m[32m 63[2mms[22m[39m
+[90mstdout[2m | app/exam/[examId]/exam-page.test.tsx[2m > [22m[2mExamPage Integration[2m > [22m[2mrenders text-based questions with the textarea fallback and sample answer
+[22m[39mRendering Text Input for type: SHORT_ANSWER
+Rendering Text Input for type: SHORT_ANSWER
+
+[90mstdout[2m | app/exam/[examId]/exam-page.test.tsx[2m > [22m[2mExamPage Integration[2m > [22m[2mallows removing an existing matching pair
+[22m[39mFetched questions: [33m6[39m for exam: exam-123
+
+ [32m✓[39m app/page.test.tsx [2m([22m[2m1 test[22m[2m)[22m[32m 21[2mms[22m[39m
+ [32m✓[39m lib/grading.test.ts [2m([22m[2m10 tests[22m[2m)[22m[32m 5[2mms[22m[39m
+[90mstdout[2m | app/exam/[examId]/exam-page.test.tsx[2m > [22m[2mExamPage Integration[2m > [22m[2mshows the correct matching pairs when answers are revealed
+[22m[39mFetched questions: [33m6[39m for exam: exam-123
+
+ [32m✓[39m lib/supabase.test.ts [2m([22m[2m3 tests[22m[2m | [22m[33m2 skipped[39m[2m)[22m[32m 2[2mms[22m[39m
+[90mstdout[2m | app/exam/[examId]/exam-page.test.tsx[2m > [22m[2mExamPage Integration[2m > [22m[2mreorders order-sequence questions using the move controls
+[22m[39mFetched questions: [33m6[39m for exam: exam-123
+
+[90mstdout[2m | app/exam/[examId]/exam-page.test.tsx[2m > [22m[2mExamPage Integration[2m > [22m[2mdisplays the correct order when answers are revealed
+[22m[39mFetched questions: [33m6[39m for exam: exam-123
+
+[90mstdout[2m | app/exam/[examId]/exam-page.test.tsx[2m > [22m[2mExamPage Integration[2m > [22m[2mregisters a beforeunload guard in exam mode
+[22m[39mFetched questions: [33m6[39m for exam: exam-123
+
+[90mstdout[2m | app/exam/[examId]/exam-page.test.tsx[2m > [22m[2mExamPage Integration[2m > [22m[2mauto submits the exam when the timer expires
+[22m[39mFetched questions: [33m6[39m for exam: exam-123
+
+[90mstdout[2m | app/exam/[examId]/exam-page.test.tsx[2m > [22m[2mExamPage Integration[2m > [22m[2mcloses the sidebar when the mobile backdrop is clicked
+[22m[39mFetched questions: [33m6[39m for exam: exam-123
+
+[90mstdout[2m | app/exam/[examId]/exam-page.test.tsx[2m > [22m[2mExamPage Integration[2m > [22m[2mshows the submit warning modal before finishing an exam
+[22m[39mFetched questions: [33m6[39m for exam: exam-123
+
+[90mstdout[2m | app/exam/[examId]/exam-page.test.tsx[2m > [22m[2mExamPage Integration[2m > [22m[2mopens the AI response modal and copies context
+[22m[39mFetched questions: [33m6[39m for exam: exam-123
+
+[90mstdout[2m | app/exam/[examId]/exam-page.test.tsx[2m > [22m[2mExamPage Integration[2m > [22m[2mscores multi-select answers correctly
+[22m[39mFetched questions: [33m1[39m for exam: exam-123
+
+[90mstdout[2m | app/exam/[examId]/exam-page.test.tsx[2m > [22m[2mExamPage Integration[2m > [22m[2mawards points for object-based answers when they match
+[22m[39mFetched questions: [33m1[39m for exam: exam-123
+
+[90mstdout[2m | app/exam/[examId]/exam-page.test.tsx[2m > [22m[2mExamPage Integration[2m > [22m[2mawards points for object-based answers when they match
+[22m[39mFetched questions: [33m1[39m for exam: exam-123
+
+[90mstdout[2m | app/exam/[examId]/exam-page.test.tsx[2m > [22m[2mExamPage Integration[2m > [22m[2mrenders order sequence question gracefully when options are missing
+[22m[39mFetched questions: [33m1[39m for exam: exam-123
+
+[90mstdout[2m | app/exam/[examId]/exam-page.test.tsx[2m > [22m[2mExamPage Integration[2m > [22m[2mprevents reordering when answer is shown
+[22m[39mFetched questions: [33m1[39m for exam: exam-123
+
+ [32m✓[39m app/exam/[examId]/exam-page.test.tsx [2m([22m[2m33 tests[22m[2m)[22m[33m 6760[2mms[22m[39m
+     [33m[2m✓[22m[39m navigates to next question [33m 508[2mms[22m[39m
+     [33m[2m✓[22m[39m shows exit warning in exam mode [33m 463[2mms[22m[39m
+     [33m[2m✓[22m[39m handles order sequence interaction [33m 323[2mms[22m[39m
+     [33m[2m✓[22m[39m displays the correct order when answers are revealed [33m 395[2mms[22m[39m
+     [33m[2m✓[22m[39m auto submits the exam when the timer expires [33m 1016[2mms[22m[39m
+     [33m[2m✓[22m[39m shows the submit warning modal before finishing an exam [33m 327[2mms[22m[39m
+     [33m[2m✓[22m[39m opens the AI response modal and copies context [33m 379[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m24 passed[39m[22m[90m (24)[39m
+[2m      Tests [22m [1m[32m167 passed[39m[22m[2m | [22m[33m2 skipped[39m[90m (169)[39m
+[2m   Start at [22m 16:18:38
+[2m   Duration [22m 8.47s[2m (transform 1.40s, setup 1.78s, collect 7.21s, tests 14.81s, environment 11.11s, prepare 669ms)[22m
+
+[34m % [39m[2mCoverage report from [22m[33mv8[39m
+-------------------|---------|----------|---------|---------|-------------------
+File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-------------------|---------|----------|---------|---------|-------------------
+All files          |   94.45 |    88.69 |   94.84 |    97.2 |                   
+ app               |     100 |      100 |     100 |     100 |                   
+  page.tsx         |     100 |      100 |     100 |     100 |                   
+ app/courses       |     100 |      100 |     100 |     100 |                   
+  page.tsx         |     100 |      100 |     100 |     100 |                   
+ app/dashboard     |   96.55 |    71.42 |     100 |   96.29 |                   
+  page.tsx         |   96.55 |    71.42 |     100 |   96.29 | 76                
+ ...oard/analytics |   88.46 |    66.66 |   92.85 |   92.68 |                   
+  page.tsx         |   88.46 |    66.66 |   92.85 |   92.68 | 109-110,215       
+ app/exam/[examId] |   92.68 |    88.19 |   96.05 |   95.55 |                   
+  page.tsx         |   92.68 |    88.19 |   96.05 |   95.55 | ...,989,1112,1137 
+ ...Id]/components |     100 |    85.18 |     100 |     100 |                   
+  ...n-sidebar.tsx |     100 |    85.18 |     100 |     100 | 39-43,109,122     
+ ...examId]/review |   92.59 |     87.5 |   86.95 |   94.44 |                   
+  page.tsx         |   92.59 |     87.5 |   86.95 |   94.44 | 161,302,328-329   
+ app/profile       |   93.75 |       70 |     100 |    92.3 |                   
+  page.tsx         |   93.75 |       70 |     100 |    92.3 | 39                
+ components        |     100 |    93.54 |     100 |     100 |                   
+  ...ion-modal.tsx |     100 |       95 |     100 |     100 | 47                
+  mode-toggle.tsx  |     100 |      100 |     100 |     100 |                   
+  navbar.tsx       |     100 |       75 |     100 |     100 | 47                
+  ...tion-card.tsx |     100 |      100 |     100 |     100 |                   
+  ...-provider.tsx |     100 |      100 |     100 |     100 |                   
+ ...ents/questions |   95.55 |       94 |     100 |     100 |                   
+  ...-question.tsx |   92.85 |    96.77 |     100 |     100 | 28                
+  ...-question.tsx |   97.29 |     92.5 |     100 |     100 | 43,58             
+  mcq-question.tsx |   89.47 |    93.75 |     100 |     100 | 27-32             
+  ...-question.tsx |   96.42 |    93.54 |     100 |     100 | 33,112            
+ components/ui     |   96.05 |    93.84 |   89.47 |   99.29 |                   
+  ...lp-button.tsx |   94.64 |    91.66 |   72.72 |   98.11 | 126               
+  badge.tsx        |     100 |    66.66 |     100 |     100 | 35                
+  button.tsx       |     100 |      100 |     100 |     100 |                   
+  card.tsx         |     100 |      100 |     100 |     100 |                   
+  ...down-menu.tsx |     100 |      100 |     100 |     100 |                   
+  input.tsx        |     100 |      100 |     100 |     100 |                   
+  ...light-nav.tsx |    90.9 |      100 |      70 |     100 |                   
+  logo.tsx         |     100 |      100 |     100 |     100 |                   
+  modal.tsx        |     100 |      100 |     100 |     100 |                   
+  progress.tsx     |     100 |      100 |     100 |     100 |                   
+  scroll-area.tsx  |     100 |       80 |     100 |     100 | 37                
+  tabs.tsx         |     100 |      100 |     100 |     100 |                   
+  textarea.tsx     |     100 |      100 |     100 |     100 |                   
+ lib               |     100 |      100 |     100 |     100 |                   
+  grading.ts       |     100 |      100 |     100 |     100 |                   
+  supabase.ts      |     100 |      100 |     100 |     100 |                   
+  utils.ts         |     100 |      100 |     100 |     100 |                   
+-------------------|---------|----------|---------|---------|-------------------

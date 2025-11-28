@@ -50,6 +50,7 @@ function ReviewContent() {
 
   const [attempt, setAttempt] = useState<ExamAttempt | null>(null)
   const [questions, setQuestions] = useState<Question[]>([])
+  const [userAnswers, setUserAnswers] = useState<Record<string, unknown>>({})
   const [currentIndex, setCurrentIndex] = useState(0)
   const [loading, setLoading] = useState(true)
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -66,6 +67,7 @@ function ReviewContent() {
 
         if (attemptError) throw attemptError
         setAttempt(attemptData)
+        setUserAnswers(attemptData.answers || {})
 
         // Fetch questions
         const { data: questionsData, error: questionsError } = await supabase
@@ -76,6 +78,22 @@ function ReviewContent() {
 
         if (questionsError) throw questionsError
         setQuestions(questionsData || [])
+
+        // Fetch user answers
+        const { data: answersData, error: answersError } = await supabase
+          .from('user_answers')
+          .select('question_id, user_answer')
+          .eq('attempt_id', attemptId)
+
+        if (answersError) throw answersError
+
+        // Map answers to dictionary
+        const answersMap: Record<string, unknown> = {}
+        answersData?.forEach((a: { question_id: string; user_answer: unknown }) => {
+          answersMap[a.question_id] = a.user_answer
+        })
+        setUserAnswers(answersMap)
+
       } catch (error) {
         console.error('Error fetching review data:', error)
       } finally {
@@ -106,7 +124,7 @@ function ReviewContent() {
   }
 
   const currentQuestion = questions[currentIndex]
-  const userAnswer = attempt.answers?.[currentQuestion.id]
+  const userAnswer = userAnswers[currentQuestion.id]
   const isCorrect = checkAnswer(currentQuestion, userAnswer)
 
   function checkAnswer(question: Question, answer: unknown) {
@@ -208,7 +226,7 @@ function ReviewContent() {
                     isCorrect ? 'border-green-500/50 bg-green-50 dark:bg-green-900/10' : 
                     'border-red-500/50 bg-red-50 dark:bg-red-900/10'
                   }`}>
-                    <p className="text-sm font-medium mb-2">Your Answer:</p>
+                    <p className="text-sm font-medium mb-2" data-testid="user-answer-label">Your Answer:</p>
                     <div className="text-lg font-medium">
                       {renderAnswer(userAnswer)}
                     </div>
@@ -276,7 +294,7 @@ function ReviewContent() {
           <h3 className="font-semibold mb-4">Questions</h3>
           <div className="grid grid-cols-5 gap-2">
             {questions.map((q, idx) => {
-              const qAnswer = attempt?.answers?.[q.id]
+              const qAnswer = userAnswers[q.id]
               const qCorrect = checkAnswer(q, qAnswer)
               return (
                 <button
@@ -301,7 +319,7 @@ function ReviewContent() {
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Questions">
         <div className="grid grid-cols-6 sm:grid-cols-8 md:grid-cols-10 gap-1 sm:gap-2">
           {questions.map((q, idx) => {
-            const qAnswer = attempt?.answers?.[q.id]
+            const qAnswer = userAnswers[q.id]
             const qCorrect = checkAnswer(q, qAnswer)
             return (
               <button
@@ -346,7 +364,7 @@ function ReviewContent() {
         </div>
         
         {questions.map((q, idx) => {
-          const qAnswer = attempt.answers?.[q.id]
+          const qAnswer = userAnswers[q.id]
           const qCorrect = checkAnswer(q, qAnswer)
           return (
             <div key={q.id} className="break-inside-avoid">

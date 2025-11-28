@@ -13,7 +13,7 @@ interface ExamAttempt {
   score: number
   total_points: number
   time_spent_seconds: number
-  created_at: string
+  started_at: string
   answers: Record<string, unknown>
 }
 

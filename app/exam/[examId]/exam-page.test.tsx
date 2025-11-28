@@ -2,10 +2,17 @@ import { render, screen, fireEvent, waitFor, within } from '@testing-library/rea
 import userEvent from '@testing-library/user-event'
 
 
-import ExamPage from './page'
+import ExamPage, { Question } from './page'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 
 // Hoist mock data
+interface UserAnswer {
+  question_id: string
+  user_answer: unknown
+  points_earned: number
+  is_correct: boolean
+}
+
 const mocks = vi.hoisted(() => ({
   questions: [
     {
@@ -91,6 +98,7 @@ const setupSupabase = (options?: {
   questionsData?: typeof mocks.questions | null
   questionsPromise?: Promise<{ data: unknown; error: unknown }>
   insertHandler?: (payload: unknown) => Promise<{ data: unknown; error: unknown }>
+  userAnswersHandler?: (payload: unknown) => Promise<{ data: unknown; error: unknown }>
 }) => {
   const {
     examData = mocks.exam,
@@ -98,6 +106,7 @@ const setupSupabase = (options?: {
     questionsData = mocks.questions,
     questionsPromise,
     insertHandler,
+    userAnswersHandler,
   } = options || {}
 
   mockSupabaseFrom.mockImplementation((table: string) => {
@@ -129,6 +138,14 @@ const setupSupabase = (options?: {
                 : Promise.resolve({ data: { id: 'attempt-default' }, error: null }),
           }),
         }),
+      }
+    }
+    if (table === 'user_answers') {
+      return {
+        insert: (payload: unknown) => 
+          userAnswersHandler 
+            ? userAnswersHandler(payload) 
+            : Promise.resolve({ data: null, error: null }),
       }
     }
     return {
@@ -283,7 +300,49 @@ describe('ExamPage Integration', () => {
 
   it('submits exam and saves attempt', async () => {
     const insertMock = vi.fn().mockResolvedValue({ data: { id: 'attempt-123' }, error: null })
-    setupSupabase({ insertHandler: insertMock })
+    const userAnswersInsertMock = vi.fn().mockResolvedValue({ data: null, error: null })
+
+    mockSupabaseFrom.mockImplementation((table: string) => {
+      if (table === 'questions') {
+        return {
+          select: () => ({
+            eq: () => ({
+              order: () => Promise.resolve({ data: mocks.questions, error: null }),
+            }),
+          }),
+        }
+      }
+      if (table === 'exams') {
+        return {
+          select: () => ({
+            eq: () => ({
+              single: () => Promise.resolve({ data: mocks.exam, error: null }),
+            }),
+          }),
+        }
+      }
+      if (table === 'exam_attempts') {
+        return {
+          insert: (payload: unknown) => ({
+            select: () => ({
+              single: () => insertMock(payload),
+            }),
+          }),
+        }
+      }
+      if (table === 'user_answers') {
+        return {
+          insert: (payload: unknown) => userAnswersInsertMock(payload),
+        }
+      }
+      return {
+        select: () => ({
+          eq: () => ({
+            single: () => Promise.resolve({ data: null, error: null }),
+          }),
+        }),
+      }
+    })
 
     render(<ExamPage />)
 
@@ -305,6 +364,7 @@ describe('ExamPage Integration', () => {
 
     await waitFor(() => {
       expect(insertMock).toHaveBeenCalled()
+      expect(userAnswersInsertMock).toHaveBeenCalled()
       expect(mockRouterPush).toHaveBeenCalledWith('/exam/exam-123/results?attemptId=attempt-123')
     })
   })
@@ -483,45 +543,7 @@ describe('ExamPage Integration', () => {
     })
   })
 
-  it('falls back to saving attempt without answers when insert fails initially', async () => {
-    const singleQuestion = [
-      {
-        id: 'solo',
-        content: 'Solo Question',
-        question_type: 'MCQ',
-        options: ['Option A', 'Option B'],
-        correct_answer: 'Option A',
-        points: 1,
-        hint: 'Hint for solo question',
-      },
-    ]
-    const insertHandler = vi.fn()
-      .mockResolvedValueOnce({ data: null, error: new Error('missing column') })
-      .mockResolvedValueOnce({ data: { id: 'attempt-fallback' }, error: null })
 
-    setupSupabase({ questionsData: singleQuestion, insertHandler })
-
-    render(<ExamPage />)
-
-    await waitFor(() => {
-      expect(screen.getByText('Solo Question')).toBeInTheDocument()
-    })
-
-    fireEvent.click(screen.getByText('Option A'))
-
-    const finishButton = screen.getByTestId('finish-exam-button')
-    fireEvent.click(finishButton)
-
-    await waitFor(() => {
-      expect(insertHandler).toHaveBeenCalledTimes(2)
-    })
-
-    const firstPayload = insertHandler.mock.calls[0][0]
-    const secondPayload = insertHandler.mock.calls[1][0]
-    expect(firstPayload).toHaveProperty('answers')
-    expect(secondPayload).not.toHaveProperty('answers')
-    expect(mockRouterPush).toHaveBeenCalledWith('/exam/exam-123/results?attemptId=attempt-fallback')
-  })
 
   it('renders fill-in-the-blank inputs and shows correct answer when toggled', async () => {
     const fillBlankQuestion = [
@@ -938,11 +960,57 @@ describe('ExamPage Integration', () => {
       expect(insertHandler).toHaveBeenCalled()
     })
 
-    const payload = insertHandler.mock.calls[0][0] as { score: number; answers: Record<string, unknown> }
-    expect(payload.score).toBe(4)
-    expect(payload.answers['match-obj']).toEqual({ Hydrogen: 'H', Oxygen: 'O' })
-  })
+    const objectQuestion = [
+      {
+        id: 'match-obj',
+        content: 'Match Elements',
+        question_type: 'MATCHING',
+        options: [
+          { left: 'Hydrogen', right: 'H' },
+          { left: 'Oxygen', right: 'O' }
+        ],
+        correct_answer: { Hydrogen: 'H', Oxygen: 'O' },
+        points: 4,
+      }
+    ]
+    const objectInsertHandler = vi.fn().mockResolvedValue({ data: { id: 'attempt-obj' }, error: null })
+    const userAnswersHandler = vi.fn().mockResolvedValue({ data: null, error: null })
+    setupSupabase({ questionsData: objectQuestion as unknown as Question[], insertHandler: objectInsertHandler, userAnswersHandler })
 
+    render(<ExamPage />)
+
+    await waitFor(() => {
+      expect(screen.getByText('Match Elements')).toBeInTheDocument()
+    })
+
+    // Simulate answering
+    // For matching, we click left then right.
+    // Click Hydrogen
+    fireEvent.click(screen.getAllByText('Hydrogen')[0])
+    // Click H
+    // H might be in a button or div.
+    const hOption = screen.getAllByText('H').find(el => el.className.includes('cursor-pointer'))
+    if (hOption) fireEvent.click(hOption)
+    
+    // Click Oxygen
+    fireEvent.click(screen.getAllByText('Oxygen')[0])
+    // Click O
+    const oOption = screen.getAllByText('O').find(el => el.className.includes('cursor-pointer'))
+    if (oOption) fireEvent.click(oOption)
+
+    // Submit
+    const finishButton = screen.getAllByTestId('finish-exam-button')[0]
+    fireEvent.click(finishButton)
+
+    await waitFor(() => {
+      expect(insertHandler).toHaveBeenCalled()
+      // Check payload of userAnswersHandler
+      const answersPayload = userAnswersHandler.mock.calls[0][0] as UserAnswer[]
+      const answer = answersPayload.find(a => a.question_id === 'match-obj')
+      expect(answer?.user_answer).toEqual({ Hydrogen: 'H', Oxygen: 'O' })
+      expect(answer?.points_earned).toBe(4)
+    })
+  })
   it('warns when no question data is returned', async () => {
     const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
     setupSupabase({ questionsData: null })
