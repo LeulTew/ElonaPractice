@@ -33,25 +33,56 @@ export default function Dashboard() {
   useEffect(() => {
     async function fetchStats() {
       try {
-        // Fetch user stats
-        const { data: statsData, error } = await supabase
-          .from('user_stats')
-          .select('*')
-          .single()
-
-        if (error) {
-          console.error('Failed to fetch dashboard stats:', error)
+        // Fetch all exam attempts for the user
+        const { data: attempts, error: attemptsError } = await supabase
+          .from('exam_attempts')
+          .select('id, score, total_points, time_spent_seconds')
+        
+        if (attemptsError) {
+          console.error('Failed to fetch exam attempts:', attemptsError)
           return
         }
 
-        if (statsData) {
+        if (!attempts || attempts.length === 0) {
           setStats({
-            totalAttempts: statsData.total_attempts || 0,
-            avgScore: Math.round(statsData.avg_score || 0),
-            totalTimeMinutes: statsData.total_time_minutes || 0,
-            questionsAnswered: statsData.questions_answered || 0,
+            totalAttempts: 0,
+            avgScore: 0,
+            totalTimeMinutes: 0,
+            questionsAnswered: 0,
           })
+          return
         }
+
+        // Calculate stats from attempts
+        const totalAttempts = attempts.length
+        const totalTimeMinutes = Math.round(attempts.reduce((acc, curr) => acc + (curr.time_spent_seconds || 0), 0) / 60)
+        
+        // Calculate average score
+        const totalScorePercentage = attempts.reduce((acc, curr) => {
+          const percentage = curr.total_points ? (curr.score / curr.total_points) * 100 : 0
+          return acc + percentage
+        }, 0)
+        const avgScore = Math.round(totalScorePercentage / totalAttempts)
+
+        // Fetch total questions answered
+        // We get the count of user_answers for these attempts
+        const attemptIds = attempts.map(a => a.id)
+        const { count: questionsAnswered, error: answersError } = await supabase
+          .from('user_answers')
+          .select('*', { count: 'exact', head: true })
+          .in('attempt_id', attemptIds)
+
+        if (answersError) {
+          console.error('Failed to fetch answers count:', answersError)
+        }
+
+        setStats({
+          totalAttempts,
+          avgScore,
+          totalTimeMinutes,
+          questionsAnswered: questionsAnswered || 0,
+        })
+
       } catch (error) {
         console.error('Failed to fetch dashboard stats:', error)
       }
@@ -111,7 +142,7 @@ export default function Dashboard() {
           />
           <StatsCard
             title="Time Spent"
-            value={`${Math.round(stats.totalTimeMinutes / 60)}h ${stats.totalTimeMinutes % 60}m`}
+            value={`${Math.floor(stats.totalTimeMinutes / 60)}h ${stats.totalTimeMinutes % 60}m`}
             icon={Clock}
             description="Total study time"
             color="text-accent"

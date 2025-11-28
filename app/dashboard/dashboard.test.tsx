@@ -33,17 +33,30 @@ describe('Dashboard Page', () => {
   })
 
   it('renders dashboard with stats', async () => {
-    // Mock successful stats fetch
-    const mockStats = {
-      total_attempts: 10,
-      avg_score: 85,
-      total_time_minutes: 120,
-      questions_answered: 50
-    }
+    // Mock successful attempts fetch
+    const mockAttempts = [
+      { id: '1', score: 8, total_points: 10, time_spent_seconds: 900 }, // 15 mins
+      { id: '2', score: 9, total_points: 10, time_spent_seconds: 900 }  // 15 mins
+    ]
+    
+    // Mock successful answers count fetch
+    const mockAnswersCount = 50
 
-    const mockSingle = vi.fn().mockResolvedValue({ data: mockStats, error: null })
-    const mockSelect = vi.fn().mockReturnValue({ single: mockSingle })
-    const mockFrom = vi.fn().mockReturnValue({ select: mockSelect })
+    // Mock implementation for chained calls
+    const mockIn = vi.fn().mockResolvedValue({ count: mockAnswersCount, error: null })
+    const mockSelectAnswers = vi.fn().mockReturnValue({ in: mockIn })
+    
+    const mockSelectAttempts = vi.fn().mockResolvedValue({ data: mockAttempts, error: null })
+
+    const mockFrom = vi.fn((table) => {
+      if (table === 'exam_attempts') {
+        return { select: mockSelectAttempts }
+      }
+      if (table === 'user_answers') {
+        return { select: mockSelectAnswers }
+      }
+      return { select: vi.fn() }
+    })
     
     // @ts-expect-error - mocking supabase client
     supabase.from.mockImplementation(mockFrom)
@@ -53,17 +66,47 @@ describe('Dashboard Page', () => {
     expect(screen.getByText('Welcome back, Elona')).toBeInTheDocument()
     
     // Wait for stats to load
+    // Avg score: (80% + 90%) / 2 = 85%
+    // Total time: (900 + 900) / 60 = 30 mins
+    // Questions answered: 50
     await waitFor(() => {
       expect(screen.getByText('85%')).toBeInTheDocument()
       expect(screen.getByText('50')).toBeInTheDocument()
+      expect(screen.getByText('0h 30m')).toBeInTheDocument()
+    })
+  })
+
+  it('handles empty attempts', async () => {
+    // Mock empty attempts
+    const mockSelectAttempts = vi.fn().mockResolvedValue({ data: [], error: null })
+    const mockFrom = vi.fn((table) => {
+      if (table === 'exam_attempts') {
+        return { select: mockSelectAttempts }
+      }
+      return { select: vi.fn() }
+    })
+    
+    // @ts-expect-error - mocking supabase client
+    supabase.from.mockImplementation(mockFrom)
+
+    render(<Dashboard />)
+
+    await waitFor(() => {
+      expect(screen.getByText('0%')).toBeInTheDocument()
+      const zeros = screen.getAllByText('0')
+      expect(zeros.length).toBeGreaterThanOrEqual(1)
     })
   })
 
   it('handles stats fetch error', async () => {
-    // Mock error in stats fetch
-    const mockSingle = vi.fn().mockResolvedValue({ data: null, error: { message: 'Database error' } })
-    const mockSelect = vi.fn().mockReturnValue({ single: mockSingle })
-    const mockFrom = vi.fn().mockReturnValue({ select: mockSelect })
+    // Mock error in attempts fetch
+    const mockSelectAttempts = vi.fn().mockResolvedValue({ data: null, error: { message: 'Database error' } })
+    const mockFrom = vi.fn((table) => {
+      if (table === 'exam_attempts') {
+        return { select: mockSelectAttempts }
+      }
+      return { select: vi.fn() }
+    })
     
     // @ts-expect-error - mocking supabase client
     supabase.from.mockImplementation(mockFrom)
@@ -74,11 +117,12 @@ describe('Dashboard Page', () => {
 
     // Should still render with default stats (0 values)
     await waitFor(() => {
-      expect(screen.getByText('Welcome back, Elona')).toBeInTheDocument()
       expect(screen.getByText('0%')).toBeInTheDocument()
+      const zeros = screen.getAllByText('0')
+      expect(zeros.length).toBeGreaterThanOrEqual(1)
     })
 
-    expect(consoleSpy).toHaveBeenCalledWith('Failed to fetch dashboard stats:', expect.any(Object))
+    expect(consoleSpy).toHaveBeenCalledWith('Failed to fetch exam attempts:', expect.any(Object))
     consoleSpy.mockRestore()
   })
 
