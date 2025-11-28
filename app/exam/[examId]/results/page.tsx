@@ -87,7 +87,7 @@ function ResultsContent() {
         className="max-w-2xl w-full space-y-8"
       >
         <div className="text-center space-y-2">
-          <h1 className="text-4xl font-bold bg-linear-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">
+          <h1 className="text-4xl font-bold bg-linear-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent">
             Exam Completed!
           </h1>
           <p className="text-muted-foreground">Here is how you performed</p>
@@ -97,7 +97,7 @@ function ResultsContent() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
             {/* Score */}
             <div className="flex flex-col items-center p-4 bg-secondary/20 rounded-xl">
-              <Trophy className="w-8 h-8 text-yellow-500 mb-2" />
+              <Trophy className="w-8 h-8 text-amber-500 mb-2" />
               <span className="text-sm text-muted-foreground">Score</span>
               <span className="text-3xl font-bold">{percentage}%</span>
               <span className="text-xs text-muted-foreground">{attempt.score} / {attempt.total_points} pts</span>
@@ -137,7 +137,7 @@ function ResultsContent() {
             <Button 
               size="lg" 
               onClick={() => router.push(`/exam/${examId}/review?attemptId=${attemptId}`)}
-              className="gap-2 bg-indigo-600 hover:bg-indigo-700 text-white"
+              className="gap-2 bg-primary text-primary-foreground hover:bg-primary/90"
             >
               Review Answers
               <ArrowRight className="w-4 h-4" />
