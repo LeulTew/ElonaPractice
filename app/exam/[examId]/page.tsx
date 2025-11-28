@@ -572,8 +572,8 @@ function ExamContent() {
                                 <Input
                                   className={cn(
                                     "inline-flex h-8 text-center border-b-2 border-t-0 border-x-0 rounded-none px-1 focus-visible:ring-0 focus-visible:border-primary bg-transparent transition-all min-w-[120px]",
-                                    showAnswer && isInputCorrect(answers[currentQuestion.id], currentQuestion.correct_answer) && "border-green-500 text-green-600",
-                                    showAnswer && !isInputCorrect(answers[currentQuestion.id], currentQuestion.correct_answer) && "border-red-500 text-red-600"
+                                    showAnswer && isInputCorrect(answers[currentQuestion.id] as string, currentQuestion.correct_answer) && "border-green-500 text-green-600",
+                                    showAnswer && !isInputCorrect(answers[currentQuestion.id] as string, currentQuestion.correct_answer) && "border-red-500 text-red-600"
                                   )}
                                   style={{ 
                                     width: `${Math.max(120, ((answers[currentQuestion.id] as string)?.length || 0) * 12)}px`
@@ -585,7 +585,7 @@ function ExamContent() {
                                 />
                                 {showAnswer && (
                                   <div className="absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap bg-popover text-popover-foreground text-xs px-2 py-1 rounded border z-10">
-                                    {currentQuestion.correct_answer as React.ReactNode}
+                                    {String(currentQuestion.correct_answer)}
                                   </div>
                                 )}
                               </div>
@@ -609,8 +609,7 @@ function ExamContent() {
                         "grid gap-6",
                         currentQuestion.metadata?.image_url ? "lg:grid-cols-2" : "grid-cols-1"
                       )}>
-                        {/* Image Column for Diagram Questions */}
-                        {currentQuestion.metadata?.image_url && (
+                        {typeof currentQuestion.metadata?.image_url === 'string' && (
                           <div className="rounded-xl overflow-hidden border border-border bg-muted/30 flex items-center justify-center p-4 h-fit relative min-h-[200px]">
                             <Image 
                               src={currentQuestion.metadata.image_url as string} 
@@ -623,7 +622,6 @@ function ExamContent() {
                           </div>
                         )}
 
-                        {/* Options Column */}
                         <div className="space-y-3">
                           {(currentQuestion.options as string[])?.map((option: string, idx: number) => {
                             const isSelected = Array.isArray(answers[currentQuestion.id]) 
